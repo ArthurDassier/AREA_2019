@@ -28,7 +28,6 @@ class User(db.Model):
     username = db.Column(db.String(50))
     mail = db.Column(db.String(130))    
     password = db.Column(db.String(100))
-    widgets = db.relationship('Widgets', uselist=True, lazy=True)
 
     def __init__(self, username, mail, password):
         self.username = username
@@ -79,20 +78,20 @@ db.session.commit()
 
 @app.route("/", methods=['POST', 'GET'])
 def home():
-    return ({'status': 'success', 'message': 'Welcome on Dashboard API.'})
+    return {'status': 'success', 'message': 'Welcome on Dashboard API.'}
 
 @app.route("/register", methods=['POST'])
 def register():
     if (len(request.json) != 3):
-        return (jsonify({'status': 'error', 'message': 'bad parameters'}))
+        return {'status': 'error', 'message': 'bad parameters'}, 400
     username = request.json['username']
     password = request.json['password']
     mail = request.json['mail']
     if (User.query.filter_by(username=username).first() is None and User.query.filter_by(mail=mail).first() is None):
         new_user = User(username, mail, password)
         new_user.save()
-        return ({'status': 'success', 'message': 'Register Success'})
-    return ({'status': 'error', 'message': 'this user already exist'})
+        return {'status': 'success', 'message': 'Register Success'}
+    return {'status': 'error', 'message': 'This user already exist'}, 409
 
 @app.route('/user', defaults={'id': -1}, methods=['GET', 'PUT', 'DELETE'])
 @app.route('/user/<int:id>', methods=['DELETE'])
@@ -100,33 +99,33 @@ def register():
 def user(id):
     usr = current_identity
     if (request.method == 'GET'):
-        return ({'username': usr.username, 'mail': usr.mail})
+        return {'username': usr.username, 'mail': usr.mail}
     if (request.method == 'PUT'):
         if (len(request.json) == 1):
             usr.mail = request.json['mail']
         if (len(request.json) == 2):
             usr.password = request.json['password']
         usr.save()
-        return ({'status': 'success', 'message': "User information successfully modified"})
+        return {'status': 'success', 'message': "User information successfully modified"}
     if (request.method == 'DELETE'):
         if (usr.username != "admin"):
-            return ({'status': 'success', 'message': 'Your are not allowed to execute this action'})
+            return {'status': 'success', 'message': 'Your are not allowed to execute this action'}, 403
         if ((User.query.filter_by(id=id).first() is None) != True):
             victim = User.query.filter_by(id=id).first()
             name = victim.username
             victim.delete()
-            return ({'status': 'success', 'message': "User '"+name+"' successfully deleted"})
-        return ({'status': 'error', 'message': "This user doesn't exist"})    
-    return ({'status': 'error', 'message': 'Bad parameters'})
+            return {'status': 'success', 'message': "User '"+name+"' successfully deleted"}
+        return {'status': 'error', 'message': "This user doesn't exist"}, 404
+    return {'status': 'error', 'message': 'Bad parameters'}, 400
 
 @app.route('/users', methods=['GET'])
 @jwt_required()
 def list_users():
     usr = current_identity
     if (usr.username != "admin"):
-        return ({'status': 'error', 'message': 'Your are not allowed to execute this action'})
+        return {'status': 'error', 'message': 'Your are not allowed to execute this action'}, 403
     res = [user.serialize() for user in User.query.all()]
-    return ({'status': 'success', 'datas': res})
+    return {'status': 'success', 'datas': res}
 
 @app.route('/protected')
 @jwt_required()
