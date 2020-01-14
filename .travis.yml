@@ -7,5 +7,6 @@ before_install:
 jobs:
   include:
   - stage: Push
+    if: (NOT type IN (pull_request)) AND (branch = master)
     script:
     - "./push.sh"
