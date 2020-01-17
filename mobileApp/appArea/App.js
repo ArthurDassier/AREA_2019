@@ -1,19 +1,25 @@
 import React from 'react';
-import Secured from "./Components/Secured"
-import Login from "./Components/Login"
-
+import AreaIndexNav from "./Index"
 export default class App extends React.Component {
-  state = {
-    isLoggedIn: false
+  constructor() {
+    super()
+    this.state = {
+      showPwd: true,
+      pressed: false
+    }
   }
+
+  showPwd = () => {
+    if (this.state.pressed == false) {
+      this.setState({showPwd: false, pressed: true})
+    } else {
+      this.setState({showPwd: true, pressed: false})
+    }
+  }
+
   render() {
-      if (this.state.isLoggedIn) 
-        return <Secured 
-            onLogoutPress={() => this.setState({isLoggedIn: false})}
-          />;
-      else 
-        return <Login 
-            onLoginPress={() => this.setState({isLoggedIn: true})}
-          />;
+    return (
+      <AreaIndexNav/>
+    )
   }
 }
