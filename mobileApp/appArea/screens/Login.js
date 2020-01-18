@@ -11,7 +11,6 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   KeyboardAvoidingView
 } from 'react-native';
 
@@ -39,6 +38,7 @@ export default class Login extends React.Component {
   }
 
   _createAccount = () => {
+    this.setState({emptyField: false})
     this.props.navigation.navigate('CreateAccount')
   }
 
