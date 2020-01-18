@@ -70,6 +70,19 @@ export const styles = StyleSheet.create({
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 16,
         textAlign: 'center',
-        
+    },
+
+    errorText: {
+        color: 'rgba(255, 99, 71, 0.7)',
+        fontSize: 16,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
+
+    createAccountText: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 16,
+        textAlign: 'center',
+        textDecorationLine: 'underline'
     }
 });
