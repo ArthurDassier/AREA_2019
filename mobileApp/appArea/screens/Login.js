@@ -25,7 +25,8 @@ export default class Login extends React.Component {
       pressed: false,
       username: "",
       password: "",
-      emptyField: false
+      emptyField: false,
+      badCredentials: false,
     }
   }
 
@@ -42,23 +43,47 @@ export default class Login extends React.Component {
     this.props.navigation.navigate('CreateAccount')
   }
 
+  _checkFetch = (data) => {
+    if (data.access_token) {
+      this.setState({badCredentials: false})
+      this.props.navigation.navigate('Home', {accessToken: data.access_token})
+    } else
+      this.setState({badCredentials: true})
+  }
+
   _log = () => {
     if (this.state.username == "" || this.state.password == "") {
       this.setState({emptyField: true})
       return
     } else
-      this.props.navigation.navigate('Home')
       this.setState({emptyField: false})
+    fetch('http://10.41.173.208:5005/auth', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "username": this.state.username,
+        "password": this.state.password,
+      }),
+    }).then((response) => response.json())
+      .then((responseJson) => this._checkFetch(responseJson));
   }
 
   _displayError = () => {
     if (this.state.emptyField)
       return <Text style={styles.errorText}> 
         Fields can't be empty
-            </Text>
-  }
+             </Text>
+    if (this.state.badCredentials)
+      return <Text style={styles.errorText}> 
+        Invalid credentials
+             </Text>
+}
 
   render() {
+    const { navigation } = this.props;
     return (
 
   <ImageBackground source={backgroundJPG} style={styles.backgroundContainer}>

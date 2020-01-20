@@ -79,6 +79,13 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
+    successText: {
+        color: 'rgba(0, 255, 0, 0.7)',
+        fontSize: 16,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
+
     createAccountText: {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 16,

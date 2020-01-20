@@ -14,13 +14,12 @@ export default class Home extends React.Component {
         title: "Welcome User " + "Hey"
     };
     render (){
+        const { navigation } = this.props;
         return (
             <ImageBackground source={backgroundJPG} style={styles.backgroundContainer}>
-                <TouchableOpacity>
-                    <Text>
-                        Go to Login Screen
+                    <Text style={styles.loginText}>
+                        {navigation.getParam('accessToken', 'No token')}
                     </Text>
-                </TouchableOpacity>
             </ImageBackground>
         )
     } 

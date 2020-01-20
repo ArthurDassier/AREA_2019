@@ -11,7 +11,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from 'react-native';
 
 export default class Login extends React.Component {
@@ -30,6 +31,8 @@ export default class Login extends React.Component {
       emptyField: false,
       wrongMail: false,
       badPassword: false,
+      pwdDoesntMatch: false,
+      badAccount: "",
     }
   }
   _validate = (email) => {
@@ -45,12 +48,17 @@ export default class Login extends React.Component {
     }
   }
 
-  _createAccount = () => {
-    this.props.navigation.navigate('CreateAccount')
+  _checkAccount = (data) => {
+    if (data.status == "success") {
+      Alert.alert('Bravo !', 'Account successfully created :D',
+      [{text: 'Thanks bra', onPress: () => this.props.navigation.navigate('Login')}])
+    } else {
+      this.setState({badAccount: data.message})
+    }
   }
 
   _createMyAccount = () => {
-    this.setState({badPassword: false, wrongMail: false, emptyField: false})
+    this.setState({badPassword: false, wrongMail: false, emptyField: false, pwdDoesntMatch: false})
 
     if (this.state.username == "" || this.state.password == "" ||
         this.state.confirmedPassword == "" || this.state.mail == "") {
@@ -59,28 +67,49 @@ export default class Login extends React.Component {
     }
     if (!this._validate(this.state.mail)) {
       this.setState({wrongMail: true})
-    return
+      return
     }
-  if (this.state.password.length > 18 || this.state.password.length < 6) {
+    if (this.state.password.length > 18 || this.state.password.length < 6) {
       this.setState({badPassword: true})
       return
     }
-    this.props.navigation.navigate('Home')
-  }
+    if (this.state.password != this.state.confirmedPassword) {
+      this.setState({pwdDoesntMatch: true})
+      return
+    }
+    fetch('http://10.41.173.208:5005/register', {
+        method: 'POST',
+        headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "username": this.state.username,
+          "password": this.state.password,
+          "mail":     this.state.mail,
+        }),
+    }).then((response) => response.json())
+      .then((responseJson) => this._checkAccount(responseJson));
+}
 
   _displayError = () => {
     if (this.state.emptyField)
-        return <Text style={styles.errorText}> 
-        Fields can't be empty
-               </Text>
+      return <Text style={styles.errorText}>
+      Fields can't be empty
+             </Text>
     if (this.state.wrongMail)
       return <Text style={styles.errorText}> 
         Wrong formatted email bitch
-               </Text> 
+             </Text> 
     if (this.state.badPassword)
       return <Text style={styles.errorText}> 
       Password should be between 6 and 18 characters.
-         </Text>
+             </Text>
+    if (this.state.badAccount.length != 0)
+      return <Text style={styles.errorText}> 
+      {this.state.badAccount}
+             </Text>
+
   }
 
   render() {
