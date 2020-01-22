@@ -17,7 +17,7 @@ import {
 
 export default class Login extends React.Component {
   static navigationOptions = {
-      title: "Login Screen"
+      title: "CreateAccount Screen"
   };
   constructor() {
     super()
@@ -50,7 +50,7 @@ export default class Login extends React.Component {
 
   _checkAccount = (data) => {
     if (data.status == "success") {
-      Alert.alert('Bravo !', 'Account successfully created :D',
+      Alert.alert('Bravo !', 'Account succefully created :D',
       [{text: 'Thanks bra', onPress: () => this.props.navigation.navigate('Login')}])
     } else {
       this.setState({badAccount: data.message})

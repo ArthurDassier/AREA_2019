@@ -21,7 +21,8 @@ export default class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      showPwd: true,
+      screenTitle: "CreateAccount",
+      secureEntry: true,
       pressed: false,
       username: "",
       password: "",
@@ -32,9 +33,9 @@ export default class Login extends React.Component {
 
   _showPwd = () => {
     if (this.state.pressed == false) {
-      this.setState({showPwd: false, pressed: true})
+      this.setState({secureEntry: false, pressed: true})
     } else {
-      this.setState({showPwd: true, pressed: false})
+      this.setState({secureEntry: true, pressed: false})
     }
   }
 
@@ -110,7 +111,7 @@ export default class Login extends React.Component {
           <TextInput
             style={styles.input}
             placeholder={'Password'}
-            secureTextEntry={this.state.showPwd}
+            secureTextEntry={this.state.secureEntry}
             onChangeText={(password) => this.setState({password})}
             placeholderTextColor={'(rgba(255, 255, 255, 0.7)'}
             underlineColorAndroid='transparent'
