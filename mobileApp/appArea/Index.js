@@ -25,12 +25,6 @@ const AreaIndexNav = createStackNavigator( {
             headerShown: false
         }
     }
-    // FilmDetail: {
-    //     screen: Logged,
-    //     navigationOptions: {
-    //         title: "Welcome to Area"
-    //     }
-    // }
 })
 
 export default createAppContainer(AreaIndexNav)
