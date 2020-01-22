@@ -1,0 +1,54 @@
+version: "3"
+services:
+
+  api:
+    build: api/
+    expose:
+      - "5000"
+    ports:
+      - "5005:5000"
+    environment:
+      FLASK_ENV: "development"
+      JWT_SECRET_KEY: "y8pugPjzqjUQCF6Y2NdOk5PwKbZ7SsJi"
+      OAUTH_CLIENT_ID_GOOGLE: "898500682257-2ciaf88aim1ftr8d4b7tv0hdf88jqkj3.apps.googleusercontent.com"
+    depends_on:
+      - db
+    networks:
+      - app-tier
+    volumes:
+    - ./api/app/:/app
+    restart: always
+
+
+  db:
+    image: postgres
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    networks:
+      - app-tier
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db-data:/var/lib/postgresql/data
+    restart: always
+
+  web:
+    # build: web/
+    image: httpd:2.4
+    ports:
+      - "8080:80"                                                                                                                                                                                                                                                                                                                                                                               
+    depends_on:
+      - api
+    networks:
+      - app-tier
+    volumes:
+      - ./web/app:/usr/local/apache2/htdocs/
+    restart: always
+
+networks:
+  app-tier:
+
+volumes: 
+  db-data:
