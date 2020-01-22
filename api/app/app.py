@@ -11,9 +11,12 @@ import hashlib
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_cors import CORS
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
-JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY'] 
+JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
+OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = JWT_SECRET_KEY
@@ -28,11 +31,14 @@ class User(db.Model):
     username = db.Column(db.String(50))
     mail = db.Column(db.String(130))    
     password = db.Column(db.String(100))
+    google_id = db.Column(db.String(21))
 
-    def __init__(self, username, mail, password):
+    def __init__(self, username, mail, password, google_id=None):
         self.username = username
         self.mail = mail
-        self.password = sha256(password)
+        if password != None:
+            self.password = sha256(password)
+        self.google_id = google_id
 
     def verify_hash(self, password):
         if (safe_str_cmp(self.password, sha256(password))):
@@ -44,6 +50,7 @@ class User(db.Model):
             'id': self.id, 
             'username': self.username,
             'mail': self.mail,
+            'google_id': self.google_id
         }
     
     def save(self):
@@ -55,7 +62,7 @@ class User(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return '<Id %r Users %r Pass: %r>' % (self.id, self.username, self.password)
+        return '<Id %r Users %r Pass: %r GoogleId: %r>' % (self.id, self.username, self.password, self.google_id)
 
 
 def sha256(string):
@@ -63,13 +70,29 @@ def sha256(string):
     return (res)
 
 def authenticate(username, password):
-    user = User.query.filter_by(username=username).first()
-    if user and user.verify_hash(password):
-        return user
+    if (username == "google_token"):
+        data = verify_google_token(password)
+        if (data != None):
+            user = User.query.filter_by(google_id=data['sub']).first()
+            if (user):
+                return user
+    else:
+        user = User.query.filter_by(username=username).first()
+        if user and user.verify_hash(password):
+            return user
 
 def identity(payload):
     user_id = payload['identity']
     return User.query.filter_by(id=user_id).first()
+
+def verify_google_token(token):
+    try:
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), OAUTH_CLIENT_ID_GOOGLE)
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            return None
+        return (idinfo)
+    except ValueError:
+        return None
 
 jwt = JWT(app, authenticate, identity)
 
@@ -82,15 +105,24 @@ def home():
 
 @app.route("/register", methods=['POST'])
 def register():
-    if (len(request.json) != 3):
+    if (len(request.json) != 3 and len(request.json) != 1):
         return {'status': 'error', 'message': 'bad parameters'}, 400
-    username = request.json['username']
-    password = request.json['password']
-    mail = request.json['mail']
-    if (User.query.filter_by(username=username).first() is None and User.query.filter_by(mail=mail).first() is None):
-        new_user = User(username, mail, password)
-        new_user.save()
-        return {'status': 'success', 'message': 'Register Success'}
+    if ('google_token' in request.json):
+        user_data = verify_google_token(request.json['google_token'])
+        if user_data == None:
+            return {'status': 'error', 'message': 'Error during google authentification'}
+        if (User.query.filter_by(google_id=user_data['sub']).first() is None and User.query.filter_by(mail=user_data['email']).first() is None):
+            new_user = User(user_data['given_name']+" "+user_data['family_name'], user_data['email'], None, user_data['sub'])
+            new_user.save()
+            return {'status': 'success', 'message': 'Register Success'}
+    else:
+        username = request.json['username']
+        password = request.json['password']
+        mail = request.json['mail']
+        if (User.query.filter_by(username=username).first() is None and User.query.filter_by(mail=mail).first() is None):
+            new_user = User(username, mail, password)
+            new_user.save()
+            return {'status': 'success', 'message': 'Register Success'}
     return {'status': 'error', 'message': 'This user already exist'}, 409
 
 @app.route('/user', defaults={'id': -1}, methods=['GET', 'PUT', 'DELETE'])
@@ -101,9 +133,11 @@ def user(id):
     if (request.method == 'GET'):
         return {'username': usr.username, 'mail': usr.mail}
     if (request.method == 'PUT'):
-        if (len(request.json) == 1):
+        if ('mail' in request.json == False and 'password' in request.json == False):
+            return {'status': 'error', 'message': "Bas parameters"}
+        if ('mail' in request.json):
             usr.mail = request.json['mail']
-        if (len(request.json) == 2):
+        if ('password' in request.json):
             usr.password = request.json['password']
         usr.save()
         return {'status': 'success', 'message': "User information successfully modified"}
