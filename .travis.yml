@@ -3,7 +3,7 @@ jobs:
   include:
   - language: node_js
     node_js:
-      - "5.8"
+      - "10.15.2"
     stage: Test NPM & API
     before_script:
       - cd mobileApp/appArea/
