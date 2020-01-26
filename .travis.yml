@@ -24,8 +24,8 @@ python:
   - "3.6"
 
 install:
-  - pip install -r api/app/requirements.txt
-  - pip install coverage
+  - pip install -r api/app/requirements.txt --user
+  - pip install coverage --user
 
 jobs:
   include:
