@@ -1,16 +1,16 @@
+env:
+  global:
+    - secure: 5084ea248956a7335561079ab7db29c87d0739f5
+  
+    - SONAR_HOST_URL=http://91.121.150.220:9000
+    - DOCKER_COMPOSE_VERSION=1.21.0
+
 matrix:
   include:
   - language: python
 
     addons:
       sonarcloud: true
-
-    env:
-      global:
-        - secure: 5084ea248956a7335561079ab7db29c87d0739f5
-      
-        - SONAR_HOST_URL=http://91.121.150.220:9000
-        - DOCKER_COMPOSE_VERSION=1.21.0
 
     before_install:
     - openssl aes-256-cbc -K $encrypted_9ad75d8875a0_key -iv $encrypted_9ad75d8875a0_iv
@@ -45,15 +45,15 @@ matrix:
           - coverage xml
           - sonar-scanner -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
 
-      - stage: Push on Epitech's servers
-        if: (NOT type IN (pull_request)) AND (branch = master)
-        script:
-          - "./push.sh"
 
   - language: node_js
 
-    jobs:
-      include:
-        - stage: TEST NPM
-          script:
-            - npm version
+    script:
+      - npm version
+
+jobs:
+  include:
+  - stage: Push on Epitech's servers
+    if: (NOT type IN (pull_request)) AND (branch = master)
+    script:
+      - "./push.sh"
