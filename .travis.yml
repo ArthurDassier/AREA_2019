@@ -6,8 +6,7 @@ jobs:
     before_script:
       - cd mobileApp/appArea/
     script:
-      - ls
-      - npm install --save-dev jest
+      - npm install
       - npm test
 
   - language: python
