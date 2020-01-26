@@ -5,6 +5,7 @@ jobs:
     node_js:
       - "10.15.2"
     stage: Test NPM & API
+    if: type = pull_request
     before_script:
       - cd mobileApp/appArea/
     script:
