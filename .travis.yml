@@ -28,6 +28,7 @@ jobs:
       - pip install coverage
     script:
       - docker-compose up -d
+      - ls
       - pytest tests/Login-Register-Edit.py
 
 
