@@ -30,12 +30,20 @@ install:
 jobs:
   include:
   - stage: Test API
-    scipt:
+    if: (NOT type IN (pull_request))
+    script:
+      - docker-compose up -d
+      - pytest tests/Login-Register-Edit.py
+
+  - stage: Test API & coverage report
+    if: (NOT type IN (pull_request)) AND (branch = master)
+    script:
       - docker-compose up -d
       - coverage run -m pytest tests/Login-Register-Edit.py
       - coverage xml
       - sonar-scanner -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
-  - stage: Push
+
+  - stage: Push on Epitech's servers
     if: (NOT type IN (pull_request)) AND (branch = master)
     script:
       - "./push.sh"
