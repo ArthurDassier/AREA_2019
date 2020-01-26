@@ -29,6 +29,11 @@ install:
 
 jobs:
   include:
+  - language: node_js
+    stage: Test NPM
+    script:
+      - npm version
+
   - stage: Test API
     if: (NOT type IN (pull_request))
     script:
