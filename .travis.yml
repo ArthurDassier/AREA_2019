@@ -24,16 +24,15 @@ python:
   - "3.6"
 
 install:
-  - pip install -r api/app/requirements.txt --user
-  - pip install coverage --user
+  - pip install -r api/app/requirements.txt
+  - pip install coverage
 
 jobs:
   include:
   - language: node_js
-    stage: Test NPM
+    stage: Test NPM & API
     script:
       - npm version
-
   - language: python
     stage: Test API
     script:
@@ -41,7 +40,6 @@ jobs:
       - pytest tests/Login-Register-Edit.py
 
   - stage: Test API & coverage report
-    if: (NOT type IN (pull_request)) AND (branch = master)
     script:
       - docker-compose up -d
       - coverage run -m pytest tests/Login-Register-Edit.py
