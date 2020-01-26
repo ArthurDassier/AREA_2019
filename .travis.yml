@@ -23,7 +23,7 @@ jobs:
   include:
   - stage: Test API
     scipt:
-      - docker-compose up 
+      - docker-compose up -d
       - pytest tests/Login-Register-Edit.py
   - stage: Push
     if: (NOT type IN (pull_request)) AND (branch = master)
