@@ -1,5 +1,8 @@
 language: python
 
+addons:
+  sonarcloud: true
+
 env:
   global:
     - secure: 5084ea248956a7335561079ab7db29c87d0739f5
