@@ -34,7 +34,6 @@ jobs:
     script:
       - npm version
   - language: python
-    stage: Test API
     script:
       - docker-compose up -d
       - pytest tests/Login-Register-Edit.py
