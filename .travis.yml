@@ -27,7 +27,6 @@ jobs:
 
 
   - stage: Send API coverage report to SonarCloud
-    if: (NOT type IN (pull_request)) AND (branch = master)
     addons:
       sonarcloud: true
     env:
