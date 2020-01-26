@@ -1,7 +1,11 @@
 language: python
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.21.0
+  global:
+    - secure: 5084ea248956a7335561079ab7db29c87d0739f5
+   
+    - SONAR_HOST_URL=http://91.121.150.220:9000
+    - DOCKER_COMPOSE_VERSION=1.21.0
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_9ad75d8875a0_key -iv $encrypted_9ad75d8875a0_iv
@@ -18,13 +22,16 @@ python:
 
 install:
   - pip install -r api/app/requirements.txt
+  - pip install coverage
 
 jobs:
   include:
   - stage: Test API
     scipt:
       - docker-compose up -d
-      - pytest tests/Login-Register-Edit.py
+      - coverage run -m pytest tests/Login-Register-Edit.py
+      - coverage xml
+      - sonar-scanner -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
   - stage: Push
     if: (NOT type IN (pull_request)) AND (branch = master)
     script:
