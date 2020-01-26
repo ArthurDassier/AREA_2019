@@ -31,13 +31,11 @@ jobs:
   include:
   - language: node_js
     stage: Test NPM
-    if: type = pull_request
     script:
       - npm version
 
   - language: python
     stage: Test API
-    if: type = pull_request
     script:
       - docker-compose up -d
       - pytest tests/Login-Register-Edit.py
