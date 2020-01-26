@@ -2,6 +2,8 @@
 jobs:
   include:
   - language: node_js
+    node_js:
+      - "5.8"
     stage: Test NPM & API
     before_script:
       - cd mobileApp/appArea/
@@ -10,6 +12,8 @@ jobs:
       - npm test
 
   - language: python
+    python:
+      - "3.7"
     env:
       - DOCKER_COMPOSE_VERSION=1.21.0
     before_install:
@@ -20,8 +24,6 @@ jobs:
     install:
       - pip install -r api/app/requirements.txt
       - pip install coverage
-    python:
-      - "3.7"
     script:
       - docker-compose up -d
       - pytest tests/Login-Register-Edit.py
@@ -29,6 +31,9 @@ jobs:
 
   - stage: Send API coverage report to SonarCloud
     if: (NOT type IN (pull_request)) AND (branch = master)
+    language: python
+    python:
+      - "3.7"
     addons:
       sonarcloud: true
     env:
@@ -43,8 +48,6 @@ jobs:
     install:
       - pip install -r api/app/requirements.txt
       - pip install coverage
-    python:
-      - "3.7"
     script:
       - docker-compose up -d
       - coverage run -m pytest tests/Login-Register-Edit.py
