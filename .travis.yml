@@ -1,5 +1,4 @@
-language: python
-
+---
 jobs:
   include:
   - language: node_js
@@ -7,7 +6,7 @@ jobs:
     before_script:
       - cd mobileApp/appArea/
     script:
-      - npm test
+      - ls
 
   - language: python
     env:
