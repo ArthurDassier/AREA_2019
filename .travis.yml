@@ -7,6 +7,8 @@ jobs:
       - cd mobileApp/appArea/
     script:
       - ls
+      - npm install --save-dev jest
+      - npm test
 
   - language: python
     env:
@@ -27,6 +29,7 @@ jobs:
 
 
   - stage: Send API coverage report to SonarCloud
+    if: (NOT type IN (pull_request)) AND (branch = master)
     addons:
       sonarcloud: true
     env:
