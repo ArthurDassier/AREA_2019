@@ -2,10 +2,10 @@
 jobs:
   include:
   - language: node_js
+    if: type = pull_request
     node_js:
       - "10.15.2"
     stage: Test NPM & API
-    if: type = pull_request
     before_script:
       - cd mobileApp/appArea/
     script:
@@ -13,6 +13,7 @@ jobs:
       - npm test
 
   - language: python
+    if: type = pull_request
     python:
       - "3.7"
     env:
