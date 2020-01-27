@@ -1,9 +1,6 @@
 /*----Import React----*/
 import React, { Component } from 'react';
 import {
-    Alert,
-    Dimensions,
-    Image,
     ImageBackground,
     Text,
     View
@@ -28,7 +25,7 @@ export default class Card extends Component {
                     height: item.dimensions.height,
                     backgroundColor: item.color
                 }]}
-                onPress={() => navigation.navigate('Service')}
+                onPress={() => navigation.navigate('Service', { item: item })}
             >
                 {item.uri ? (
                     <ImageBackground

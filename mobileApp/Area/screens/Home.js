@@ -9,7 +9,6 @@ import { SearchBar, Icon } from 'react-native-elements';
 
 /*----Import Components----*/
 import Card from '../components/Card';
-import { Alert } from 'react-native';
 
 /*----Import Styles----*/
 import { styles } from '../Style';
@@ -157,6 +156,7 @@ export default class Home extends React.Component {
 
     RenderFlatListStickyHeader = () => {
         const { search } = this.state;
+
         return (
             <View style={styles.flatListHeader}>
                 <Text style={styles.flatListHeaderTitle}>Explore</Text>

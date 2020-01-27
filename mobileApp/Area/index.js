@@ -54,8 +54,10 @@ const HomeStackNavigator = createStackNavigator(
         [config.service]: Service
     },
     {
-        defaultNavigationOptions: ({ navigation }) =>
-            headerNavigation({ navigation })
+        defaultNavigationOptions: ({ navigation }) => 
+            navigation.state.routeName == config.home
+                ? headerNavigation({ navigation })
+                : null
     }
 );
 

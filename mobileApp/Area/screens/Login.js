@@ -82,24 +82,21 @@ export default class Login extends React.Component {
 
     _displayError = () => {
         if (this.state.emptyField)
-            return <Text style={styles.errorText}>
-                Fields can't be empty
-             </Text>
+            return (
+                <Text style={styles.errorText}>
+                    Fields can't be empty
+                </Text>
+            );
         if (this.state.badCredentials)
-            return <Text style={styles.errorText}>
-                Invalid credentials
-             </Text>
+            return (
+                <Text style={styles.errorText}>
+                    Invalid credentials
+                </Text>
+            );
     }
 
     render() {
-        const { navigation } = this.props;
         return (
-            // <View>
-            //     <TouchableOpacity
-            //         style={styles.loginBtn}
-            //         onPress={() => navigation.navigate('Area')}
-            //     />
-            // </View>
             <ImageBackground source={backgroundJPG} style={styles.backgroundContainer}>
                 <KeyboardAvoidingView keyboardVerticalOffset={100} behavior="padding" enabled>
                     <View style={styles.logoContainer}>
