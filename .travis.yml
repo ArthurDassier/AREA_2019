@@ -7,7 +7,7 @@ jobs:
       - "10.15.2"
     stage: Unit tests
     before_script:
-      - cd mobileApp/appArea/
+      - cd mobileApp/Area/
     script:
       - npm install
       - npm test
