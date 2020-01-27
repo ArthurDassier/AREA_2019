@@ -1,3 +1,6 @@
 db-data
 api/app/__pycache__
 .tests
+tests/__pycache__
+.coverage
+coverage.xml

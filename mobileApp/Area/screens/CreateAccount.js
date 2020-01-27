@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
+// import Icon from 'react-native-vector-icons/Ionicons'
+import { Icon } from 'react-native-elements';
 
 /*----Import Styles----*/
 import { styles } from "../Style"
@@ -126,8 +127,13 @@ export default class Login extends React.Component {
                     </View>
                     {this._displayError()}
                     <View style={styles.inputContainer}>
-                        <Icon name={'ios-person'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                            style={styles.inputIcon} />
+                        <Icon
+                            name={'ios-person'}
+                            type={'ionicon'}
+                            size={28}
+                            color={'rgba(255, 255, 255, 0.7)'}
+                            iconStyle={styles.inputIcon}
+                        />
                         <TextInput
                             style={styles.input}
                             placeholder={'Username'}
@@ -137,8 +143,13 @@ export default class Login extends React.Component {
                         />
                     </View>
                     <View style={styles.inputContainer}>
-                        <Icon name={'ios-person'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                            style={styles.inputIcon} />
+                        <Icon
+                            name={'ios-person'}
+                            type={'ionicon'}
+                            size={28}
+                            color={'rgba(255, 255, 255, 0.7)'}
+                            iconStyle={styles.inputIcon}
+                        />
                         <TextInput
                             style={styles.input}
                             placeholder={'Mail address'}
@@ -148,8 +159,13 @@ export default class Login extends React.Component {
                         />
                     </View>
                     <View style={styles.inputContainer}>
-                        <Icon name={'ios-lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                            style={styles.inputIcon} />
+                        <Icon
+                            name={'ios-lock'}
+                            type={'ionicon'}
+                            size={28}
+                            color={'rgba(255, 255, 255, 0.7)'}
+                            iconStyle={styles.inputIcon}
+                        />
                         <TextInput
                             style={styles.input}
                             placeholder={'Password'}
@@ -160,13 +176,23 @@ export default class Login extends React.Component {
                         />
                         <TouchableOpacity style={styles.hidePwdBtn}
                             onPress={this._showPwd.bind(this)}>
-                            <Icon name={this.state.pressed == false ? 'ios-eye' : 'ios-eye-off'}
-                                size={26} color={'rgba(255, 255, 255, 0.7)'} />
+                            <Icon
+                                name={this.state.pressed == false
+                                    ? 'ios-eye'
+                                    : 'ios-eye-off'}
+                                type={'ionicon'}
+                                size={26}
+                                color={'rgba(255, 255, 255, 0.7)'} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.inputContainer}>
-                        <Icon name={'ios-lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                            style={styles.inputIcon} />
+                        <Icon
+                            name={'ios-lock'}
+                            type={'ionicon'}
+                            size={28}
+                            color={'rgba(255, 255, 255, 0.7)'}
+                            iconStyle={styles.inputIcon}
+                        />
                         <TextInput
                             style={styles.input}
                             placeholder={'Confirm your password'}

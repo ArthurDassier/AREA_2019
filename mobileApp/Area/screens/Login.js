@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
+// import Icon from 'react-native-vector-icons/Ionicons'
+import { Icon } from 'react-native-elements';
 
 /*----Import Styles----*/
 import { styles } from "../Style"
@@ -26,20 +27,21 @@ export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-            showPwd: true,
-            pressed: false,
-            username: "",
-            password: "",
-            emptyField: false,
             badCredentials: false,
+            emptyField: false,
+            password: "",
+            pressed: false,
+            screenTitle: "CreateAccount",
+            secureEntry: true,
+            username: ""
         }
     }
 
     _showPwd = () => {
         if (this.state.pressed == false) {
-            this.setState({ showPwd: false, pressed: true })
+            this.setState({ secureEntry: false, pressed: true })
         } else {
-            this.setState({ showPwd: true, pressed: false })
+            this.setState({ secureEntry: true, pressed: false })
         }
     }
 
@@ -97,46 +99,77 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <ImageBackground source={backgroundJPG} style={styles.backgroundContainer}>
-                <KeyboardAvoidingView keyboardVerticalOffset={100} behavior="padding" enabled>
+            <ImageBackground
+                source={backgroundJPG}
+                style={styles.backgroundContainer}
+            >
+                <KeyboardAvoidingView
+                    behavior="padding"
+                    enabled
+                    keyboardVerticalOffset={100}
+                >
                     <View style={styles.logoContainer}>
                         <Image source={logo} style={styles.logo} />
                         <Text style={styles.logoText}>AREA APP</Text>
                     </View>
                     {this._displayError()}
                     <View style={styles.inputContainer}>
-                        <Icon name={'ios-person'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                            style={styles.inputIcon} />
+                        <Icon
+                            color={'rgba(255, 255, 255, 0.7)'}
+                            name={'ios-person'}
+                            type={'ionicon'}
+                            size={28}
+                            iconStyle={styles.inputIcon}
+                        />
                         <TextInput
-                            style={styles.input}
-                            placeholder={'Username'}
                             onChangeText={(username) => this.setState({ username })}
+                            placeholder={'Username'}
                             placeholderTextColor={'(rgba(255, 255, 255, 0.7)'}
-                            underlineColorAndroid='transparent'
+                            style={styles.input}
+                            underlineColorAndroid={'transparent'}
                         />
                     </View>
                     <View style={styles.inputContainer}>
-                        <Icon name={'ios-lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                            style={styles.inputIcon} />
+                        <Icon
+                            color={'rgba(255, 255, 255, 0.7)'}
+                            name={'ios-lock'}
+                            type={'ionicon'}
+                            size={28}
+                            iconStyle={styles.inputIcon}
+                        />
                         <TextInput
                             style={styles.input}
                             placeholder={'Password'}
-                            secureTextEntry={this.state.showPwd}
+                            secureTextEntry={this.state.secureEntry}
                             onChangeText={(password) => this.setState({ password })}
                             placeholderTextColor={'(rgba(255, 255, 255, 0.7)'}
                             underlineColorAndroid='transparent'
                         />
-                        <TouchableOpacity style={styles.hidePwdBtn}
-                            onPress={this._showPwd.bind(this)}>
-                            <Icon name={this.state.pressed == false ? 'ios-eye' : 'ios-eye-off'}
-                                size={26} color={'rgba(255, 255, 255, 0.7)'} />
+                        <TouchableOpacity
+                            style={styles.hidePwdBtn}
+                            onPress={this._showPwd.bind(this)}
+                        >
+                            <Icon
+                                name={this.state.pressed == false
+                                    ? 'ios-eye'
+                                    : 'ios-eye-off'}
+                                size={26}
+                                type={'ionicon'}
+                                color={'rgba(255, 255, 255, 0.7)'}
+                            />
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
-                <TouchableOpacity style={styles.loginBtn} onPress={this._log}>
+                <TouchableOpacity
+                    style={styles.loginBtn}
+                    onPress={this._log}
+                >
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
-                <Text style={styles.createAccountText} onPress={this._createAccount}>
+                <Text
+                    style={styles.createAccountText}
+                    onPress={this._createAccount}
+                >
                     Create an account
                 </Text>
             </ImageBackground>

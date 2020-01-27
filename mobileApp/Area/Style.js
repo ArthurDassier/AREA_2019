@@ -95,7 +95,9 @@ export const styles = StyleSheet.create({
     backgroundContainer: {
         alignItems: 'center',
         flex: 1,
-        justifyContent: 'center'
+        height: null,
+        justifyContent: 'center',
+        width: null,
     },
 
     createAccountText: {
