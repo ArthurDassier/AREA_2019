@@ -29,6 +29,45 @@ with open("static/services.json", "r") as fp:
 db = SQLAlchemy(app)
 SERVICES_NAMES = ['google']
 
+
+class OAuthTokens(db.Model):
+    __tablename__ = 'oauthtokens'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer)
+    service = db.Column(db.String(3))
+    access_token = db.Column(db.String(2048))
+    refresh_token = db.Column(db.String(512))
+    refresh_time = db.Column(db.Integer)
+
+    def __init__(self, user_id, service, access_token=None, refresh_token=None, refresh_time=None):
+        self.user_id = user_id
+        self.service = service
+        self.access_token = access_token
+        self.refresh_token = refresh_token
+        self.refresh_time = refresh_time
+
+    def serialize(self):
+        return {
+            'id': self.id, 
+            'user_id': self.user_id,
+            'service': self.service,
+            'access_token': self.access_token,
+            'refresh_token': self.refresh_token,
+            'refresh_time': self.refresh_time
+        }
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<Id %r User_id: %r Service: %r Access: %r Refresh: %r Time: %r>' % (self.id, self.user_id, self.service, self.access_token, self.refresh_token, self.refresh_time)
+
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -36,6 +75,7 @@ class User(db.Model):
     mail = db.Column(db.String(130))    
     password = db.Column(db.String(100))
     google_id = db.Column(db.String(21))
+    google_tokens = db.relationship('OAuthTokens', uselist=True, lazy=True)
 
     def __init__(self, username, mail, password, google_id=None):
         self.username = username
@@ -67,7 +107,6 @@ class User(db.Model):
 
     def __repr__(self):
         return '<Id %r Users %r Pass: %r GoogleId: %r>' % (self.id, self.username, self.password, self.google_id)
-
 
 def sha256(string):
     res = hashlib.sha256(string.encode()).hexdigest()
