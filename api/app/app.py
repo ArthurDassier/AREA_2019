@@ -12,18 +12,22 @@ from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_cors import CORS
 from google.oauth2 import id_token
-from google.auth.transport import requests
+from google.auth.transport import requests as grequests
 
+SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
 OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
+CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET']}
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = JWT_SECRET_KEY
 app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
 cors = CORS(app, resources={"/*": {"origins": "*"}})
-
+with open("static/services.json", "r") as fp:
+    SERVICES = json.load(fp)
 db = SQLAlchemy(app)
+SERVICES_NAMES = ['google']
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -87,7 +91,7 @@ def identity(payload):
 
 def verify_google_token(token):
     try:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), OAUTH_CLIENT_ID_GOOGLE)
+        idinfo = id_token.verify_oauth2_token(token, grequests.Request(), OAUTH_CLIENT_ID_GOOGLE)
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             return None
         return (idinfo)
@@ -160,6 +164,32 @@ def list_users():
         return {'status': 'error', 'message': 'Your are not allowed to execute this action'}, 403
     res = [user.serialize() for user in User.query.all()]
     return {'status': 'success', 'datas': res}
+
+def OAuth2GetTokens(service_name, code):
+    header = {"content-type": "application/x-www-form-urlencoded"}
+    data = {
+        'code': code,
+        'client_id': SERVICES[service_name]['client_id'],
+        'client_secret': CLIENTS_SECRET[service_name],
+        'redirect_uri': SERVER_ADDRESS+SERVICES['endpoint_path'],
+        'grant_type': 'authorization_code'
+    }
+    r = requests.post(SERVICES[service_name]['token_uri'], data=data, headers=header)
+    a = json.loads(r.text)
+    return a
+
+@app.route('/oauth2-endpoint', methods=['GET'])
+# @jwt_required()
+def OAuth2():
+    state = request.args.get('state').split(';')
+    code = request.args.get('code')
+    service_name = state[0]
+    user_id = state[1]
+    if (service_name in SERVICES_NAMES):
+        #TODO: Sauvegarder les tokens dans la bonne table avec le bon user 
+        return OAuth2GetTokens(service_name, code)
+    return "salut"
+
 
 @app.route('/protected')
 @jwt_required()

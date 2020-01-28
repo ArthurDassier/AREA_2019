@@ -1,0 +1,17 @@
+{
+    "google": {
+        "title": "Théo 4 the Win",
+        "description": "blabla",
+        "uri": "static/segfault.jpg",
+        "color": "Google",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
+        "scope": "https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/gmail.send",
+        "access_type": "offline"
+    },
+    "endpoint_path": "/oauth2-endpoint"
+}
