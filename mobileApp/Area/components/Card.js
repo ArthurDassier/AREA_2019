@@ -23,7 +23,6 @@ export default class Card extends Component {
         return (
             <TouchableWithoutFeedback
                 style={[styles.cardContainer, {
-                    // height: 300,
                     backgroundColor: item.color
                 }]}
                 onPress={() => navigation.navigate('Service', { item: item })}
@@ -32,7 +31,6 @@ export default class Card extends Component {
                     <View>
                         <Image
                             source={{ uri: item.uri }}
-                            // resizeMethod={'resize'}
                             resizeMode={'contain'}
                             style={[styles.cardImageBackground, {
                                 height: item.dimensions.height
@@ -46,7 +44,6 @@ export default class Card extends Component {
                             {item.title}
                         </Text>
                     </View>
-                    // </ImageBackground>
                 ) : (
                     <View style={{ backgroundColor: item.color }}>
                         <Text style={styles.cardTitle}>{item.title}</Text>
