@@ -10,6 +10,9 @@ import { SearchBar, Icon } from 'react-native-elements';
 /*----Import Components----*/
 import Card from '../components/Card';
 
+/*----Import Services----*/
+import { getServicesList } from '../services/services';
+
 /*----Import Styles----*/
 import { styles } from '../Style';
 
@@ -29,102 +32,17 @@ export default class Home extends React.Component {
     }
 
     asyncCall = async () => {
-        let data = [
-            {
-                title: 'JARVIS 4EVER',
-                description: 'blabla',
-                uri: 'http://wiki.marvel-world.com/images/thumb/8/83/J.A.R.V.I.S_Terre_199999_Portrait.jpg/300px-J.A.R.V.I.S_Terre_199999_Portrait.jpg',
-                color: 'white',
-                dimensions: {
-                    height: 300,
-                    width: 300
-                }
-            },
-            {
-                title: 'Apricot',
-                description: 'blabla',
-                uri: '',
-                color: 'rgb(22,110,251)',
-                dimensions: {
-                    height: 100,
-                    width: 300
-                }
-            },
-            {
-                title: 'Coronavirus',
-                description: 'blabla',
-                uri: 'https://img.aws.la-croix.com/2018/08/16/1200962173/bieres-Corona_0_729_505.jpg',
-                color: '#fff',
-                dimensions: {
-                    height: 300,
-                    width: 300
-                }
-            },
-            // {
-            //     id: 3,
-            //     title: 'Banana',
-            //     color: 'rgb(35,68,139)',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-            // {
-            //     id: 4,
-            //     title: 'Blackberry',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-            // {
-            //     id: 5,
-            //     title: 'Blackcurrant',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-            // {
-            //     id: 6,
-            //     title: 'Blueberry',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-            // {
-            //     id: 7,
-            //     title: 'Boysenberry',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-            // {
-            //     id: 8,
-            //     title: 'Cherry',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-            // {
-            //     id: 9,
-            //     title: 'Coconut',
-            //     dimensions: {
-            //         height: 300,
-            //         width: 300
-            //     }
-            // },
-        ];
+        let data = await getServicesList();
+        console.log('data:', data);
         this.arrayHolder = data;
         this.setState({ data });
     }
 
     searchFilter = (search) => {
         const data = this.arrayHolder.filter(item => {
-            const itemData = `${item.title.toUpperCase()}`;
+            const itemData = `${item.title.toUpperCase()}
+                ${item.name.toUpperCase()}
+                ${item.description.toUpperCase()}`;
             const textData = search.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });

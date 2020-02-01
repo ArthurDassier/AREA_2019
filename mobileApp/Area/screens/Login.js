@@ -12,6 +12,9 @@ import {
 // import Icon from 'react-native-vector-icons/Ionicons'
 import { Icon } from 'react-native-elements';
 
+/*----Import Services----*/
+import { logIn } from '../services/user';
+
 /*----Import Styles----*/
 import { styles } from "../Style"
 
@@ -62,24 +65,20 @@ export default class Login extends React.Component {
             this.setState({ badCredentials: true })
     }
 
+    logInUser = async () => {
+        await logIn({
+            "username": this.state.username,
+            "password": this.state.password
+        }).then((response) => this._checkFetch(response));
+    }
+
     _log = () => {
         if (this.state.username == "" || this.state.password == "") {
             this.setState({ emptyField: true })
             return
         } else
             this.setState({ emptyField: false })
-        fetch('http://10.41.173.208:5005/auth', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "username": this.state.username,
-                "password": this.state.password,
-            }),
-        }).then((response) => response.json())
-            .then((responseJson) => this._checkFetch(responseJson));
+        this.logInUser();
     }
 
     _displayError = () => {

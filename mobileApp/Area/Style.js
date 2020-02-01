@@ -9,7 +9,7 @@ import { getSizeDifferenceByPercentage } from './utils/common';
 
 const { width: WIDTH } = Dimensions.get('window')
 
-const POST_MAX_WIDTH = getSizeDifferenceByPercentage(WIDTH, 0.90);
+const MAX_WIDTH = getSizeDifferenceByPercentage(WIDTH, 0.90);
 
 export const styles = StyleSheet.create({
 
@@ -180,6 +180,63 @@ export const styles = StyleSheet.create({
         textAlign: 'center'
     },
 
+    //----------------------------------------------------//
+    //                      Service                       //
+    //----------------------------------------------------//
+
+    serviceConnectButton: {
+        alignSelf: 'center',
+        backgroundColor: "#0B75D9",
+        borderRadius: 25,
+        height: 50,
+        justifyContent: 'center',
+        marginBottom: 20,
+        marginTop: 15,
+        width: getSizeDifferenceByPercentage(WIDTH, 0.5)
+    },
+
+    serviceConnectText: {
+        alignSelf: 'center',
+        color: '#fff',
+        fontFamily: 'Comfortaa-Bold',
+        fontSize: 20,
+        lineHeight: 22.5
+    },
+    
+    serviceContainer: {
+        flex: 1,
+        width: '100%'
+    },
+
+    serviceDescriptionContainer: {
+        alignSelf: 'center',
+        marginBottom: 30,
+        paddingHorizontal: 16,
+        width: MAX_WIDTH
+    },
+
+    serviceDescriptionText: {
+        fontFamily: 'Comfortaa',
+        fontSize: 16,
+        lineHeight: 22.5
+    },
+
+    serviceImage: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'flex-end',
+        margin: 20,
+        width: '100%'
+    },
+
+    serviceTitle: {
+        fontFamily: 'Comfortaa-Bold',
+        fontSize: 36,
+        lineHeight: 40.5,
+        marginBottom: 5,
+        textAlign: 'center'
+    },
+
 //----------------------------------------------------------------------------//
 //                                 Components                                 //
 //----------------------------------------------------------------------------//
@@ -202,21 +259,22 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.29,
         shadowRadius: 4.65,
-        width: POST_MAX_WIDTH
+        width: MAX_WIDTH
     },
 
     cardImageBackground: {
         alignItems: 'center',
+        alignSelf: 'center',
         justifyContent: 'flex-end',
-        width: POST_MAX_WIDTH,
+        width: MAX_WIDTH,
+        margin: 20
     },
 
     cardTitle: {
-        color: '#fff',
         fontFamily: 'Comfortaa-Bold',
         fontSize: 20,
         lineHeight: 22.5,
-        margin: 40,
+        marginBottom: 30,
         textAlign: 'center'
     }
 });

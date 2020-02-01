@@ -5,7 +5,10 @@ import {
     createSwitchNavigator
 } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createStackNavigator } from 'react-navigation-stack';
+import {
+    createStackNavigator,
+    TransitionSpecs
+} from 'react-navigation-stack';
 import Icon from 'react-native-vector-icons/Feather';
 
 /*----Import Screens----*/
