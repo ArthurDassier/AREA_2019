@@ -1,5 +1,5 @@
 {
-    "google": {
+    "google-calendar": {
         "title": "Théo 4 the Win",
         "description": "blabla",
         "uri": "static/segfault.jpg",
@@ -8,9 +8,85 @@
             "height": 300,
             "width": 300
         },
+        "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
         "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
-        "scope": "https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/gmail.send",
+        "scope": "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
+        "access_type": "offline"
+    },
+    "google-youtube": {
+        "title": "Théo 4 the Win",
+        "description": "blabla",
+        "uri": "static/segfault.jpg",
+        "color": "Google",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
+        "scope": "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly",
+        "access_type": "offline"
+    },
+    "google-drive": {
+        "title": "Théo 4 the Win",
+        "description": "blabla",
+        "uri": "static/segfault.jpg",
+        "color": "Google",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
+        "scope": "https://www.googleapis.com/drive/v3 https://www.googleapis.com/appsactivity/v1",
+        "access_type": "offline"
+    },
+    "spotify": {
+        "title": "my spotify",
+        "description": "spot",
+        "uri": "static/segfault.jpg",
+        "color": "Spotify",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://accounts.spotify.com/authorize",
+        "token_uri": "https://accounts.spotify.com/api/token",
+        "client_id": "cb207135ce6949cdbe6355a129b0ef47",
+        "scope": "user-read-email user-library-read",
+        "access_type": "offline"
+    },
+    "pushbullet": {
+        "title": "my pushbullet",
+        "description": "spot",
+        "uri": "static/segfault.jpg",
+        "color": "",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://www.pushbullet.com/authorize",
+        "token_uri": "https://api.pushbullet.com/oauth2/token",
+        "client_id": "rbmkT1qHalwJSQb1SAKRBdv47yOPhyGh",
+        "scope": "user-read-email user-library-read",
+        "access_type": "offline"
+    },
+    "github": {
+        "title": "my github",
+        "description": "spot",
+        "uri": "static/segfault.jpg",
+        "color": "",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://github.com/login/oauth/authorize",
+        "token_uri": "https://github.com/login/oauth/access_token",
+        "client_id": "Iv1.0b5e75a77bda5688",
+        "scope": "repo notifications",
         "access_type": "offline"
     },
     "endpoint_path": "/oauth2-endpoint"

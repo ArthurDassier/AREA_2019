@@ -18,7 +18,7 @@ SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
 OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
-CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET']}
+CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET']}
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = JWT_SECRET_KEY
@@ -27,14 +27,14 @@ cors = CORS(app, resources={"/*": {"origins": "*"}})
 with open("static/services.json", "r") as fp:
     SERVICES = json.load(fp)
 db = SQLAlchemy(app)
-SERVICES_NAMES = ['google']
+SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github']
 
 
 class OAuthTokens(db.Model):
     __tablename__ = 'oauthtokens'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer)
-    service = db.Column(db.String(3))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    service = db.Column(db.String(20))
     access_token = db.Column(db.String(2048))
     refresh_token = db.Column(db.String(512))
     refresh_time = db.Column(db.Integer)
@@ -75,7 +75,7 @@ class User(db.Model):
     mail = db.Column(db.String(130))    
     password = db.Column(db.String(100))
     google_id = db.Column(db.String(21))
-    google_tokens = db.relationship('OAuthTokens', uselist=True, lazy=True)
+    tokens = db.relationship('OAuthTokens', uselist=True, lazy=True)
 
     def __init__(self, username, mail, password, google_id=None):
         self.username = username
@@ -204,31 +204,88 @@ def list_users():
     res = [user.serialize() for user in User.query.all()]
     return {'status': 'success', 'datas': res}
 
-def OAuth2GetTokens(service_name, code):
-    header = {"content-type": "application/x-www-form-urlencoded"}
+# Return client secret of a service. But if this service
+# is an under service like google calendar for google service
+# it return the client secret from google
+def getClientSecret(service_name):
+    if ('-' in service_name):
+        return CLIENTS_SECRET[service_name[:service_name.index('-')]]
+    return CLIENTS_SECRET[service_name]    
+
+def refreshAccessToken(service_name, user_id):
+    token = OAuthTokens.query.filter_by(service=service_name, user_id=user_id).first()
+    if token != None:
+        header = {"content-type": "application/x-www-form-urlencoded"}
+        data = {
+            'client_id': SERVICES[service_name]['client_id'],
+            'client_secret': getClientSecret(service_name),
+            'refresh_token': OAuthTokens.query.filter_by(service=service_name, user_id=user_id).first().refresh_token,
+            'grant_type': 'refresh_token'
+        }
+        r = requests.post(SERVICES[service_name]['token_uri'], data=data, headers=header)
+        a = json.loads(r.text)
+        token.access_token = a['access_token']
+        token.refresh_time = int(datetime.datetime.now().timestamp())
+        token.save()
+
+def OAuth2GetTokens(service_name, user_id, code):
+    header = {"content-type": "application/x-www-form-urlencoded", "Accept": "application/json"}
     data = {
         'code': code,
         'client_id': SERVICES[service_name]['client_id'],
-        'client_secret': CLIENTS_SECRET[service_name],
+        'client_secret': getClientSecret(service_name),
         'redirect_uri': SERVER_ADDRESS+SERVICES['endpoint_path'],
         'grant_type': 'authorization_code'
     }
     r = requests.post(SERVICES[service_name]['token_uri'], data=data, headers=header)
     a = json.loads(r.text)
-    return a
+    if ('error' in a):
+        return {'status': 'error', 'message': 'Bad request'}
+    token = OAuthTokens.query.filter_by(service=service_name, user_id=user_id).first()
+    if token == None:
+        refresh_token = a['refresh_token'] if 'refresh_token' in a else None
+        refresh_time = int(datetime.datetime.now().timestamp()) if 'expires_in' in a else -1
+        token = OAuthTokens(user_id, service_name, a['access_token'], refresh_token, refresh_time)
+    else:
+        token.access_token = a['access_token']
+        if 'refresh_token' in a:
+            token.refresh_token = a['refresh_token']
+        if 'expires_in' in a:
+            token.refresh_time = int(datetime.datetime.now().timestamp())
+        else:
+            token.refresh_time = -1
+    token.save()
+    return {'status': 'success', 'message': service_name+' service successfuly added.'}
 
 @app.route('/oauth2-endpoint', methods=['GET'])
-# @jwt_required()
 def OAuth2():
-    state = request.args.get('state').split(';')
-    code = request.args.get('code')
-    service_name = state[0]
-    user_id = state[1]
-    if (service_name in SERVICES_NAMES):
-        #TODO: Sauvegarder les tokens dans la bonne table avec le bon user 
-        return OAuth2GetTokens(service_name, code)
-    return "salut"
+    if ('state' in request.args and 'code' in request.args):
+        if (',' in request.args.get('state') == False):
+            return {'satus': 'error', 'message': "',' separator is missing in state parameters"}
+        state = request.args.get('state').split(',')
+        code = request.args.get('code')
+        service_name = state[0]
+        user_id = int(state[1])
+        if (service_name in SERVICES_NAMES):
+            return OAuth2GetTokens(service_name, user_id, code)
+    return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
 
+@app.route('/services', methods=['GET'])
+@jwt_required()
+def getActiveServices():
+    res = {}
+    usr = current_identity
+    tokens = OAuthTokens.query.filter_by(user_id=usr.id).all()
+    for service in SERVICES_NAMES:
+        found = False
+        for token in tokens:
+            if service == token.service:
+                res[service] = True
+                found = True
+                break
+        if found != True:
+            res[service] = False
+    return (res)  
 
 @app.route('/protected')
 @jwt_required()
