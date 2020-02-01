@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "appArea",
-    "slug": "appArea",
+    "name": "Area",
+    "slug": "Area",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [

@@ -1,12 +1,69 @@
-before_install:
-- openssl aes-256-cbc -K $encrypted_9ad75d8875a0_key -iv $encrypted_9ad75d8875a0_iv
-  -in deploy_rsa.enc -out ~/.ssh/deploy_rsa -d
-- chmod 400 ~/.ssh/deploy_rsa
-- chmod +x push.sh
-
+---
 jobs:
   include:
-  - stage: Push
-    if: (NOT type IN (pull_request)) AND (branch = master)
+  - language: node_js
+    if: type = pull_request
+    node_js:
+      - "10.15.2"
+    stage: Unit tests
+    before_script:
+      - cd mobileApp/Area/
     script:
-    - "./push.sh"
+      - npm install
+      - npm test
+
+  - language: python
+    if: type = pull_request
+    python:
+      - "3.7"
+    env:
+      - DOCKER_COMPOSE_VERSION=1.21.0
+    before_install:
+      - sudo rm /usr/local/bin/docker-compose
+      - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+      - chmod +x docker-compose
+      - sudo mv docker-compose /usr/local/bin
+    install:
+      - pip install -r api/app/requirements.txt
+      - pip install coverage
+    script:
+      - docker-compose up -d
+      - ls
+      - pytest tests/Login-Register-Edit.py
+
+
+  - stage: Send API coverage report to SonarCloud
+    if: (NOT type IN (pull_request)) AND (branch = master)
+    language: python
+    python:
+      - "3.7"
+    addons:
+      sonarcloud: true
+    env:
+      - secure: 5084ea248956a7335561079ab7db29c87d0739f5
+      - secure: SONAR_HOST_URL=http://91.121.150.220:9000
+      - DOCKER_COMPOSE_VERSION=1.21.0
+    before_install:
+      - sudo rm /usr/local/bin/docker-compose
+      - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+      - chmod +x docker-compose
+      - sudo mv docker-compose /usr/local/bin
+    install:
+      - pip install -r api/app/requirements.txt
+      - pip install coverage
+    script:
+      - docker-compose up -d
+      - coverage run -m pytest tests/Login-Register-Edit.py
+      - coverage xml
+      - sonar-scanner -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
+
+
+  - stage: Push GitHub repository to Epitech repository
+    if: (NOT type IN (pull_request)) AND (branch = master)
+    before_install:
+      - openssl aes-256-cbc -K $encrypted_9ad75d8875a0_key -iv $encrypted_9ad75d8875a0_iv
+        -in deploy_rsa.enc -out ~/.ssh/deploy_rsa -d
+      - chmod 400 ~/.ssh/deploy_rsa
+      - chmod +x push.sh
+    script:
+      - "./push.sh"
