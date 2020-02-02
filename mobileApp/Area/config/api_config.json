@@ -1,0 +1,18 @@
+{
+    "user": {
+        "auth": {
+            "url": "http://192.168.8.111:5005/auth",
+            "method": "POST"
+        },
+        "register": {
+            "url": "http://192.168.8.111:5005/register",
+            "method": "POST"
+        }
+    },
+    "service": {
+        "serviceList": {
+            "url": "http://192.168.8.111:5005/static/services.json",
+            "method": "GET"
+        }
+    }
+}
