@@ -5,10 +5,7 @@ import {
     createSwitchNavigator
 } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import {
-    createStackNavigator,
-    TransitionSpecs
-} from 'react-navigation-stack';
+import { createStackNavigator } from 'react-navigation-stack';
 import Icon from 'react-native-vector-icons/Feather';
 
 /*----Import Screens----*/
@@ -16,6 +13,9 @@ import CreateAccount from './screens/CreateAccount';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import Service from './screens/Service';
+
+/*----Import Components----*/
+import Drawer from './components/Drawer';
 
 /*----Import Configs----*/
 const config = require('./config/index.json');
@@ -88,6 +88,12 @@ const AppDrawerNavigator = createDrawerNavigator({
     [config.home]: HomeStackNavigator,
     [config.notifications]: NotificationsStackNavigator,
     [config.profile]: ProfileStackNavigator
+}, {
+    contentOptions: {
+        activeTintColor: 'orange'
+    },
+    drawerType: 'slide',
+    contentComponent: (props => <Drawer {...props}/>)
 });
 
 const AppSwitchNavigator = createSwitchNavigator({

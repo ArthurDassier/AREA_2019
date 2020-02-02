@@ -33,7 +33,6 @@ export default class Home extends React.Component {
 
     asyncCall = async () => {
         let data = await getServicesList();
-        console.log('data:', data);
         this.arrayHolder = data;
         this.setState({ data });
     }

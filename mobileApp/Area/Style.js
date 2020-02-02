@@ -26,6 +26,14 @@ export const styles = StyleSheet.create({
         color: 'black'
     },
 
+    column: {
+        flexDirection: 'column'
+    },
+
+    row: {
+        flexDirection: 'row'
+    },
+
 //----------------------------------------------------------------------------//
 //                                   Screens                                  //
 //----------------------------------------------------------------------------//
@@ -276,5 +284,34 @@ export const styles = StyleSheet.create({
         lineHeight: 22.5,
         marginBottom: 30,
         textAlign: 'center'
+    },
+
+    //----------------------------------------------------//
+    //                       Drawer                       //
+    //----------------------------------------------------//
+
+    drawerFooter: {
+        alignItems: 'center',
+        bottom: 20
+    },
+
+    drawerFooterIcon: {
+        fontSize: 24
+    },
+
+    drawerFooterIconContainer: {
+        flexDirection: 'column',
+        marginRight: 15
+    },
+
+    drawerHeader: {
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    drawerHeaderImage: {
+        height: 236,
+        width: 300
     }
 });
