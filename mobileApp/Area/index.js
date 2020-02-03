@@ -14,6 +14,9 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import Service from './screens/Service';
 
+/*----Import Components----*/
+import Drawer from './components/Drawer';
+
 /*----Import Configs----*/
 const config = require('./config/index.json');
 
@@ -85,6 +88,12 @@ const AppDrawerNavigator = createDrawerNavigator({
     [config.home]: HomeStackNavigator,
     [config.notifications]: NotificationsStackNavigator,
     [config.profile]: ProfileStackNavigator
+}, {
+    contentOptions: {
+        activeTintColor: 'orange'
+    },
+    drawerType: 'slide',
+    contentComponent: (props => <Drawer {...props}/>)
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
