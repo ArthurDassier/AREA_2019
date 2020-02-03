@@ -28,7 +28,7 @@ jobs:
       - pip install coverage
     script:
       - docker-compose up -d
-      - ls
+      - sleep 10
       - pytest tests/Login-Register-Edit.py
 
 
@@ -53,6 +53,7 @@ jobs:
       - pip install coverage
     script:
       - docker-compose up -d
+      - sleep 10
       - coverage run -m pytest tests/Login-Register-Edit.py
       - coverage xml
       - sonar-scanner -D sonar.host.url=$SONAR_HOST_URL -D sonar.login=$SONAR_TOKEN -X
