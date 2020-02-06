@@ -16,6 +16,9 @@ import { getServicesList } from '../services/services';
 /*----Import Styles----*/
 import { styles } from '../Style';
 
+/*----Import Errors----*/
+const ER = require('../config/errors.json');
+
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -33,8 +36,13 @@ export default class Home extends React.Component {
 
     asyncCall = async () => {
         let data = await getServicesList();
-        this.arrayHolder = data;
-        this.setState({ data });
+        if (typeof data == 'undefined') {
+            this.arrayHolder = ER.errors;
+            this.setState({data: ER.errors})
+        } else {
+            this.arrayHolder = data.services;
+            this.setState({ data: data.services });
+        }
     }
 
     searchFilter = (search) => {

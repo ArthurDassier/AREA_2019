@@ -1,0 +1,20 @@
+{
+    "errors": [
+            {
+            "name": "No services available",
+            "title": "No services available",
+            "description": "No services available",
+            "uri": "https://cdn.xl.thumbs.canstockphoto.com/no-service-rubber-stamp-with-text-no-service-inside-vector-illustration-vector-clip-art_csp28851217.jpg",
+            "color": "#DADADA",
+            "dimensions": {
+                "height": 150,
+                "width": 50
+            }, 
+            "authorization_uri": "",
+            "token_uri": "",
+            "client_id": "",
+            "scope": "",
+            "access_type": "offline"
+        }
+    ]
+}

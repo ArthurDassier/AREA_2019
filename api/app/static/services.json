@@ -1,131 +1,101 @@
 {
-    "google-calendar": {
-        "name": "Google Calendar",
-        "title": "Just a calendar",
-        "description": "Google Calendar is a time-management and scheduling calendar service developed by Google. It became available in beta release April 13, 2006, and in general release in July 2009, on the web and as mobile apps for the Android and iOS platforms.\n\nGoogle Calendar allows users to create and edit events. Reminders can be enabled for events, with options available for type and time. Event locations can also be added, and other users can be invited to events. Users can enable or disable the visibility of special calendars, including Birthdays, where the app retrieves dates of births from Google contacts and displays birthday cards on a yearly basis, and Holidays, a country-specific calendar that displays dates of special occasions. Over time, Google has added functionality that makes use of machine learning, including \"Events from Gmail\", where event information from a user's Gmail messages are automatically added to Google Calendar; \"Reminders\", where users add to-do activities that can be automatically updated with new information; \"Smart Suggestions\", where the app recommends titles, contacts, and locations when creating events; and \"Goals\", where users enter information on a specified personal goal, and the app automatically schedules the activity at optimal times.",
-        "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Google_Calendar_icon.svg/1200px-Google_Calendar_icon.svg.png",
-        "color": "#DADADA",
-        "dimensions": {
-            "height": 150,
-            "width": 150
+    "services": [
+        {
+            "name": "Google Calendar",
+            "title": "Just a calendar",
+            "description": "Google Calendar is a time-management and scheduling calendar service developed by Google. It became available in beta release April 13, 2006, and in general release in July 2009, on the web and as mobile apps for the Android and iOS platforms.\n\nGoogle Calendar allows users to create and edit events. Reminders can be enabled for events, with options available for type and time. Event locations can also be added, and other users can be invited to events. Users can enable or disable the visibility of special calendars, including Birthdays, where the app retrieves dates of births from Google contacts and displays birthday cards on a yearly basis, and Holidays, a country-specific calendar that displays dates of special occasions. Over time, Google has added functionality that makes use of machine learning, including \"Events from Gmail\", where event information from a user's Gmail messages are automatically added to Google Calendar; \"Reminders\", where users add to-do activities that can be automatically updated with new information; \"Smart Suggestions\", where the app recommends titles, contacts, and locations when creating events; and \"Goals\", where users enter information on a specified personal goal, and the app automatically schedules the activity at optimal times.",
+            "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Google_Calendar_icon.svg/1200px-Google_Calendar_icon.svg.png",
+            "color": "#DADADA",
+            "dimensions": {
+                "height": 150,
+                "width": 150
+            },
+            "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
+            "scope": "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
+            "access_type": "offline"
         },
-        "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
-        "scope": "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
-        "access_type": "offline"
-    },
-    "google-youtube": {
-        "name": "Youtube",
-        "title": "Watch the world go crazy",
-        "description": "YouTube is an American video-sharing platform headquartered in San Bruno, California. Three former PayPal employees—Chad Hurley, Steve Chen, and Jawed Karim—created the service in February 2005. Google bought the site in November 2006 for US$1.65 billion; YouTube now operates as one of Google's subsidiaries.\n\nYouTube allows users to upload, view, rate, share, add to playlists, report, comment on videos, and subscribe to other users. It offers a wide variety of user-generated and corporate media videos. Available content includes video clips, TV show clips, music videos, short and documentary films, audio recordings, movie trailers, live streams, and other content such as video blogging, short original videos, and educational videos. Most content on YouTube is uploaded by individuals, but media corporations including CBS, the BBC, Vevo, and Hulu offer some of their material via YouTube as part of the YouTube partnership program. Unregistered users can only watch videos on the site, while registered users are permitted to upload an unlimited number of videos and add comments to videos.",
-        "uri": "https://upload.wikimedia.org/wikipedia/commons/b/b2/YouTube_logo_%282013-2015%29.png",
-        "color": "#fff",
-        "dimensions": {
-            "height": 120,
-            "width": 120
+        {
+            "name": "Youtube",
+            "title": "Watch the world go crazy",
+            "description": "YouTube is an American video-sharing platform headquartered in San Bruno, California. Three former PayPal employees—Chad Hurley, Steve Chen, and Jawed Karim—created the service in February 2005. Google bought the site in November 2006 for US$1.65 billion; YouTube now operates as one of Google's subsidiaries.\n\nYouTube allows users to upload, view, rate, share, add to playlists, report, comment on videos, and subscribe to other users. It offers a wide variety of user-generated and corporate media videos. Available content includes video clips, TV show clips, music videos, short and documentary films, audio recordings, movie trailers, live streams, and other content such as video blogging, short original videos, and educational videos. Most content on YouTube is uploaded by individuals, but media corporations including CBS, the BBC, Vevo, and Hulu offer some of their material via YouTube as part of the YouTube partnership program. Unregistered users can only watch videos on the site, while registered users are permitted to upload an unlimited number of videos and add comments to videos.",
+            "uri": "https://upload.wikimedia.org/wikipedia/commons/b/b2/YouTube_logo_%282013-2015%29.png",
+            "color": "#fff",
+            "dimensions": {
+                "height": 120,
+                "width": 120
+            },
+            "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
+            "scope": "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly",
+            "access_type": "offline"
         },
-        "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
-        "scope": "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly",
-        "access_type": "offline"
-    },
-    "google-drive": {
-        "name": "Google Drive",
-        "title": "No link to any car",
-        "description": "Google Drive is a file storage and synchronization service developed by Google. Launched on April 24, 2012, Google Drive allows users to store files on their servers, synchronize files across devices, and share files. In addition to a website, Google Drive offers apps with offline capabilities for Windows and macOS computers, and Android and iOS smartphones and tablets. Google Drive encompasses Google Docs, Google Sheets, and Google Slides, which are a part of an office suite that permits collaborative editing of documents, spreadsheets, presentations, drawings, forms, and more. Files created and edited through the office suite are saved in Google Drive.",
-        "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Google_Drive_logo.png/1200px-Google_Drive_logo.png",
-        "color": "#DADADA",
-        "dimensions": {
-            "height": 150,
-            "width": 150
+        {
+            "name": "Google Drive",
+            "title": "No link to any car",
+            "description": "Google Drive is a file storage and synchronization service developed by Google. Launched on April 24, 2012, Google Drive allows users to store files on their servers, synchronize files across devices, and share files. In addition to a website, Google Drive offers apps with offline capabilities for Windows and macOS computers, and Android and iOS smartphones and tablets. Google Drive encompasses Google Docs, Google Sheets, and Google Slides, which are a part of an office suite that permits collaborative editing of documents, spreadsheets, presentations, drawings, forms, and more. Files created and edited through the office suite are saved in Google Drive.",
+            "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Google_Drive_logo.png/1200px-Google_Drive_logo.png",
+            "color": "#DADADA",
+            "dimensions": {
+                "height": 150,
+                "width": 150
+            },
+            "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
+            "scope": "https://www.googleapis.com/drive/v3 https://www.googleapis.com/appsactivity/v1",
+            "access_type": "offline"
         },
-        "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
-        "scope": "https://www.googleapis.com/drive/v3 https://www.googleapis.com/appsactivity/v1",
-        "access_type": "offline"
-    },
-    "spotify": {
-        "name": "Spotify",
-        "title": "Your Spotify thing",
-        "description": "Spotify Technology S.A. is an international media services provider. It is legally domiciled in Luxembourg and is headquartered in Stockholm, Sweden. Founded in 2006, the company's primary business is providing an audio streaming platform, the 'Spotify' platform, that provides DRM-protected music, videos and podcasts from record labels and media companies. As a freemium service, basic features are free with advertisements or automatic music videos, while additional features, such as offline listening and commercial-free listening, are offered via paid subscriptions. Launched on October 7, 2008, the Spotify platform provides access to over 50 million tracks. Users can browse by parameters such as artist, album, or genre, and can create, edit, and share playlists. Spotify is available in most of Europe and the Americas, Australia, New Zealand, and parts of Africa and Asia, and on most modern devices, including Windows, macOS, and Linux computers, and iOS, and Android smartphones and tablets. As of October 2019, the company had 248 million monthly active users, including 113 million paying subscribers. Unlike physical or download sales, which pay artists a fixed price per song or album sold, Spotify pays royalties based on the number of artist streams as a proportion of total songs streamed. It distributes approximately 70% of its total revenue to rights holders, who then pay artists based on their individual agreements. Spotify has faced criticism from artists and producers including Taylor Swift and Thom Yorke, who have argued that it does not fairly compensate musicians. In 2017, as part of its efforts to renegotiate license deals for an interest in going public, Spotify announced that artists would be able to make albums temporarily exclusive to paid subscribers if the albums are part of Universal Music Group or the Merlin Network.",
-        "uri": "https://upload.wikimedia.org/wikipedia/fr/6/60/Spotify_logo_sans_texte.png",
-        "color": "#000",
-        "dimensions": {
-            "height": 150,
-            "width": 150
+        {
+            "name": "Spotify",
+            "title": "Your Spotify thing",
+            "description": "Spotify Technology S.A. is an international media services provider. It is legally domiciled in Luxembourg and is headquartered in Stockholm, Sweden. Founded in 2006, the company's primary business is providing an audio streaming platform, the 'Spotify' platform, that provides DRM-protected music, videos and podcasts from record labels and media companies. As a freemium service, basic features are free with advertisements or automatic music videos, while additional features, such as offline listening and commercial-free listening, are offered via paid subscriptions. Launched on October 7, 2008, the Spotify platform provides access to over 50 million tracks. Users can browse by parameters such as artist, album, or genre, and can create, edit, and share playlists. Spotify is available in most of Europe and the Americas, Australia, New Zealand, and parts of Africa and Asia, and on most modern devices, including Windows, macOS, and Linux computers, and iOS, and Android smartphones and tablets. As of October 2019, the company had 248 million monthly active users, including 113 million paying subscribers. Unlike physical or download sales, which pay artists a fixed price per song or album sold, Spotify pays royalties based on the number of artist streams as a proportion of total songs streamed. It distributes approximately 70% of its total revenue to rights holders, who then pay artists based on their individual agreements. Spotify has faced criticism from artists and producers including Taylor Swift and Thom Yorke, who have argued that it does not fairly compensate musicians. In 2017, as part of its efforts to renegotiate license deals for an interest in going public, Spotify announced that artists would be able to make albums temporarily exclusive to paid subscribers if the albums are part of Universal Music Group or the Merlin Network.",
+            "uri": "https://upload.wikimedia.org/wikipedia/fr/6/60/Spotify_logo_sans_texte.png",
+            "color": "#000",
+            "dimensions": {
+                "height": 150,
+                "width": 150
+            },
+            "authorization_uri": "https://accounts.spotify.com/authorize",
+            "token_uri": "https://accounts.spotify.com/api/token",
+            "client_id": "cb207135ce6949cdbe6355a129b0ef47",
+            "scope": "user-read-email user-library-read",
+            "access_type": "offline"
         },
-        "authorization_uri": "https://accounts.spotify.com/authorize",
-        "token_uri": "https://accounts.spotify.com/api/token",
-        "client_id": "cb207135ce6949cdbe6355a129b0ef47",
-        "scope": "user-read-email user-library-read",
-        "access_type": "offline"
-    },
-    "pushbullet": {
-        "name": "Pushbullet",
-        "title": "He committed suicide with a bullet in the back",
-        "description": "Bringing together your devices, friends, and the things you care about.\nPushbullet is \"the app you never knew you needed\", according to CNET. Here's why:\n\nSTAY CONNECTED\n\t• Conveniently send and receive SMS messages from your computer (requires Android)\n\t• Reply to messages from many popular apps including WhatsApp, Kik, and Facebook Messenger (requires Android)\n\t• Easily share links and files between your devices, or with friends\n\nNEVER MISS A NOTIFICATION\n\t• See all of your phone's notifications on your computer, including phone calls (requires Android)\n\t• Dismiss a notification on your computer and it goes away on your phone too\n\t• Use Pushbullet Channels to subscribe to timely notifications about things you care about\n\nSAVE TIME\n\t• Text from your computer using your keyboard instead of grabbing your phone\n\t• The easiest way to get a link or file onto your phone to open or share\n\t• Deal with notifications on your computer as they arrive\n\n\"Pushbullet Is a Fantastic App Every Phone Should Have\" - Gizmodo\n\n\"TNW’s Apps of the Year: PushBullet for Android\" - TNW\n\n★ Secure: Protect your notifications and SMS with end-to-end encryption\n\n★ Used by millions of people and counting\n\n★ Translated into over a dozen languages by an awesome group of our own users",
-        "uri": "https://www.stickpng.com/assets/images/58481546cef1014c0b5e496a.png",
-        "color": "#fff",
-        "dimensions": {
-            "height": 150,
-            "width": 150
+        {
+            "name": "Pushbullet",
+            "title": "He committed suicide with a bullet in the back",
+            "description": "Bringing together your devices, friends, and the things you care about.\nPushbullet is \"the app you never knew you needed\", according to CNET. Here's why:\n\nSTAY CONNECTED\n\t• Conveniently send and receive SMS messages from your computer (requires Android)\n\t• Reply to messages from many popular apps including WhatsApp, Kik, and Facebook Messenger (requires Android)\n\t• Easily share links and files between your devices, or with friends\n\nNEVER MISS A NOTIFICATION\n\t• See all of your phone's notifications on your computer, including phone calls (requires Android)\n\t• Dismiss a notification on your computer and it goes away on your phone too\n\t• Use Pushbullet Channels to subscribe to timely notifications about things you care about\n\nSAVE TIME\n\t• Text from your computer using your keyboard instead of grabbing your phone\n\t• The easiest way to get a link or file onto your phone to open or share\n\t• Deal with notifications on your computer as they arrive\n\n\"Pushbullet Is a Fantastic App Every Phone Should Have\" - Gizmodo\n\n\"TNW’s Apps of the Year: PushBullet for Android\" - TNW\n\n★ Secure: Protect your notifications and SMS with end-to-end encryption\n\n★ Used by millions of people and counting\n\n★ Translated into over a dozen languages by an awesome group of our own users",
+            "uri": "https://www.stickpng.com/assets/images/58481546cef1014c0b5e496a.png",
+            "color": "#fff",
+            "dimensions": {
+                "height": 150,
+                "width": 150
+            },
+            "authorization_uri": "https://www.pushbullet.com/authorize",
+            "token_uri": "https://api.pushbullet.com/oauth2/token",
+            "client_id": "rbmkT1qHalwJSQb1SAKRBdv47yOPhyGh",
+            "scope": "user-read-email user-library-read",
+            "access_type": "offline"
         },
-        "authorization_uri": "https://www.pushbullet.com/authorize",
-        "token_uri": "https://api.pushbullet.com/oauth2/token",
-        "client_id": "rbmkT1qHalwJSQb1SAKRBdv47yOPhyGh",
-        "scope": "user-read-email user-library-read",
-        "access_type": "offline"
-    },
-    "github": {
-        "title": "my github",
-        "description": "spot",
-        "uri": "static/segfault.jpg",
-        "color": "",
-        "dimensions": {
-            "height": 300,
-            "width": 300
-        },
-        "authorization_uri": "https://github.com/login/oauth/authorize",
-        "token_uri": "https://github.com/login/oauth/access_token",
-        "client_id": "Iv1.0b5e75a77bda5688",
-        "scope": "repo notifications",
-        "access_type": "offline"
-    },
-    "Jarvis": {
-        "name": "jarvis",
-        "title": "JARVIS 4EVER",
-        "description": "blabla",
-        "uri": "http://wiki.marvel-world.com/images/thumb/8/83/J.A.R.V.I.S_Terre_199999_Portrait.jpg/300px-J.A.R.V.I.S_Terre_199999_Portrait.jpg",
-        "color": "white",
-        "dimensions": {
-            "height": 300,
-            "width": 300
+        {
+            "name": "Github",
+            "title": "my github",
+            "description": "spot",
+            "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png",
+            "color": "",
+            "dimensions": {
+                "height": 300,
+                "width": 300
+            },
+            "authorization_uri": "https://github.com/login/oauth/authorize",
+            "token_uri": "https://github.com/login/oauth/access_token",
+            "client_id": "Iv1.0b5e75a77bda5688",
+            "scope": "repo notifications",
+            "access_type": "offline"
         }
-    },
-    "Apricot": {
-        "name": "apricot",
-        "title": "Apricot",
-        "description": "Super fruit",
-        "uri": "",
-        "color": "rgb(22,110,251)",
-        "dimensions": {
-            "height": 100,
-            "width": 300
-        }
-    },
-    "Coronavirus": {
-        "name": "Coronavirus",
-        "title": "A refreshing virus",
-        "description": "blabla",
-        "uri": "https://img.aws.la-croix.com/2018/08/16/1200962173/bieres-Corona_0_729_505.jpg",
-        "color": "#fff",
-        "dimensions": {
-            "height": 300,
-            "width": 300
-        }
-    },
+    ],
     "endpoint_path": "/oauth2-endpoint"
 }
