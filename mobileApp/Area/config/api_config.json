@@ -1,17 +1,22 @@
 {
+    "config": {
+        "header": "http://",
+        "servAddr" : "192.168.9.10",
+        "port": "5005"
+    },
     "user": {
         "auth": {
-            "url": "http://192.168.8.111:5005/auth",
+            "url": "/auth",
             "method": "POST"
         },
         "register": {
-            "url": "http://192.168.8.111:5005/register",
+            "url": "/register",
             "method": "POST"
         }
     },
     "service": {
         "serviceList": {
-            "url": "http://192.168.8.111:5005/static/services.json",
+            "url": "/static/services.json",
             "method": "GET"
         }
     }
