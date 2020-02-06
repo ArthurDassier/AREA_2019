@@ -60,7 +60,7 @@
         "authorization_uri": "https://accounts.spotify.com/authorize",
         "token_uri": "https://accounts.spotify.com/api/token",
         "client_id": "cb207135ce6949cdbe6355a129b0ef47",
-        "scope": "user-read-email user-library-read",
+        "scope": "user-read-email user-library-read user-library-modify",
         "access_type": "offline"
     },
     "pushbullet": {

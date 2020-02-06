@@ -13,6 +13,8 @@ from werkzeug.security import safe_str_cmp
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests as grequests
+from services.spotify import *
+from services.pushbullet import *
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
@@ -270,6 +272,22 @@ def OAuth2():
             return OAuth2GetTokens(service_name, user_id, code)
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
 
+@app.route('/serviceskey', methods=['GET'])
+@jwt_required()
+def getServiceKey():
+    usr = current_identity
+    tokens = OAuthTokens.query.filter_by(user_id=usr.id).all()
+    print(tokens)
+    s = {}
+    list = "abcdef"
+    max = len(tokens)
+    i = 0
+    for letter in list:
+        if i < max:
+            s[letter] = tokens[i].serialize()
+            i += 1
+    return s
+
 @app.route('/services', methods=['GET'])
 @jwt_required()
 def getActiveServices():
@@ -286,6 +304,13 @@ def getActiveServices():
         if found != True:
             res[service] = False
     return (res)  
+
+@app.route('/test', methods=['GET'])
+def testRoute():
+    token = OAuthTokens.query.filter_by(service="pushbullet", user_id=1).first()
+    Pushbullet.sendSms("0695018164 0695057918", "by api", token.access_token)
+    return "ok"
+    # return spotify.getSavedTracks()
 
 @app.route('/protected')
 @jwt_required()
