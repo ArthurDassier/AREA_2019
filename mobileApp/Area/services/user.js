@@ -3,7 +3,8 @@ const API = require('../config/api_config.json');
 
 export function logIn(user) {
     const req = API.user.auth;
-    return fetch(req.url, {
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
         method: req.method,
         headers: {
             Accept: 'application/json',
@@ -14,12 +15,13 @@ export function logIn(user) {
             "password": user.password
         })
     }).then(response => response.json())
-        .catch(error => console.log('error:', error));
+        .catch(error => console.log('error on login:', error));
 }
 
 export function register(user) {
     const req = API.user.register;
-    return fetch(req.url, {
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
         method: req.method,
         headers: {
             Accept: 'application/json',
@@ -31,5 +33,5 @@ export function register(user) {
             "mail": user.mail
         })
     }).then(response => response.json())
-        .catch(error => console.log('error:', error));
+        .catch(error => console.log('error on register:', error));
 }

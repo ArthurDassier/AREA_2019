@@ -115,7 +115,6 @@ class User(db.Model):
     def __repr__(self):
         return '<Id %r Users %r Pass: %r GoogleId: %r>' % (self.id, self.username, self.password, self.google_id)
 
-
 def sha256(string):
     res = hashlib.sha256(string.encode()).hexdigest()
     return (res)
@@ -310,7 +309,6 @@ def OAuth2GetTokens(service_name, user_id, code):
     token.save()
     return {'status': 'success', 'message': service_name+' service successfuly added.'}
 
-
 @app.route('/oauth2-endpoint', methods=['GET'])
 def OAuth2():
     if ('state' in request.args and 'code' in request.args):
@@ -323,7 +321,6 @@ def OAuth2():
         if (service_name in SERVICES_NAMES):
             return OAuth2GetTokens(service_name, user_id, code)
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
-
 
 @app.route('/services', methods=['GET'])
 @jwt_required()
@@ -341,7 +338,6 @@ def getActiveServices():
         if found != True:
             res[service] = False
     return (res)  
-
 
 @app.route('/protected')
 @jwt_required()

@@ -80,9 +80,9 @@
         "access_type": "offline"
     },
     "github": {
-        "title": "my github",
+        "title": "Github",
         "description": "spot",
-        "uri": "static/segfault.jpg",
+        "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png",
         "color": "",
         "dimensions": {
             "height": 300,
@@ -93,39 +93,6 @@
         "client_id": "Iv1.0b5e75a77bda5688",
         "scope": "repo notifications",
         "access_type": "offline"
-    },
-    "Jarvis": {
-        "name": "jarvis",
-        "title": "JARVIS 4EVER",
-        "description": "blabla",
-        "uri": "http://wiki.marvel-world.com/images/thumb/8/83/J.A.R.V.I.S_Terre_199999_Portrait.jpg/300px-J.A.R.V.I.S_Terre_199999_Portrait.jpg",
-        "color": "white",
-        "dimensions": {
-            "height": 300,
-            "width": 300
-        }
-    },
-    "Apricot": {
-        "name": "apricot",
-        "title": "Apricot",
-        "description": "Super fruit",
-        "uri": "",
-        "color": "rgb(22,110,251)",
-        "dimensions": {
-            "height": 100,
-            "width": 300
-        }
-    },
-    "Coronavirus": {
-        "name": "Coronavirus",
-        "title": "A refreshing virus",
-        "description": "blabla",
-        "uri": "https://img.aws.la-croix.com/2018/08/16/1200962173/bieres-Corona_0_729_505.jpg",
-        "color": "#fff",
-        "dimensions": {
-            "height": 300,
-            "width": 300
-        }
     },
     "endpoint_path": "/oauth2-endpoint"
 }
