@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+psycopg2
+Flask-JWT
+flask-cors
+requests
+google-auth
