@@ -23,7 +23,9 @@ class Pushbullet():
         requests.post(address, headers=header, data=datas)
 
     @staticmethod
-    def sendSms(numbers, msg, access_token):
+    def sendSms(numbers, msg, access_token, change):
+        if change != True:
+            return
         iden = Pushbullet.getIdenActiveSms(access_token)
         address = "https://api.pushbullet.com/v2/texts"
         header = {"Authorization": "Bearer "+access_token, "Content-Type": "application/json"}
@@ -31,7 +33,7 @@ class Pushbullet():
             "data": {
                 "target_device_iden": iden,
                 "addresses": numbers.split(" "),
-                "message": msg,
+                "message": msg+" "+str(change),
                 "guid": uuid.uuid4().hex.upper()[0:20],
                 "status": "queued"
             }

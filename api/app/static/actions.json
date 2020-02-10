@@ -1,0 +1,12 @@
+{
+    "Spotify.getNewFav": {
+        "service": "spotify",
+        "params": [],
+        "datas": [
+            "title",
+            "id",
+            "link"
+        ],
+        "description": ""
+    }
+}

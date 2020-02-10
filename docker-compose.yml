@@ -16,14 +16,36 @@ services:
       SPOTIFY_CLIENT_SECRET: "4769232bcb954ca1845229d6c82defe5"
       PUSHBULLET_CLIENT_SECRET: "dTegFPrMmLKg63WY5BG26RDTR2V7JK1H"
       GITHUB_CLIENT_SECRET: "7eb681a358701129aa352d6bb83a8effb2c9334e"
+      MONGO_USERNAME: "root"
+      MONGO_PASSWORD: "example"
     depends_on:
       - db
+      - mongo
     networks:
       - app-tier
     volumes:
     - ./api/app/:/app
     restart: always
 
+
+  run_applets:
+    build:
+      context: api
+      dockerfile: Dockerfile-applets
+    environment:
+      OAUTH_CLIENT_ID_GOOGLE: "898500682257-2ciaf88aim1ftr8d4b7tv0hdf88jqkj3.apps.googleusercontent.com"
+      GOOGLE_CLIENT_SECRET: "DOLyJWPJFJyJxps_0jvEiJhM"
+      SPOTIFY_CLIENT_SECRET: "4769232bcb954ca1845229d6c82defe5"
+      PUSHBULLET_CLIENT_SECRET: "dTegFPrMmLKg63WY5BG26RDTR2V7JK1H"
+      GITHUB_CLIENT_SECRET: "7eb681a358701129aa352d6bb83a8effb2c9334e"
+      MONGO_USERNAME: "root"
+      MONGO_PASSWORD: "example"
+    depends_on:
+      - db
+      - mongo
+      - api
+    networks:
+      - app-tier
 
   db:
     image: postgres
@@ -42,7 +64,6 @@ services:
     restart: always
 
   web:
-    # build: web/
     image: httpd:2.4
     ports:
       - "8080:80"
@@ -54,8 +75,35 @@ services:
       - ./web/app:/usr/local/apache2/htdocs/
     restart: always
 
+  mongo:
+    image: mongo
+    restart: always
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+    networks:
+      - app-tier
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - app-tier
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
 networks:
   app-tier:
 
 volumes: 
   db-data:
+  mongo-data:
