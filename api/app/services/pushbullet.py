@@ -16,11 +16,12 @@ class Pushbullet():
         return None
 
     @staticmethod
-    def sendPush(title, body, access_token):
-        address = "https://api.pushbullet.com/v2/pushes"
-        header = {"Authorization": "Bearer "+access_token, "Content-Type": "application/json"}
-        datas = json.dumps({"title": title, "body": body, "type": "note"})
-        requests.post(address, headers=header, data=datas)
+    def sendPush(title, body, access_token, change):
+        if change:
+            address = "https://api.pushbullet.com/v2/pushes"
+            header = {"Authorization": "Bearer "+access_token, "Content-Type": "application/json"}
+            datas = json.dumps({"title": title, "body": body, "type": "note"})
+            requests.post(address, headers=header, data=datas)
 
     @staticmethod
     def sendSms(numbers, msg, access_token, change):

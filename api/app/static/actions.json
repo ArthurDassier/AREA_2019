@@ -7,6 +7,20 @@
             "id",
             "link"
         ],
-        "description": ""
+        "description": "Check if a new track is added to favorite."
+    },
+    "Spotify.getArtistNewRelease": {
+        "service": "spotify",
+        "params": [
+            "artist_name"
+        ],
+        "datas": [
+            "name",
+            "artist",
+            "release_date",
+            "total_tracks",
+            "link"
+        ],
+        "description": "Check if a new album of the artist is relese."
     }
 }

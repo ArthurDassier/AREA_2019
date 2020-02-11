@@ -132,7 +132,12 @@ def replaceInReaction(applet, resAction):
 def exec(mongo_client, applet):
     myFc = {
         "Spotify.getNewFav": Spotify.getNewFav,
-        "Pushbullet.sendSms": Pushbullet.sendSms
+        "Spotify.playSong": Spotify.playSong,
+        "Spotify.playNextSong": Spotify.playNextSong,
+        "Spotify.playPreviousSong": Spotify.playPreviousSong,
+        "Spotify.getArtistNewRelease": Spotify.getArtistNewRelease,
+        "Pushbullet.sendSms": Pushbullet.sendSms,
+        "Pushbullet.sendPush": Pushbullet.sendPush
     }
     
     action = session.query(OAuthTokens).filter_by(service=ACTIONS[applet['action']['name']]['service'], user_id=applet['user_id']).first()
