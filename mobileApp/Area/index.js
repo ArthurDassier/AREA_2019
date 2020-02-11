@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Feather';
 /*----Import Screens----*/
 import CreateAccount from './screens/CreateAccount';
 import Home from './screens/Home';
+import Profil from './screens/Profil';
 import Login from './screens/Login';
 import Service from './screens/Service';
 
@@ -76,7 +77,7 @@ const NotificationsStackNavigator = createStackNavigator(
 
 const ProfileStackNavigator = createStackNavigator(
     {
-        [config.profile]: Home
+        [config.profile]: Profil
     },
     {
         defaultNavigationOptions: ({ navigation }) =>
