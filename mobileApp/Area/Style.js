@@ -313,5 +313,69 @@ export const styles = StyleSheet.create({
     drawerHeaderImage: {
         height: 236,
         width: 300
+    },
+
+    //----------------------------------------------------//
+    //                      Profil                        //
+    //----------------------------------------------------//
+
+    optionContainer: {
+        flex: 1
+    },
+
+    profilContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        marginBottom: 30
+    },
+
+    profilPic: {
+        paddingTop: 10
+    },
+
+    profilUsername: {
+        paddingTop: 10
+    },
+
+    username: {
+        fontFamily: 'Comfortaa-Bold',
+        fontSize: 20,
+        lineHeight: 22.5,
+        textAlign: 'center',
+        marginLeft: 10
+    },
+
+    profilOption: {
+        fontFamily: 'Comfortaa-Light',
+        fontSize: 15,
+        lineHeight: 11.25,
+        marginLeft: 15,
+        marginBottom: 5,
+        paddingTop: 10
+    },
+
+    avatarEdit: {
+        fontFamily: 'Comfortaa-Bold',
+        textAlign: 'center',
+        color: 'blue',
+        lineHeight: 25,
+        textDecorationLine: 'underline'
+    },
+
+    profilEdit: {
+        fontFamily: 'Comfortaa-Bold',
+        position: 'absolute',
+        right: MAX_WIDTH - (MAX_WIDTH - 10),
+        color: 'blue',
+        lineHeight: 25,
+        textDecorationLine: 'underline'
+    },
+
+    profilInfo: {
+        fontFamily: 'Comfortaa-Bold',
+        fontSize: 15,
+        marginLeft: 25,
     }
+
 });
