@@ -1,6 +1,9 @@
 from pymongo import MongoClient
 from services.spotify import *
 from services.pushbullet import *
+from services.GoogleCalendar import *
+from services.github import *
+from services.GoogleYoutube import *
 import psycopg2
 import os
 import datetime
@@ -137,7 +140,11 @@ def exec(mongo_client, applet):
         "Spotify.playPreviousSong": Spotify.playPreviousSong,
         "Spotify.getArtistNewRelease": Spotify.getArtistNewRelease,
         "Pushbullet.sendSms": Pushbullet.sendSms,
-        "Pushbullet.sendPush": Pushbullet.sendPush
+        "Pushbullet.sendPush": Pushbullet.sendPush,
+        "GoogleCalendar.addEvent": GoogleCalendar.addEvent,
+        "Github.getNewIssue": Github.getNewIssue,
+        "Github.getNewPullRequest": Github.getNewPullRequest,
+        "GoogleYoutube.addVideoToPlaylist": GoogleYoutube.addVideoToPlaylist
     }
     
     action = session.query(OAuthTokens).filter_by(service=ACTIONS[applet['action']['name']]['service'], user_id=applet['user_id']).first()

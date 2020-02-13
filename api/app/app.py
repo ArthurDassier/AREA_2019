@@ -19,7 +19,6 @@ from pymongo import MongoClient
 from bson import Binary, Code
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from services.spotify import *
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
@@ -341,7 +340,6 @@ def getActiveServices():
         if found != True:
             res[service] = False
     return (res)  
-
 
 @app.route('/protected')
 @jwt_required()
