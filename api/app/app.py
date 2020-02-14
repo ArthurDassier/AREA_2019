@@ -19,12 +19,13 @@ from pymongo import MongoClient
 from bson import Binary, Code
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+from exec_applet import refreshAccessToken
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
 OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
-CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET']}
+CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET'], 'mastodon': os.environ['MASTODON_CLIENT_SECRET']}
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = JWT_SECRET_KEY
@@ -34,7 +35,7 @@ with open("static/services.json", "r") as fp:
     SERVICES = json.load(fp)
 db = SQLAlchemy(app)
 mongo_client = MongoClient('mongo', 27017, username=os.environ['MONGO_USERNAME'], password=os.environ['MONGO_PASSWORD'])
-SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github']
+SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github', 'mastodon']
 
 
 class OAuthTokens(db.Model):
@@ -340,6 +341,7 @@ def getActiveServices():
         if found != True:
             res[service] = False
     return (res)  
+    
 
 @app.route('/protected')
 @jwt_required()

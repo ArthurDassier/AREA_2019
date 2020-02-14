@@ -114,6 +114,8 @@ class Spotify():
         if len(artist_id) == 0:
             return {'name': None, 'artist': None, 'release_date': None, 'total_tracks': None, 'link': None, "change": False}
         new_album = Spotify.getNewAlbum(artist_id, access_token)
+        new_album['user_id'] = applet['user_id']
+        new_album['applet_id'] = applet['_id']
         collec = mongo_client.area.Spotify.getArtistNewRelease
         prev_album = collec.find_one({'user_id': applet['user_id'], 'applet_id': applet['_id']})
         if prev_album == None:

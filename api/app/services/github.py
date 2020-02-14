@@ -34,6 +34,8 @@ class Github():
     @staticmethod
     def getNewIssue(repo_url, applet=None, access_token=None, mongo_client=None):
         new_issues = Github.getIssue(repo_url, access_token)
+        new_issues['user_id'] = applet['user_id']
+        new_issues['applet_id'] = applet['_id']
         if new_issues['success'] == False:
             return {'title': '', 'body': '', 'link': '', 'change': False}
         collec = mongo_client.area.Github.getNewIssues
@@ -51,6 +53,8 @@ class Github():
     @staticmethod
     def getNewPullRequest(repo_url, applet=None, access_token=None, mongo_client=None):
         new_pr = Github.getPullRequest(repo_url, access_token)
+        new_pr['user_id'] = applet['user_id']
+        new_pr['applet_id'] = applet['_id']
         if new_pr['success'] == False:
             return {'title': '', 'body': '', 'link': '', 'change': False}
         collec = mongo_client.area.Github.getNewPullRequest

@@ -51,5 +51,35 @@
             "video_url"
         ],
         "description": "Add video to youtube playlist (video url format : 'https://www.youtube.com/watch?v=XXXXXXX' / playlist url format: 'https://www.youtube.com/playlist?list=XXXXXXX'"
+    },
+    "GoogleYoutube.commentVideo": {
+        "service": "google-youtube",
+        "params": [
+            "video_url",
+            "message"
+        ],
+        "description": "Comment a video (url format : 'https://www.youtube.com/watch?v=XXXXXXX')."
+    },
+    "GoogleYoutube.likeVideo": {
+        "service": "google-youtube",
+        "params": [
+            "video_url"
+        ],
+        "description": "Like a video (url format : 'https://www.youtube.com/watch?v=XXXXXXX')."
+    },
+    "GoogleDrive.uploadTextFile": {
+        "service": "google-drive",
+        "params": [
+            "name",
+            "text",
+            "description"
+        ]
+    },
+    "Mastodon.sendPouet": {
+        "service": "mastodon",
+        "params": [
+            "message",
+            "visibility"
+        ]
     }
 }
