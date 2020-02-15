@@ -19,6 +19,7 @@ from pymongo import MongoClient
 from bson import Binary, Code
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+import base64
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
@@ -318,7 +319,10 @@ def OAuth2():
         state = request.args.get('state').split(',')
         code = request.args.get('code')
         service_name = state[0]
-        user_id = int(state[1])
+        token = state[1]
+        first = token[token.find('.')+1:]
+        second = first[:first.find('.')]+"="
+        user_id = json.loads(base64.b64decode(second))['identity']
         if (service_name in SERVICES_NAMES):
             return OAuth2GetTokens(service_name, user_id, code)
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
@@ -339,7 +343,7 @@ def getActiveServices():
                 break
         if found != True:
             res[service] = False
-    return (res)  
+    return (res)
 
 
 @app.route('/protected')
