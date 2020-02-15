@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, make_response, g, jsonify
+from flask import Flask, render_template, request, make_response, g, jsonify, Response
 import os
 import socket
 import random
 import json
 import sys
 import datetime
+import time
 import requests
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
@@ -20,8 +21,10 @@ from bson import Binary, Code
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 import base64
+from get_ip import *
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
+SERVER_IP = get_ip_address()
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
 OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
@@ -33,6 +36,7 @@ app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
 cors = CORS(app, resources={"/*": {"origins": "*"}})
 with open("static/services.json", "r") as fp:
     SERVICES = json.load(fp)
+    fp.close()
 db = SQLAlchemy(app)
 mongo_client = MongoClient('mongo', 27017, username=os.environ['MONGO_USERNAME'], password=os.environ['MONGO_PASSWORD'])
 SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github', 'mastodon', 'outlook']
@@ -345,6 +349,15 @@ def getActiveServices():
             res[service] = False
     return (res)
 
+
+@app.route('/about.json', methods=['GET'])
+def about():
+    with open("static/about.json", "r") as fp:
+        datas = json.load(fp)
+        fp.close()
+    datas['client']['host'] = SERVER_IP
+    datas['server']['current_time'] = int(time.time())
+    return make_response(json.dumps(datas), 200, {'Content-Type':'application/json'})
 
 @app.route('/protected')
 @jwt_required()
