@@ -81,5 +81,13 @@
             "message",
             "visibility"
         ]
+    },
+    "Outlook.sendMail": {
+        "service": "outlook",
+        "params": [
+            "mail",
+            "subject",
+            "content"
+        ]
     }
 }

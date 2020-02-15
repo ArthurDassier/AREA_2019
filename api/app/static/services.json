@@ -109,5 +109,20 @@
         "scope": "read write follow",
         "access_type": "offline"
     },
+    "outlook": {
+        "title": "Outlook",
+        "description": "",
+        "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png",
+        "color": "",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        "token_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+        "client_id": "e93f2816-9f3a-4c85-a954-faa27865c18e",
+        "scope": "https://outlook.office.com/Mail.ReadWrite,https://outlook.office.com/Mail.Send",
+        "access_type": "offline"
+    },
     "endpoint_path": "/oauth2-endpoint"
 }

@@ -6,6 +6,7 @@ from services.github import *
 from services.GoogleYoutube import *
 from services.GoogleDrive import *
 from services.mastodon import *
+from services.outlook import *
 import psycopg2
 import os
 import datetime
@@ -17,8 +18,8 @@ from sqlalchemy import Table, Column, Integer, String, ForeignKey, create_engine
 from sqlalchemy.orm import relationship
 from bson.objectid import ObjectId
 
-CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET']}
-SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github']
+CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET'], 'mastodon': os.environ['MASTODON_CLIENT_SECRET'], 'outlook': os.environ['OUTLOOK_CLIENT_SECRET']}
+SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github', 'outlook']
 MONGO_USERNAME = os.environ['MONGO_USERNAME']
 MONGO_PASSWORD = os.environ['MONGO_PASSWORD']
 with open("static/services.json", "r") as fp:
@@ -150,7 +151,10 @@ def exec(mongo_client, applet):
         "GoogleYoutube.commentVideo": GoogleYoutube.commentVideo,
         "GoogleYoutube.likeVideo": GoogleYoutube.likeVideo,
         "GoogleDrive.uploadTextFile": GoogleDrive.uploadTextFile,
-        "Mastodon.sendPouet": Mastodon.sendPouet
+        "Mastodon.sendPouet": Mastodon.sendPouet,
+        "Mastodon.getNewHashtag": Mastodon.getNewHashtag,
+        "Mastodon.getNewPouetSubject": Mastodon.getNewPouetSubject,
+        "Outlook.sendMail": Outlook.sendMail
     }
     
     action = session.query(OAuthTokens).filter_by(service=ACTIONS[applet['action']['name']]['service'], user_id=applet['user_id']).first()
