@@ -2,7 +2,7 @@ import requests
 import json
 
 ADDRESS = "http://0.0.0.0"
-PORT = "5005"
+PORT = "8080"
 JWT_TOKEN = ""
 
 def registerAdmin():
