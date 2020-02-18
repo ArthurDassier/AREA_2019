@@ -28,7 +28,7 @@
         "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
         "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
-        "scope": "https://www.googleapis.com/auth/youtube",
+        "scope": "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl",
         "access_type": "offline"
     },
     "google-drive": {
@@ -81,7 +81,7 @@
     },
     "github": {
         "title": "Github",
-        "description": "spot",
+        "description": "GitHub is a US-based global company that provides hosting for software development version control using Git. It provides access control and several collaboration features such as bug tracking, feature requests, task management, and wikis for every project.",
         "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png",
         "color": "",
         "dimensions": {
@@ -92,6 +92,36 @@
         "token_uri": "https://github.com/login/oauth/access_token",
         "client_id": "Iv1.0b5e75a77bda5688",
         "scope": "repo notifications",
+        "access_type": "offline"
+    },
+    "mastodon": {
+        "title": "Mastodon",
+        "description": "Mastodon is a free and open-source self-hosted social networking service. It allows anyone to host their own server node in the network, and its various separately operated user bases are federated across many different servers. These servers are connected as a federated social network, allowing users from different servers to interact with each other seamlessly.",
+        "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png",
+        "color": "",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://mastodon.social/oauth/authorize",
+        "token_uri": "https://mastodon.social/oauth/token",
+        "client_id": "UdPS2HIkH0zdgJocvYmMLZ8SHaxSgWqppD_J4hdsoFs",
+        "scope": "read write follow",
+        "access_type": "offline"
+    },
+    "outlook": {
+        "title": "Outlook",
+        "description": "Microsoft Outlook is a personal information manager from Microsoft, available as a part of the Microsoft Office suite. Primarily an email application, it also includes a calendar, task manager, contact manager, note taking, journal, and web browsing.",
+        "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png",
+        "color": "",
+        "dimensions": {
+            "height": 300,
+            "width": 300
+        },
+        "authorization_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        "token_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+        "client_id": "e93f2816-9f3a-4c85-a954-faa27865c18e",
+        "scope": "https://outlook.office.com/Mail.ReadWrite,https://outlook.office.com/Mail.Send",
         "access_type": "offline"
     },
     "endpoint_path": "/oauth2-endpoint"

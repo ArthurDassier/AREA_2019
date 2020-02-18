@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, make_response, g, jsonify
+from flask import Flask, render_template, request, make_response, g, jsonify, Response
 import os
 import socket
 import random
 import json
 import sys
 import datetime
+import time
 import requests
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
@@ -19,12 +20,15 @@ from pymongo import MongoClient
 from bson import Binary, Code
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+import base64
+from get_ip import *
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
+SERVER_IP = get_ip_address()
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
 OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
-CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET']}
+CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET'], 'mastodon': os.environ['MASTODON_CLIENT_SECRET'], 'outlook': os.environ['OUTLOOK_CLIENT_SECRET']}
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = JWT_SECRET_KEY
@@ -32,9 +36,10 @@ app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
 cors = CORS(app, resources={"/*": {"origins": "*"}})
 with open("static/services.json", "r") as fp:
     SERVICES = json.load(fp)
+    fp.close()
 db = SQLAlchemy(app)
 mongo_client = MongoClient('mongo', 27017, username=os.environ['MONGO_USERNAME'], password=os.environ['MONGO_PASSWORD'])
-SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github']
+SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github', 'mastodon', 'outlook']
 
 
 class OAuthTokens(db.Model):
@@ -318,7 +323,10 @@ def OAuth2():
         state = request.args.get('state').split(',')
         code = request.args.get('code')
         service_name = state[0]
-        user_id = int(state[1])
+        token = state[1]
+        first = token[token.find('.')+1:]
+        second = first[:first.find('.')]+"="
+        user_id = json.loads(base64.b64decode(second))['identity']
         if (service_name in SERVICES_NAMES):
             return OAuth2GetTokens(service_name, user_id, code)
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
@@ -339,7 +347,17 @@ def getActiveServices():
                 break
         if found != True:
             res[service] = False
-    return (res)  
+    return (res)
+
+
+@app.route('/about.json', methods=['GET'])
+def about():
+    with open("static/about.json", "r") as fp:
+        datas = json.load(fp)
+        fp.close()
+    datas['client']['host'] = SERVER_IP
+    datas['server']['current_time'] = int(time.time())
+    return make_response(json.dumps(datas), 200, {'Content-Type':'application/json'})
 
 @app.route('/protected')
 @jwt_required()

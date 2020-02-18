@@ -7,7 +7,7 @@
             "id",
             "link"
         ],
-        "description": "Check if a new track is added to favorite."
+        "description": "Check if a new track has been added to your favorites."
     },
     "Spotify.getArtistNewRelease": {
         "service": "spotify",
@@ -21,7 +21,7 @@
             "total_tracks",
             "link"
         ],
-        "description": "Check if a new album of the artist is relese."
+        "description": "Check if a new album of an artist has been relesead."
     },
     "Github.getNewIssue": {
         "service": "github",
@@ -33,7 +33,7 @@
             "body",
             "link"
         ],
-        "description": "Check if a new issue was released on the repo."
+        "description": "Check if a new issue has been post on a repository."
     },
     "Github.getNewPullRequest": {
         "service": "github",
@@ -46,5 +46,26 @@
             "link"
         ],
         "description": "Check if a new pull request was released on the repo."
+    },
+    "Mastodon.getNewHashtag": {
+        "service": "mastodon",
+        "params": [
+            "hashtag"
+        ],
+        "datas": [
+            "username",
+            "link"
+        ],
+        "description": "Check is a new Pouet with an specific hashtag has been posted."
+    },
+    "Mastodon.getNewPouetSubject": {
+        "service": "mastodon",
+        "params": [
+            "query"
+        ],
+        "datas": [
+            "link"
+        ],
+        "description": "Check if a new pouet with a specific content has been posted."
     }
 }
