@@ -9,7 +9,7 @@ services:
       - "8080:5000"
     environment:
       FLASK_ENV: "development"
-      SERVER_ADDRESS: "http://localhost:5005"
+      SERVER_ADDRESS: "http://localhost:8080"
       JWT_SECRET_KEY: "y8pugPjzqjUQCF6Y2NdOk5PwKbZ7SsJi"
       OAUTH_CLIENT_ID_GOOGLE: "898500682257-2ciaf88aim1ftr8d4b7tv0hdf88jqkj3.apps.googleusercontent.com"
       GOOGLE_CLIENT_SECRET: "DOLyJWPJFJyJxps_0jvEiJhM"
@@ -46,6 +46,7 @@ services:
       - api
     networks:
       - app-tier
+    restart: always
 
   db:
     image: postgres

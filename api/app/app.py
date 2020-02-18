@@ -309,6 +309,7 @@ def OAuth2GetTokens(service_name, user_id, code):
     token.save()
     return {'status': 'success', 'message': service_name+' service successfuly added.'}
 
+
 @app.route('/oauth2-endpoint', methods=['GET'])
 def OAuth2():
     if ('state' in request.args and 'code' in request.args):
@@ -321,6 +322,7 @@ def OAuth2():
         if (service_name in SERVICES_NAMES):
             return OAuth2GetTokens(service_name, user_id, code)
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
+
 
 @app.route('/services', methods=['GET'])
 @jwt_required()

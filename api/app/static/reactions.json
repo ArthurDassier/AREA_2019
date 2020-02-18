@@ -5,6 +5,51 @@
             "numbers",
             "msg"
         ],
-        "description": ""
+        "description": "Send an SMS."
+    },
+    "Pushbullet.sendPush": {
+        "service": "pushbullet",
+        "params": [
+            "title",
+            "body"
+        ],
+        "description": "Send an SMS."
+    },
+    "Spotify.playSong": {
+        "service": "spotify",
+        "params": [
+            "track_name",
+            "track_id"
+        ],
+        "description": "Play a track on your active device."
+    },
+    "Spotify.playNextSong": {
+        "service": "spotify",
+        "params": [],
+        "description": "Play a next song on your active device."
+    },
+    "Spotify.playPreviousSong": {
+        "service": "spotify",
+        "params": [],
+        "description": "Play a previous song on your active device."
+    },
+    "GoogleCalendar.addEvent": {
+        "service": "google-calendar",
+        "params": [
+            "title",
+            "description",
+            "location",
+            "start",
+            "end"
+        ],
+        "description": "Add an event to your google calendar (date format : 'YYYY-MM-DD H:M:S')."
+    },
+    "GoogleYoutube.addVideoToPlaylist": {
+        "service": "google-youtube",
+        "params": [
+            "playlist_url",
+            "video_url"
+        ],
+        "description": "Add video to youtube playlist (video url format : 'https://www.youtube.com/watch?v=XXXXXXX' / playlist url format: 'https://www.youtube.com/playlist?list=XXXXXXX'"
     }
 }

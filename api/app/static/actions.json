@@ -7,6 +7,44 @@
             "id",
             "link"
         ],
-        "description": ""
+        "description": "Check if a new track is added to favorite."
+    },
+    "Spotify.getArtistNewRelease": {
+        "service": "spotify",
+        "params": [
+            "artist_name"
+        ],
+        "datas": [
+            "name",
+            "artist",
+            "release_date",
+            "total_tracks",
+            "link"
+        ],
+        "description": "Check if a new album of the artist is relese."
+    },
+    "Github.getNewIssue": {
+        "service": "github",
+        "params": [
+            "repo_url"
+        ],
+        "datas": [
+            "title",
+            "body",
+            "link"
+        ],
+        "description": "Check if a new issue was released on the repo."
+    },
+    "Github.getNewPullRequest": {
+        "service": "github",
+        "params": [
+            "repo_url"
+        ],
+        "datas": [
+            "title",
+            "body",
+            "link"
+        ],
+        "description": "Check if a new pull request was released on the repo."
     }
 }
