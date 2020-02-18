@@ -1,0 +1,10 @@
+{
+    "Pushbullet.sendSms": {
+        "service": "pushbullet",
+        "params": [
+            "numbers",
+            "msg"
+        ],
+        "description": ""
+    }
+}
