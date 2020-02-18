@@ -6,7 +6,13 @@ import MainPage from './MainPage/mainpage'
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { isUserLogged: false }
+    this.state = {
+      isUserLogged: false,
+      userData: {
+        accessToken: "",
+        username: ""
+      }
+    }
   }
 
   SetLogState = (value) => {
@@ -20,16 +26,19 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <MainPage UserData={this.state.UserData} SetLogState={this.SetLogState} />
+        <MainPage userData={this.state.userData} setLogState={this.SetLogState} />
       )
     }
   }
 
-  UserConnect = (data) => {
-    data = JSON.parse(data)
+  UserConnect = (accessToken, username) => {
+    this.setState({
+      userData: {
+        accessToken: accessToken,
+        username: username
+      }
+    })
     this.SetLogState(true)
-    // this.setState({ isUserLogged: !this.state.isUserLogged })
-    this.setState({ UserData: data })
   }
 
   render() {

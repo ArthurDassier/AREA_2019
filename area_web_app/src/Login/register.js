@@ -21,30 +21,32 @@ export default class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+    async handleSubmit(event) {
+        event.preventDefault();
 
-        var raw = JSON.stringify({ "username": this.state.username, "password": this.state.password, "mail": this.state.email });
-
-        var requestOptions = {
+        await fetch('http://localhost:5005/register', {
             method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("/register", requestOptions)
-            .then(response => {
-                if (response.ok) {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                mail: this.state.email
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
                     console.log("LE COMPTE A BIEN ÉTÉ CRÉÉ");
-                    ToastsStore.success("Registration complete !\nYou may now log in :)")
+                    ToastsStore.success("Registration complete !\nYou may now log in :)");
                 } else {
-                    console.log("ERREUR")
-                    ToastsStore.error("Registration failed...\nPlease try again later :/")
+                    console.log('ERREUR');
+                    if (res.message === 'This user already exist') {
+                        ToastsStore.error("This user already exists\nIf this is you, please log in!");
+                    } else {
+                        ToastsStore.error("Registration failed...\nPlease try again later :/");
+                    }
                 }
             })
-            .catch(error => console.log('error', error));
     }
 
     handleChange = (e) => {
