@@ -12,6 +12,11 @@ import {
 
 import { Avatar } from 'react-native-elements';
 
+/*----Import Services----*/
+import { getUserInfo, getUserServices } from '../services/user';
+
+/*----Import Utils----*/
+import { getAccessToken } from '../utils/common';
 
 /*----Import Styles----*/
 import { styles } from '../Style';
@@ -24,8 +29,31 @@ export default class Profil extends React.Component {
         super()
         this.state = {
             refreshing: false,
+            username: 'Bob le Bricoleur',
+            email: 'BobLeBircoleur@tfou.com',
+            avatar: 'https://m.media-amazon.com/images/M/MV5BNjRlYjgwMWMtNDFmMy00OWQ0LWFhMTMtNWE3MTU4ZjQ3MjgyXkEyXkFqcGdeQXVyNzU1NzE3NTg@._V1_CR0,45,480,270_AL_UX477_CR0,0,477,268_AL_.jpg',
+            services: [""]
         }
     }
+
+    componentDidMount = () => {
+        this._refreshProfil();
+    }
+
+    asyncCall = async () => {
+        let data = await getServicesList();
+        let goodData = this.goodDataFormat(data);
+
+        if (typeof goodData == 'undefined') {
+            this.arrayHolder = ER.errors;
+            this.setState({ data: ER.errors })
+        } else {
+            this.arrayHolder = goodData;
+            this.setState({ data: goodData });
+        }
+    }
+
+
 
     headerContainer = () => {
         return (
@@ -46,7 +74,7 @@ export default class Profil extends React.Component {
                 </View>
                 <View style={styles.profilUsername}>
                     <Text style={styles.username}>
-                        Bob le Bricoleur
+                        {this.state.username}
                     </Text>
                     <Text style={styles.avatarEdit}
                         onPress={() => console.log("Works!")}
@@ -66,7 +94,7 @@ export default class Profil extends React.Component {
                 </Text>
                 <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                     <Text style={styles.profilInfo}>
-                        BobLeBircoleur@tfou.com
+                        {this.state.email}
                 </Text>
                     <Text style={styles.profilEdit}
                         onPress={() => console.log("Works!")}>
@@ -97,14 +125,6 @@ export default class Profil extends React.Component {
     }
 
     servicesContainer = () => {
-        const services = [
-            { service: "Google" },
-            { service: "Spotify" },
-            { service: "Github" },
-            { service: "Youtube" },
-            { service: "PushBullet" },
-            { service: "Drive" },
-        ]
         return (
             <View>
                 <Text style={styles.profilOption}>
@@ -112,15 +132,15 @@ export default class Profil extends React.Component {
                 </Text>
                 <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                     <FlatList
-                        data={services}
+                        data={this.state.services}
                         renderItem={
                             ({ item }) =>
                                 <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                                     <Text style={styles.profilInfo}>
-                                        {item.service}
+                                        {item}
                                     </Text>
                                     <Text style={styles.profilEdit}
-                                        onPress={() => console.log("Disconnecting from " + item.service)}>
+                                        onPress={() => console.log("Disconnecting from " + item)}>
                                         Disconnecting
                                     </Text>
                                 </View>
@@ -134,7 +154,18 @@ export default class Profil extends React.Component {
     }
 
     _refreshProfil = async () => {
-        wait(2000).then(() => this.setState({refreshing: false}))
+        let info = await getUserInfo(getAccessToken());
+        let services = await getUserServices(getAccessToken());
+
+        this.setState({refreshing: false, username: info['username'], email: info['mail'], services: []});
+
+        Object.entries(services).forEach(([key, value]) => {
+            if (value == true) {
+               this.setState({
+                   services: [...this.state.services, key]
+               });
+            }
+        });
     }
 
     render() {

@@ -17,6 +17,15 @@ export default class Card extends Component {
         this.state = {}
     }
 
+    _redirect = () => {
+        let isCo = this.props.connectedServices.find(element => element == this.props.item["id"]);
+        if (isCo == "undefined") {
+            this.props.navigation.navigate('Service', { item: this.props.item });
+        } else {
+            this.props.navigation.navigate('Applet', { item: this.props.item });
+        }
+    }
+
     render() {
         const { navigation, item } = this.props;
 
@@ -25,7 +34,7 @@ export default class Card extends Component {
                 style={[styles.cardContainer, {
                     backgroundColor: item.color
                 }]}
-                onPress={() => navigation.navigate('Service', { item: item })}
+                onPress={this._redirect}
             >
                 {item.uri ? (
                     <View>

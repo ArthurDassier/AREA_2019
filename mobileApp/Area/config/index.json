@@ -1,6 +1,8 @@
 {
     "home": "Discover",
+    "loginService": "LoginService",
     "notifications": "Notifications",
     "profile": "Profile",
-    "service": "Service"
+    "service": "Service",
+    "applet": "Applet"
 }

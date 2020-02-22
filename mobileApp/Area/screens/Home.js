@@ -12,6 +12,10 @@ import Card from '../components/Card';
 
 /*----Import Services----*/
 import { getServicesList } from '../services/services';
+import { getUserServices } from '../services/user';
+
+/*----Import Utils----*/
+import { getAccessToken } from '../utils/common';
 
 /*----Import Styles----*/
 import { styles } from '../Style';
@@ -25,7 +29,8 @@ export default class Home extends React.Component {
 
         this.state = {
             data: [],
-            search: ''
+            search: '',
+            services: []
         };
         this.arrayHolder = [];
     }
@@ -36,19 +41,47 @@ export default class Home extends React.Component {
 
     asyncCall = async () => {
         let data = await getServicesList();
-        if (typeof data == 'undefined') {
+        let services = await getUserServices(getAccessToken());
+        let goodData = this.goodDataFormat(data);
+
+        if (typeof goodData == 'undefined') {
             this.arrayHolder = ER.errors;
-            this.setState({data: ER.errors})
+            this.setState({ data: ER.errors })
         } else {
-            this.arrayHolder = data.services;
-            this.setState({ data: data.services });
+            this.arrayHolder = goodData;
+            this.setState({ data: goodData });
         }
+
+        Object.entries(services).forEach(([key, value]) => {
+            if (value == true) {
+               this.setState({
+                   services: [...this.state.services, key]
+               });
+            }
+        });
+    }
+
+    goodDataFormat = (object) => {
+        let goodData = []
+        let card = {}
+
+        Object.entries(object).forEach(([key, value]) => {
+            if (key != "endpoint_path") {
+               card = value;
+               card = {
+                   ...card,
+                   ["id"]: key
+               }
+        }
+            goodData.push(card)
+        });
+        return goodData;
     }
 
     searchFilter = (search) => {
         const data = this.arrayHolder.filter(item => {
             const itemData = `${item.title.toUpperCase()}
-                ${item.name.toUpperCase()}
+                ${item.id.toUpperCase()}
                 ${item.description.toUpperCase()}`;
             const textData = search.toUpperCase();
             return itemData.indexOf(textData) > -1;
@@ -58,6 +91,7 @@ export default class Home extends React.Component {
 
     clearSearch = () => {
         this.setState({ search: '' });
+        this.searchFilter('');
     }
 
     RenderSearchIcon = () => (
@@ -116,6 +150,7 @@ export default class Home extends React.Component {
     RenderFlatListItem = ({ item }) => (
         <Card
             item={item}
+            connectedServices={this.state.services}
             navigation={this.props.navigation}
         />
     );
@@ -130,7 +165,7 @@ export default class Home extends React.Component {
                     keyExtractor={(item, index) => index.toString()}
                     ListHeaderComponent={this.RenderFlatListStickyHeader}
                     ListFooterComponent={this.RenderFlatListFooter}
-                    // stickyHeaderIndices={[0]}
+                // stickyHeaderIndices={[0]}
                 />
             </View>
         );

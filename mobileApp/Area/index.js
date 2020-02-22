@@ -14,6 +14,8 @@ import Home from './screens/Home';
 import Profil from './screens/Profil';
 import Login from './screens/Login';
 import Service from './screens/Service';
+import LoginService from './screens/LoginService';
+import Applet from './screens/Applet';
 
 /*----Import Components----*/
 import Drawer from './components/Drawer';
@@ -55,7 +57,9 @@ const headerNavigation = ({ navigation }) => {
 const HomeStackNavigator = createStackNavigator(
     {
         [config.home]: Home,
-        [config.service]: Service
+        [config.service]: Service,
+        [config.loginService]: LoginService,
+        [config.applet]: Applet
     },
     {
         defaultNavigationOptions: ({ navigation }) => 
