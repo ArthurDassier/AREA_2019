@@ -53,7 +53,7 @@ export default class Home extends React.Component {
         }
 
         Object.entries(services).forEach(([key, value]) => {
-            if (value == false) {
+            if (value == true) {
                this.setState({
                    services: [...this.state.services, key]
                });

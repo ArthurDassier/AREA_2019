@@ -160,7 +160,7 @@ export default class Profil extends React.Component {
         this.setState({refreshing: false, username: info['username'], email: info['mail'], services: []});
 
         Object.entries(services).forEach(([key, value]) => {
-            if (value == false) {
+            if (value == true) {
                this.setState({
                    services: [...this.state.services, key]
                });
