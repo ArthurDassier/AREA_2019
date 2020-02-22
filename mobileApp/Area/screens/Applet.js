@@ -6,14 +6,15 @@ import {
     FlatList
 } from 'react-native';
 
+/*----Import Components----*/
+import AppletCard from '../components/AppletCard';
+import Trigger from '../components/Trigger';
+
 /*----Import Utils----*/
 import { getAccessToken } from '../utils/common';
 
 /*----Import Styles----*/
 import { styles } from '../Style';
-
-/*----Import COmponents----*/
-import Trigger from '../components/Trigger';
 
 export default class Applet extends React.Component {
     static navigationOptions = {
@@ -25,18 +26,18 @@ export default class Applet extends React.Component {
 
         this.state = {
             data: [
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"},
-                {description: "Add to Google Calendar facebooke registered event"}
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"},
+                { title: "Facebook event", description: "Add to Google Calendar facebooke registered event"}
             ],
         };
         this.arrayHolder = [];
@@ -54,15 +55,15 @@ export default class Applet extends React.Component {
         const { search } = this.state;
 
         return (
-            <View style={styles.flatListHeader}>
-                <Text style={styles.flatListHeaderTitle}>Explore</Text>
+            <View style={styles.appletFlatListHeader}>
+                <Text style={styles.flatListHeaderTitle}>Choose trigger</Text>
             </View>
         );
     }
 
 
     RenderFlatListItem = ({ item }) => (
-        <Trigger
+        <AppletCard
             item={item}
             navigation={this.props.navigation}
         />
