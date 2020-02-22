@@ -1,7 +1,7 @@
 import requests
 import json
 
-ADDRESS = "http://jarvis-app.fr"
+ADDRESS = "http://0.0.0.0"
 PORT = "8090"
 JWT_TOKEN = ""
 
