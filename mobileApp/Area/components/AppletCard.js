@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import {
     Text,
+    TouchableOpacity,
     View
 } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 /*----Import Styles----*/
 import { styles } from '../Style';
@@ -23,7 +23,7 @@ export default class AppletCard extends Component {
         const { item } = this.props;
 
         return (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
                 style={styles.cardContainer}
                 onPress={this._redirect}
             >
@@ -35,7 +35,7 @@ export default class AppletCard extends Component {
                         {item.description}
                     </Text>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     }
 };
