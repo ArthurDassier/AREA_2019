@@ -1,7 +1,7 @@
 {
     "config": {
         "header": "http://",
-        "servAddr" : "192.168.9.10",
+        "servAddr" : "192.168.1.63",
         "port": "8080"
     },
     "user": {
@@ -12,6 +12,14 @@
         "register": {
             "url": "/register",
             "method": "POST"
+        },
+        "userInfo": {
+            "url": "/user",
+            "method": "GET"
+        },
+        "userServices": {
+            "url": "/services",
+            "method": "GET"
         }
     },
     "service": {

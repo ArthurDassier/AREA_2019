@@ -283,7 +283,7 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         lineHeight: 22.5,
         marginBottom: 30,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
     //----------------------------------------------------//
