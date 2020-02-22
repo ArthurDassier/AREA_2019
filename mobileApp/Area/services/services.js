@@ -26,4 +26,6 @@ export function getRightUrlToLog(access_token, serviceData)
     const state = '&' + 'state=' + serviceData["id"] + ',' + access_token;
 
     const url = serviceData["authorization_uri"] + client_id + redirect_url + response_type + scope + access_type + state;
+    console.log(url);
+    return url;
 }
