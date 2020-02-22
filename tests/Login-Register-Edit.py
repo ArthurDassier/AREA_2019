@@ -1,8 +1,8 @@
 import requests
 import json
 
-ADDRESS = "http://0.0.0.0"
-PORT = "8080"
+ADDRESS = "http://jarvis-app.fr"
+PORT = "8090"
 JWT_TOKEN = ""
 
 def registerAdmin():
