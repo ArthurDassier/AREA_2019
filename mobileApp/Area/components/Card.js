@@ -18,7 +18,7 @@ export default class Card extends Component {
 
     _redirect = () => {
         let isCo = this.props.connectedServices.find(element => element == this.props.item["id"]);
-        if (isCo == "undefined") {
+        if (isCo == undefined) {
             this.props.navigation.navigate('Service', { item: this.props.item });
         } else {
             this.props.navigation.navigate('Applet', { item: this.props.item });
