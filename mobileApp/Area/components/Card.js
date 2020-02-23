@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import {
     Image,
-    ImageBackground,
     Text,
     View
 } from 'react-native';
