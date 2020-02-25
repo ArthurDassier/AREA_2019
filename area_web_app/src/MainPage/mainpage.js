@@ -8,9 +8,7 @@ export default class MainPage extends React.Component {
 
     render() {
         return (
-            <div className="main-content">
-                <p>Welcome back, {this.state.userData.username} !</p>
-            </div>
+            <p>Welcome back, {this.state.userData.username} !</p>
         )
     }
 }

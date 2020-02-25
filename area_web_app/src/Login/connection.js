@@ -37,15 +37,13 @@ export default class Connect extends React.Component {
             );
 
         return (
-            <div className="main-content">
-                <Card className="blurred-card">
-                    <Typography component="h1" variant="h4" style={{ "marginTop": "20px", "marginBottom": "20px" }}>
-                        {formTitle}
-                    </Typography>
-                    {this.display()}
-                    {button}
-                </Card>
-            </div>
+            <Card className="blurred-card">
+                <Typography component="h1" variant="h4" style={{ "marginTop": "20px", "marginBottom": "20px" }}>
+                    {formTitle}
+                </Typography>
+                {this.display()}
+                {button}
+            </Card>
         )
     }
 }
