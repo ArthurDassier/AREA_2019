@@ -35,3 +35,33 @@ export function register(user) {
     }).then(response => response.json())
         .catch(error => console.log('error on register:', error));
 }
+
+export function getUserInfo(access_token) {
+    const req = API.user.userInfo;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'JWT ' + access_token
+        }
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on getting user info:', error));
+}
+
+export function getUserServices(access_token) {
+    const req = API.user.userServices;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'JWT ' + access_token
+        }
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on getting user services:', error));
+}

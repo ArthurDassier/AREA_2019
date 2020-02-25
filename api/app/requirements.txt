@@ -5,3 +5,4 @@ Flask-JWT
 flask-cors
 requests
 google-auth
+pymongo==3.10.1

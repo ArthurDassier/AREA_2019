@@ -15,7 +15,10 @@ import { styles } from '../Style';
 export default class Service extends Component {
 
     connectService = () => {
-
+        const { item } = this.props.navigation.state.params;
+        this.props.navigation.navigate('LoginService', {
+            serviceData: item
+        })
     }
 
     renderBackgroundImage = () => {

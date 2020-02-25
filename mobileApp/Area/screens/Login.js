@@ -14,6 +14,9 @@ import { Icon } from 'react-native-elements';
 /*----Import Services----*/
 import { logIn } from '../services/user';
 
+/*----Import Utils----*/
+import { setAccessToken } from '../utils/common';
+
 /*----Import Styles----*/
 import { styles } from "../Style"
 
@@ -57,6 +60,7 @@ export default class Login extends React.Component {
     _checkFetch = (data) => {
         if (data.access_token) {
             this.setState({ badCredentials: false })
+            setAccessToken(data.access_token);
             this.props.navigation.navigate('Area', {
                 accessToken: data.access_token
             })

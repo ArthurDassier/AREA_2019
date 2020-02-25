@@ -1,0 +1,9 @@
+FROM python
+
+WORKDIR app
+ADD app .
+
+ADD app/requirements.txt .
+RUN pip install -r requirements.txt
+
+CMD python exec_applet.py
