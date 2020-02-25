@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import Header from './header'
-import Connect from './Login/connection'
-import MainPage from './MainPage/mainpage'
+import Connect from '../Login/connection'
+import MainPage from '../MainPage/mainpage'
 
 export default class App extends React.Component {
   constructor(props) {
