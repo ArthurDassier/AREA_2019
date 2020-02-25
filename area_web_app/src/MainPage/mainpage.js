@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 
 export default class MainPage extends React.Component {
     constructor(props) {

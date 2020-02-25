@@ -10,6 +10,8 @@ import {
     ToastsContainerPosition
 } from 'react-toasts';
 
+const Config = require('../app.config.json');
+
 export default class Register extends React.Component {
     constructor(props) {
         super(props)
@@ -25,7 +27,7 @@ export default class Register extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
 
-        await fetch('http://localhost:5005/register', {
+        await fetch(Config.apiEndpointUrl + '/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

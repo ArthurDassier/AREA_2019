@@ -10,6 +10,8 @@ import {
     ToastsContainerPosition
 } from 'react-toasts';
 
+const Config = require('../app.config.json');
+
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -24,7 +26,7 @@ export default class Login extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
 
-        await fetch('http://localhost:5005/auth', {
+        await fetch(Config.apiEndpointUrl + '/auth', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
