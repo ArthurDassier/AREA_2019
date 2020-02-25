@@ -10,7 +10,7 @@ import {
     ToastsContainerPosition
 } from 'react-toasts';
 
-const Config = require('../app.config.json');
+const Config = require('../App/app.config.json');
 
 export default class Register extends React.Component {
     constructor(props) {
