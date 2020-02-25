@@ -1,12 +1,19 @@
 import React from 'react';
 import './App.css';
+import Header from './header'
 import Connect from './Login/connection'
 import MainPage from './MainPage/mainpage'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { isUserLogged: false }
+    this.state = {
+      isUserLogged: false,
+      userData: {
+        accessToken: "",
+        username: ""
+      }
+    }
   }
 
   SetLogState = (value) => {
@@ -20,28 +27,27 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <MainPage UserData={this.state.UserData} SetLogState={this.SetLogState} />
+        <MainPage userData={this.state.userData} />
       )
     }
   }
 
-  UserConnect = (data) => {
-    data = JSON.parse(data)
+  UserConnect = (accessToken, username) => {
+    this.setState({
+      userData: {
+        accessToken: accessToken,
+        username: username
+      }
+    })
     this.SetLogState(true)
-    // this.setState({ isUserLogged: !this.state.isUserLogged })
-    this.setState({ UserData: data })
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src="area-logo.png" alt="area logo" />
-        </header>
+        <Header isUserLogged={this.state.isUserLogged} setLogState={this.SetLogState} />
         <div className="App-container">
-          <div className="main-content">
-            {this.CheckLog()}
-          </div>
+          {this.CheckLog()}
         </div>
       </div >
     )
