@@ -1,0 +1,132 @@
+{
+    "client": {
+        "host": ""
+    },
+    "server": {
+        "current_time": 0,
+        "services": [
+            {
+                "name": "Google Calendar",
+                "actions": [],
+                "reactions": [
+                    {
+                        "name": "addEvent",
+                        "description": "Add an event to your google calendar (date format : 'YYYY-MM-DD H:M:S')."
+                    }
+                ]
+            },
+            {
+                "name": "Youtube",
+                "actions": [],
+                "reactions": [
+                    {
+                        "name": "addVideoToPlaylist",
+                        "description": "Add video to one of yours youtube playlists."
+                    },
+                    {
+                        "name": "commentVideo",
+                        "description": "Comment a video."
+                    },
+                    {
+                        "name": "likeVideo",
+                        "description": "Like a video."
+                    }
+                ]
+            },
+            {
+                "name": "Google Drive",
+                "actions": [],
+                "reactions": [
+                    {
+                        "name": "uploadTextFile",
+                        "description": "Create and fill a text file in your drive."
+                    }
+                ]
+            },
+            {
+                "name": "Spotify",
+                "actions": [
+                    {
+                        "name": "getNewFav",
+                        "description": "Check if a new track has been added to your favorites."
+                    },
+                    {
+                        "name": "getArtistNewRelease",
+                        "description": "Check if a new album of an artist has been relesead."
+                    }
+                ],
+                "reactions": [
+                    {
+                        "name": "playSong",
+                        "description": "Play a track on your active device."
+                    },
+                    {
+                        "name": "playNextSong",
+                        "description": "Plays the following music on your active device"
+                    },
+                    {
+                        "name": "playPreviousSong",
+                        "description": "Plays the previous music on your active device"
+                    }
+                ]
+            },
+            {
+                "name": "Pushbullet",
+                "actions": [],
+                "reactions": [
+                    {
+                        "name": "sendSms",
+                        "description": "Send an SMS."
+                    },
+                    {
+                        "name": "sendPush",
+                        "description": "Send a push notification."
+                    }
+                ]
+            },
+            {
+                "name": "Github",
+                "actions": [
+                    {
+                        "name": "getNewIssue",
+                        "description": "Check if a new issue has been post on a repository."
+                    },
+                    {
+                        "name": "getNewPullRequest",
+                        "description": "Check if a new pull request has been asked on a repository."
+                    }
+                ],
+                "reactions": []
+            },
+            {
+                "name": "Mastodon",
+                "actions": [
+                    {
+                        "name": "getNewHashtag",
+                        "description": "Check is a new Pouet with an specific hashtag has been posted."
+                    },
+                    {
+                        "name": "getNewPouetSubject",
+                        "description": "Check if a new pouet with a specific content has been posted."
+                    }
+                ],
+                "reactions": [
+                    {
+                        "name": "sendPouet",
+                        "description": "Post a Pouet."
+                    }
+                ]
+            },
+            {
+                "name": "Outlook",
+                "actions": [],
+                "reactions": [
+                    {
+                        "name": "sendMail",
+                        "description": "Send an email."
+                    }
+                ]
+            }
+        ]
+    }
+}

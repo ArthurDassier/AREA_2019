@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, make_response, g, jsonify
+from flask import Flask, render_template, request, make_response, g, jsonify, Response
 import os
 import socket
 import random
 import json
 import sys
 import datetime
+import time
 import requests
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
@@ -13,12 +14,21 @@ from werkzeug.security import safe_str_cmp
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests as grequests
+from services.spotify import *
+from services.pushbullet import *
+from pymongo import MongoClient
+from bson import Binary, Code
+from bson.json_util import dumps
+from bson.objectid import ObjectId
+import base64
+from get_ip import *
 
 SERVER_ADDRESS = os.environ['SERVER_ADDRESS']
+SERVER_IP = get_ip_address()
 JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 DATABASE_URI = 'postgres+psycopg2://postgres:password@db:5432/area'
 OAUTH_CLIENT_ID_GOOGLE = os.environ['OAUTH_CLIENT_ID_GOOGLE']
-CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET']}
+CLIENTS_SECRET = {'google': os.environ['GOOGLE_CLIENT_SECRET'], 'spotify': os.environ['SPOTIFY_CLIENT_SECRET'], 'pushbullet': os.environ['PUSHBULLET_CLIENT_SECRET'], 'github': os.environ['GITHUB_CLIENT_SECRET'], 'mastodon': os.environ['MASTODON_CLIENT_SECRET'], 'outlook': os.environ['OUTLOOK_CLIENT_SECRET']}
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = JWT_SECRET_KEY
@@ -26,8 +36,10 @@ app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
 cors = CORS(app, resources={"/*": {"origins": "*"}})
 with open("static/services.json", "r") as fp:
     SERVICES = json.load(fp)
+    fp.close()
 db = SQLAlchemy(app)
-SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github']
+mongo_client = MongoClient('mongo', 27017, username=os.environ['MONGO_USERNAME'], password=os.environ['MONGO_PASSWORD'])
+SERVICES_NAMES = ['google-calendar', 'google-youtube', 'google-drive', 'spotify', 'pushbullet', 'github', 'mastodon', 'outlook']
 
 
 class OAuthTokens(db.Model):
@@ -112,6 +124,7 @@ def sha256(string):
     res = hashlib.sha256(string.encode()).hexdigest()
     return (res)
 
+
 def authenticate(username, password):
     if (username == "google_token"):
         data = verify_google_token(password)
@@ -124,9 +137,11 @@ def authenticate(username, password):
         if user and user.verify_hash(password):
             return user
 
+
 def identity(payload):
     user_id = payload['identity']
     return User.query.filter_by(id=user_id).first()
+
 
 def verify_google_token(token):
     try:
@@ -137,14 +152,18 @@ def verify_google_token(token):
     except ValueError:
         return None
 
+
 jwt = JWT(app, authenticate, identity)
+
 
 db.create_all()
 db.session.commit()
 
+
 @app.route("/", methods=['POST', 'GET'])
 def home():
     return {'status': 'success', 'message': 'Welcome on Dashboard API.'}
+
 
 @app.route("/register", methods=['POST'])
 def register():
@@ -167,6 +186,7 @@ def register():
             new_user.save()
             return {'status': 'success', 'message': 'Register Success'}
     return {'status': 'error', 'message': 'This user already exist'}, 409
+
 
 @app.route('/user', defaults={'id': -1}, methods=['GET', 'PUT', 'DELETE'])
 @app.route('/user/<int:id>', methods=['DELETE'])
@@ -195,6 +215,7 @@ def user(id):
         return {'status': 'error', 'message': "This user doesn't exist"}, 404
     return {'status': 'error', 'message': 'Bad parameters'}, 400
 
+
 @app.route('/users', methods=['GET'])
 @jwt_required()
 def list_users():
@@ -204,6 +225,57 @@ def list_users():
     res = [user.serialize() for user in User.query.all()]
     return {'status': 'success', 'datas': res}
 
+
+@app.route('/applets', methods=['GET', 'POST'])
+@jwt_required()
+def applets():
+    usr = current_identity
+    collec = mongo_client.area.applets
+    if request.method == 'POST':
+        datas = request.get_json(force=True)
+        datas['user_id'] = usr.id
+        collec.insert_one(datas).inserted_id
+        return {"status": "success", "message": "Applet "+datas['name']+" successfully added."}
+    if request.method == 'GET':
+        applets = collec.find({'user_id': usr.id})
+        p = [dumps(applet) for applet in applets]
+        return {"status": "success", "datas": p}
+
+
+@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'DELETE', 'PATCH'])
+@jwt_required()
+def appletUpdate(id, status=None):
+    usr = current_identity
+    collec = mongo_client.area.applets
+    if len(id) != 24:
+        return {'status': 'error', 'message': 'Invalid applet id (too short).'}
+    if request.method == 'DELETE':
+        collec.delete_one({'user_id': usr.id, '_id': ObjectId(id)})
+        return {'status': 'success', 'message': 'Applet successfully deleted.'}
+    if request.method == 'GET':
+        applet = collec.find_one({'user_id': usr.id, '_id': ObjectId(id)})
+        if applet:
+            return {'status': 'success', 'datas': dumps(applet)}
+    if request.method == 'PUT':
+        datas = {'$set': request.get_json(force=True)}
+        collec.update_one({'user_id': usr.id, '_id': ObjectId(id)}, datas)
+        return {'satus': 'success', 'message': "Applet "+id+" successfully updated."}
+    if request.method == 'PATCH':
+        status_res = ""
+        datas = None
+        if status:
+            if status == "enable":
+                datas = {'$set': {'enable': True}}
+                status_res = "enabled"
+            elif status == "disable":
+                datas = {'$set': {'enable': False}}
+                status_res = "disabled"
+            if datas:
+                collec.update_one({'user_id': usr.id, '_id': ObjectId(id)}, datas)
+                return {'status': 'success', 'message': "Applet successfully "+status_res+"."}
+        return {'status': 'error', 'message': "Status parameter is missing or incorrect ('enable' or 'disable')"}
+
+
 # Return client secret of a service. But if this service
 # is an under service like google calendar for google service
 # it return the client secret from google
@@ -212,21 +284,6 @@ def getClientSecret(service_name):
         return CLIENTS_SECRET[service_name[:service_name.index('-')]]
     return CLIENTS_SECRET[service_name]    
 
-def refreshAccessToken(service_name, user_id):
-    token = OAuthTokens.query.filter_by(service=service_name, user_id=user_id).first()
-    if token != None:
-        header = {"content-type": "application/x-www-form-urlencoded"}
-        data = {
-            'client_id': SERVICES[service_name]['client_id'],
-            'client_secret': getClientSecret(service_name),
-            'refresh_token': OAuthTokens.query.filter_by(service=service_name, user_id=user_id).first().refresh_token,
-            'grant_type': 'refresh_token'
-        }
-        r = requests.post(SERVICES[service_name]['token_uri'], data=data, headers=header)
-        a = json.loads(r.text)
-        token.access_token = a['access_token']
-        token.refresh_time = int(datetime.datetime.now().timestamp())
-        token.save()
 
 def OAuth2GetTokens(service_name, user_id, code):
     header = {"content-type": "application/x-www-form-urlencoded", "Accept": "application/json"}
@@ -257,6 +314,7 @@ def OAuth2GetTokens(service_name, user_id, code):
     token.save()
     return {'status': 'success', 'message': service_name+' service successfuly added.'}
 
+
 @app.route('/oauth2-endpoint', methods=['GET'])
 def OAuth2():
     if ('state' in request.args and 'code' in request.args):
@@ -265,10 +323,14 @@ def OAuth2():
         state = request.args.get('state').split(',')
         code = request.args.get('code')
         service_name = state[0]
-        user_id = int(state[1])
+        token = state[1]
+        first = token[token.find('.')+1:]
+        second = first[:first.find('.')]+"="
+        user_id = json.loads(base64.b64decode(second))['identity']
         if (service_name in SERVICES_NAMES):
             return OAuth2GetTokens(service_name, user_id, code)
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
+
 
 @app.route('/services', methods=['GET'])
 @jwt_required()
@@ -285,7 +347,17 @@ def getActiveServices():
                 break
         if found != True:
             res[service] = False
-    return (res)  
+    return (res)
+
+
+@app.route('/about.json', methods=['GET'])
+def about():
+    with open("static/about.json", "r") as fp:
+        datas = json.load(fp)
+        fp.close()
+    datas['client']['host'] = SERVER_IP
+    datas['server']['current_time'] = int(time.time())
+    return make_response(json.dumps(datas), 200, {'Content-Type':'application/json'})
 
 @app.route('/protected')
 @jwt_required()
