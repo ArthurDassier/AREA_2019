@@ -14,9 +14,10 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            password: ""
+            username: '',
+            password: ''
         }
+        this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -44,14 +45,14 @@ export default class Login extends React.Component {
             })
     }
 
-    handleChange = (e) => {
-        e.preventDefault()
-        switch (e.target.name) {
-            case "username":
-                this.setState({ username: e.target.value })
+    handleChange(event) {
+        event.preventDefault()
+        switch (event.target.name) {
+            case 'username':
+                this.setState({ username: event.target.value })
                 break;
-            case "password":
-                this.setState({ password: e.target.value })
+            case 'password':
+                this.setState({ password: event.target.value })
                 break;
             default:
                 break;
@@ -60,7 +61,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="login-form">
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -82,9 +83,9 @@ export default class Login extends React.Component {
                 />
                 <Button
                     type="submit"
-                    fullWidth
                     variant="contained"
                     color="primary"
+                    style={{ "marginTop": "16px" }}
                 >
                     Log In
                 </Button>

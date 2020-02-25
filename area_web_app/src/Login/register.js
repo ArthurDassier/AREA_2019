@@ -14,10 +14,11 @@ export default class Register extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: "",
-            password: "",
-            email: ""
+            username: '',
+            password: '',
+            email: ''
         }
+        this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -49,17 +50,17 @@ export default class Register extends React.Component {
             })
     }
 
-    handleChange = (e) => {
-        e.preventDefault()
-        switch (e.target.name) {
-            case "username":
-                this.setState({ username: e.target.value })
+    handleChange(event) {
+        event.preventDefault()
+        switch (event.target.name) {
+            case 'username':
+                this.setState({ username: event.target.value })
                 break;
-            case "password":
-                this.setState({ password: e.target.value })
+            case 'password':
+                this.setState({ password: event.target.value })
                 break;
-            case "email":
-                this.setState({ email: e.target.value })
+            case 'email':
+                this.setState({ email: event.target.value })
                 break;
             default:
                 break;
@@ -68,7 +69,7 @@ export default class Register extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="login-form">
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -100,9 +101,9 @@ export default class Register extends React.Component {
                 />
                 <Button
                     type="submit"
-                    fullWidth
                     variant="contained"
                     color="primary"
+                    style={{ "marginTop": "16px" }}
                 >
                     Register
                 </Button>

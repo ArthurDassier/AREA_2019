@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Header from './header'
 import Connect from './Login/connection'
 import MainPage from './MainPage/mainpage'
 
@@ -26,7 +27,7 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <MainPage userData={this.state.userData} setLogState={this.SetLogState} />
+        <MainPage userData={this.state.userData} />
       )
     }
   }
@@ -44,13 +45,9 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src="area-logo.png" alt="area logo" />
-        </header>
+        <Header isUserLogged={this.state.isUserLogged} setLogState={this.SetLogState} />
         <div className="App-container">
-          <div className="main-content">
-            {this.CheckLog()}
-          </div>
+          {this.CheckLog()}
         </div>
       </div >
     )

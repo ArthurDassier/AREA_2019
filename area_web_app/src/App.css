@@ -1,20 +1,68 @@
+/* #region Gradient background */
+
+body {
+  background: linear-gradient(-45deg, #ee7752, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 45s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* #endregion */
+
 .App {
-  background-color: #282c34;
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-header {
-  min-height: 50px;
+/* #region App-header */
+
+.App-header-center {
   text-align: center;
 }
 
-.App-header img {
+.App-header-center img {
   height: 100px;
   margin-top: 50px;
   margin-bottom: 50px;
 }
+
+.App-header-left {
+  display: flex;
+  justify-content: space-between;
+  min-height: 50px;
+  text-align: left;
+}
+
+.App-header-left img {
+  height: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+
+.logout-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-wrapper button {
+  margin-right: 50px;
+}
+
+/* #endregion */
 
 .App-container {
   position: relative;
@@ -31,5 +79,37 @@
   left: 0;
   bottom: 0;
   right: 0;
-  padding-top: 150px;
+  margin-top: 100px;
 }
+
+/* #region Login page */
+
+.blurred-card {
+  border-radius: 15px !important;
+  padding: 20px;
+  width: 500px;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.login-form {
+  width: 400px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font-size: 20px;
+  color: #45b;
+  cursor: pointer;
+}
+
+.button-link:hover {
+  text-decoration: underline;
+}
+
+/* #endregion */
