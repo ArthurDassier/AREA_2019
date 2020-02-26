@@ -1,5 +1,6 @@
 {
     "Spotify.getNewFav": {
+        "name": "New track added",
         "service": "spotify",
         "params": [],
         "datas": [
@@ -10,6 +11,7 @@
         "description": "Check if a new track has been added to your favorites."
     },
     "Spotify.getArtistNewRelease": {
+        "name": "Artist New Release",
         "service": "spotify",
         "params": [
             "artist_name"
@@ -24,6 +26,7 @@
         "description": "Check if a new album of an artist has been relesead."
     },
     "Github.getNewIssue": {
+        "name": "New Issue from a repo",
         "service": "github",
         "params": [
             "repo_url"
@@ -36,6 +39,7 @@
         "description": "Check if a new issue has been post on a repository."
     },
     "Github.getNewPullRequest": {
+        "name": "New Pull request from a repo",
         "service": "github",
         "params": [
             "repo_url"
@@ -48,6 +52,7 @@
         "description": "Check if a new pull request was released on the repo."
     },
     "Mastodon.getNewHashtag": {
+        "name": "New Hastag Detection",
         "service": "mastodon",
         "params": [
             "hashtag"
@@ -59,6 +64,7 @@
         "description": "Check is a new Pouet with an specific hashtag has been posted."
     },
     "Mastodon.getNewPouetSubject": {
+        "name": "New Pouet Subject",
         "service": "mastodon",
         "params": [
             "query"
