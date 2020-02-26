@@ -1,12 +1,17 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
 export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: this.props.username }
+        this.state = { userData: this.props.userData }
     }
 
     render() {
-        return <p>Welcome back, {this.state.username}!</p>
+        return (
+            <div className="main-content">
+                <p>Welcome back, {this.state.userData.username} !</p>
+            </div>
+        )
     }
 }

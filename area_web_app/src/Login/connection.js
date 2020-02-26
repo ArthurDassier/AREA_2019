@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-    Typography
+    Typography,
+    Card
 } from '@material-ui/core';
 import 'typeface-roboto';
 import Login from './login';
@@ -30,18 +31,20 @@ export default class Connect extends React.Component {
         let formTitle = this.state.logState === true ? "Log In" : "Register";
         let button = this.state.logState === true ?
             (
-                <p style={{ "fontSize": "20px" }}>No account yet? <a href='#' onClick={this.changeState}>Sign up</a></p>
+                <p style={{ "fontSize": "20px" }}>No account yet? <button className='button-link' onClick={this.changeState}>Sign up</button></p>
             ) : (
-                <p style={{ "fontSize": "20px" }}>Already have an account? <a href='#' onClick={this.changeState}>Log in</a></p>
+                <p style={{ "fontSize": "20px" }}>Already have an account? <button className='button-link' onClick={this.changeState}>Log in</button></p>
             );
 
         return (
-            <div>
-                <Typography component="h1" variant="h4">
-                    {formTitle}
-                </Typography>
-                {this.display()}
-                {button}
+            <div className="main-content">
+                <Card className="blurred-card">
+                    <Typography component="h1" variant="h4" style={{ "marginTop": "20px", "marginBottom": "20px" }}>
+                        {formTitle}
+                    </Typography>
+                    {this.display()}
+                    {button}
+                </Card>
             </div>
         )
     }

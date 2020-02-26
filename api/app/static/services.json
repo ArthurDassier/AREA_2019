@@ -105,7 +105,7 @@
         },
         "authorization_uri": "https://mastodon.social/oauth/authorize",
         "token_uri": "https://mastodon.social/oauth/token",
-        "client_id": "UdPS2HIkH0zdgJocvYmMLZ8SHaxSgWqppD_J4hdsoFs",
+        "client_id": "fdbiQ2AM8zuwIYKxr_C_k0Lt2n4icdgegz666gExsFw",
         "scope": "read write follow",
         "access_type": "offline"
     },
