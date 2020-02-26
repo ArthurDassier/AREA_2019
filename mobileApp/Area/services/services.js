@@ -12,7 +12,35 @@ export function getServicesList() {
         },
     }).then(response => response.json())
         .then(responseJson => responseJson)
-        .catch(error => console.log('error on SericesList', error));
+        .catch(error => console.log('error on ServicesList', error));
+}
+
+export function getActionList() {
+    const req = API.service.actionList;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on ActionList', error));
+}
+
+export function getReactionList() {
+    const req = API.service.reactionList;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on ActionList', error));
 }
 
 export function getRightUrlToLog(access_token, serviceData)
@@ -26,6 +54,19 @@ export function getRightUrlToLog(access_token, serviceData)
     const state = '&' + 'state=' + serviceData["id"] + ',' + access_token;
 
     const url = serviceData["authorization_uri"] + client_id + redirect_url + response_type + scope + access_type + state;
-    console.log(url);
     return url;
+}
+
+export function getResponseConnect(rep) {
+    const req = API.service.reactionList;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(rep, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on ActionList', error));
 }

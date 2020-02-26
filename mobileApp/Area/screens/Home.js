@@ -30,7 +30,8 @@ export default class Home extends React.Component {
         this.state = {
             data: [],
             search: '',
-            services: []
+            services: [],
+            applet: []
         };
         this.arrayHolder = [];
     }

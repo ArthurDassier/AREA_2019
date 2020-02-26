@@ -12,10 +12,14 @@ import Icon from 'react-native-vector-icons/Feather';
 import CreateAccount from './screens/CreateAccount';
 import Home from './screens/Home';
 import Profil from './screens/Profil';
+import AppletShow from './screens/AppletShow';
 import Login from './screens/Login';
 import Service from './screens/Service';
 import LoginService from './screens/LoginService';
 import Applet from './screens/Applet';
+import Action from './screens/Action';
+import Reaction from './screens/Reaction';
+import NewApplet from './screens/NewApplet';
 
 /*----Import Components----*/
 import Drawer from './components/Drawer';
@@ -59,7 +63,11 @@ const HomeStackNavigator = createStackNavigator(
         [config.home]: Home,
         [config.service]: Service,
         [config.loginService]: LoginService,
-        [config.applet]: Applet
+        [config.applet]: Applet,
+        [config.appletShow]: AppletShow,
+        [config.action]: Action,
+        [config.reaction]: Reaction,
+        [config.newApplet]: NewApplet
     },
     {
         defaultNavigationOptions: ({ navigation }) => 
@@ -79,6 +87,17 @@ const NotificationsStackNavigator = createStackNavigator(
     }
 );
 
+
+const AppletShowStackNavigator = createStackNavigator(
+    {
+        [config.appletShow]: AppletShow
+    },
+    {
+        defaultNavigationOptions: ({ navigation }) =>
+            headerNavigation({ navigation })
+    }
+);
+
 const ProfileStackNavigator = createStackNavigator(
     {
         [config.profile]: Profil
@@ -91,6 +110,7 @@ const ProfileStackNavigator = createStackNavigator(
 
 const AppDrawerNavigator = createDrawerNavigator({
     [config.home]: HomeStackNavigator,
+    [config.appletShow]: AppletShowStackNavigator,
     [config.notifications]: NotificationsStackNavigator,
     [config.profile]: ProfileStackNavigator
 }, {

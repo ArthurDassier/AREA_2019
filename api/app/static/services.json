@@ -44,7 +44,7 @@
         "authorization_uri": "https://accounts.google.com/o/oauth2/v2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
         "client_id": "189563693687-5bvcfu5u1baukle8b88utp565pb2il7i.apps.googleusercontent.com",
-        "scope": "https://www.googleapis.com/drive/v3 https://www.googleapis.com/appsactivity/v1",
+        "scope": "https://www.googleapis.com/auth/drive",
         "access_type": "offline"
     },
     "spotify": {

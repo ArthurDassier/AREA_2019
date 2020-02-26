@@ -4,5 +4,9 @@
     "notifications": "Notifications",
     "profile": "Profile",
     "service": "Service",
-    "applet": "Applet"
+    "applet": "Applet",
+    "appletShow": "Applets",
+    "action": "Action",
+    "reaction": "Reaction",
+    "newApplet": "New Applet"
 }

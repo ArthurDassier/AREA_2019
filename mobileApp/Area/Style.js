@@ -60,6 +60,14 @@ export const styles = StyleSheet.create({
         width: '100%'
     },
 
+    flatListFooterEmpty: {
+        backgroundColor: '#EEEEEE',
+        flex: 1,
+        height: 40,
+        marginTop: 20,
+        width: '100%'
+    },
+
     flatListHeader: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -196,6 +204,17 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+
+    inputDescription: {
+        backgroundColor: 'rgba(0, 0, 0, 0.35)',
+        borderRadius: 25,
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 16,
+        height: 150,
+        marginHorizontal: 25,
+        paddingLeft: 45,
+        width: WIDTH - 55
     },
 
     //----------------------------------------------------//
