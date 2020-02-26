@@ -1,6 +1,7 @@
 {
     "Pushbullet.sendSms": {
         "service": "pushbullet",
+        "name": "Pushbullet",
         "params": [
             "numbers",
             "msg"
@@ -9,6 +10,7 @@
     },
     "Pushbullet.sendPush": {
         "service": "pushbullet",
+        "name": "Pushbullet",
         "params": [
             "title",
             "body"
@@ -17,6 +19,7 @@
     },
     "Spotify.playSong": {
         "service": "spotify",
+        "name": "Spotify",
         "params": [
             "track_name",
             "track_id"
@@ -25,16 +28,19 @@
     },
     "Spotify.playNextSong": {
         "service": "spotify",
+        "name": "Spotify",
         "params": [],
         "description": "Plays the following music on your active device"
     },
     "Spotify.playPreviousSong": {
         "service": "spotify",
+        "name": "Spotify",
         "params": [],
         "description": "Play a previous song on your active device."
     },
     "GoogleCalendar.addEvent": {
         "service": "google-calendar",
+        "name": "Google Calendar",
         "params": [
             "title",
             "description",
@@ -46,6 +52,7 @@
     },
     "GoogleYoutube.addVideoToPlaylist": {
         "service": "google-youtube",
+        "name": "Youtube",
         "params": [
             "playlist_url",
             "video_url"
@@ -54,6 +61,7 @@
     },
     "GoogleYoutube.commentVideo": {
         "service": "google-youtube",
+        "name": "Youtube",
         "params": [
             "video_url",
             "message"
@@ -62,6 +70,7 @@
     },
     "GoogleYoutube.likeVideo": {
         "service": "google-youtube",
+        "name": "Youtube",
         "params": [
             "video_url"
         ],
@@ -69,6 +78,7 @@
     },
     "GoogleDrive.uploadTextFile": {
         "service": "google-drive",
+        "name": "Google Drive",
         "params": [
             "name",
             "text",
@@ -78,14 +88,16 @@
     },
     "Mastodon.sendPouet": {
         "service": "mastodon",
+        "name": "Mastodon",
         "params": [
             "message",
             "visibility"
         ],
-        "decription": "Post a Pouet."
+        "description": "Post a Pouet."
     },
     "Outlook.sendMail": {
         "service": "outlook",
+        "name": "Outlook",
         "params": [
             "mail",
             "subject",

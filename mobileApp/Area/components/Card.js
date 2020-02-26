@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import {
     Image,
     Text,
-    View
+    View,
+    Alert
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { getActionList } from '../services/services'
 
 /*----Import Styles----*/
 import { styles } from '../Style';
@@ -13,16 +15,40 @@ import { styles } from '../Style';
 export default class Card extends Component {
     constructor() {
         super();
-        this.state = {}
+        this.state = { action: []}
     }
 
-    _redirect = () => {
-        let isCo = this.props.connectedServices.find(element => element == this.props.item["id"]);
-        if (isCo == undefined) {
-            this.props.navigation.navigate('Service', { item: this.props.item });
-        } else {
-            this.props.navigation.navigate('Applet', { item: this.props.item });
-        }
+    _refreshAction = async () => {
+        const { navigation, item } = this.props;
+        let allActions = await getActionList();
+
+        Object.entries(allActions).forEach(([key, value]) => {
+            if (value.service == item["id"]) {
+                value = {
+                    ...value,
+                    ["id"]: key
+                }
+               this.setState({
+                   action: [...this.state.action, value]
+               });
+            }
+        });
+    }
+
+    _redirect = async () => {
+        this._refreshAction().then(() => {
+            let isCo = this.props.connectedServices.find(element => element == this.props.item["id"]);
+            if (isCo == undefined) {
+                this.props.navigation.navigate('Service', { item: this.props.item });
+            } else {
+                if (this.state.action.length != 0) {
+                    this.props.navigation.navigate('Applet', { item: this.props.item, step: "Action" });
+                } else {
+                    Alert.alert('Sorry !', 'There is actually 0 action on this service, only reactions...',
+                        [{ text: 'Try another one'}])
+                }
+            } 
+        });
     }
 
     render() {

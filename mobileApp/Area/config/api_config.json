@@ -27,5 +27,24 @@
             "url": "/static/services.json",
             "method": "GET"
         },
+        "actionList": {
+            "url": "/static/actions.json",
+            "method": "GET"
+        },
+        "reactionList": {
+            "url": "/static/reactions.json",
+            "method": "GET"
+        }
+    },
+    "applet": {
+        "getApplet": {
+            "url": "/applets",
+            "method": "GET"
+        },
+        "createApplet": {
+            "url": "/applets",
+            "method": "POST"
+
+        }
     }
 }
