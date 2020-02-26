@@ -14,50 +14,53 @@ export default class Register extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: "",
-            password: "",
-            email: ""
+            username: '',
+            password: '',
+            email: ''
         }
+        this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+    async handleSubmit(event) {
+        event.preventDefault();
 
-        var raw = JSON.stringify({ "username": this.state.username, "password": this.state.password, "mail": this.state.email });
-
-        var requestOptions = {
+        await fetch('http://localhost:5005/register', {
             method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("/register", requestOptions)
-            .then(response => {
-                if (response.ok) {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                mail: this.state.email
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
                     console.log("LE COMPTE A BIEN ÉTÉ CRÉÉ");
-                    ToastsStore.success("Registration complete !\nYou may now log in :)")
+                    ToastsStore.success("Registration complete !\nYou may now log in :)");
                 } else {
-                    console.log("ERREUR")
-                    ToastsStore.error("Registration failed...\nPlease try again later :/")
+                    console.log('ERREUR');
+                    if (res.message === 'This user already exist') {
+                        ToastsStore.error("This user already exists\nIf this is you, please log in!");
+                    } else {
+                        ToastsStore.error("Registration failed...\nPlease try again later :/");
+                    }
                 }
             })
-            .catch(error => console.log('error', error));
     }
 
-    handleChange = (e) => {
-        e.preventDefault()
-        switch (e.target.name) {
-            case "username":
-                this.setState({ username: e.target.value })
+    handleChange(event) {
+        event.preventDefault()
+        switch (event.target.name) {
+            case 'username':
+                this.setState({ username: event.target.value })
                 break;
-            case "password":
-                this.setState({ password: e.target.value })
+            case 'password':
+                this.setState({ password: event.target.value })
                 break;
-            case "email":
-                this.setState({ email: e.target.value })
+            case 'email':
+                this.setState({ email: event.target.value })
                 break;
             default:
                 break;
@@ -66,7 +69,7 @@ export default class Register extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="login-form">
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -98,9 +101,9 @@ export default class Register extends React.Component {
                 />
                 <Button
                     type="submit"
-                    fullWidth
                     variant="contained"
                     color="primary"
+                    style={{ "marginTop": "16px" }}
                 >
                     Register
                 </Button>
