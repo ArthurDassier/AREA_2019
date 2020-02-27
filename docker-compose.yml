@@ -8,7 +8,7 @@ services:
     ports:
       - "8090:5000"
     env_file:
-      - env/api.env
+      - ./env/api.env
     depends_on:
       - db
       - mongo
@@ -23,7 +23,7 @@ services:
       context: api
       dockerfile: Dockerfile-applets
     env_file:
-      - env/run_applets.env
+      - ./env/run_applets.env
     depends_on:
       - db
       - mongo
@@ -39,7 +39,7 @@ services:
     ports:
       - "5433:5432"
     env_file:
-      - env/db.env
+      - ./env/db.env
     networks:
       - app-tier
     volumes:
@@ -58,14 +58,14 @@ services:
       - app-tier
     volumes:
       - ./web/app:/usr/local/apache2/htdocs/
-      - shared-volume: /apk
+      - shared-volume:/apk
     restart: always
 
   client-mobile:
     build: mobileApp/
     restart: always
     volumes:
-      - shared-volume: /apk
+      - shared-volume:/apk
 
   mongo:
     image: mongo
@@ -77,7 +77,7 @@ services:
     networks:
       - app-tier
     env_file:
-      - env/mongo.env
+      - ./env/mongo.env
     volumes:
       - ./mongo-data:/data/db
 
@@ -89,7 +89,7 @@ services:
     networks:
       - app-tier
     env_file:
-      - env/mongo-express.env
+      - ./env/mongo-express.env
 
 networks:
   app-tier:
