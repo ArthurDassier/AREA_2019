@@ -18,7 +18,6 @@ services:
     - ./api/app/:/app
     restart: always
 
-
   run_applets:
     build:
       context: api
@@ -54,11 +53,19 @@ services:
       - "8081:80"
     depends_on:
       - server-api
+      - client-mobile
     networks:
       - app-tier
     volumes:
       - ./web/app:/usr/local/apache2/htdocs/
+      - shared-volume: /apk
     restart: always
+
+  client-mobile:
+    build: mobileApp/
+    restart: always
+    volumes:
+      - shared-volume: /apk
 
   mongo:
     image: mongo
@@ -90,3 +97,4 @@ networks:
 volumes: 
   db-data:
   mongo-data:
+  shared-volume:
