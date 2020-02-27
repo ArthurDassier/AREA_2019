@@ -1,7 +1,7 @@
 version: "3"
 services:
 
-  api:
+  server-api:
     build: api/
     expose:
       - "5000"
@@ -28,7 +28,7 @@ services:
     depends_on:
       - db
       - mongo
-      - api
+      - server-api
     networks:
       - app-tier
     restart: always
@@ -48,12 +48,12 @@ services:
       - ./db-data:/var/lib/postgresql/data
     restart: always
 
-  web:
+  client-web:
     image: httpd:2.4
     ports:
       - "8081:80"
     depends_on:
-      - api
+      - server-api
     networks:
       - app-tier
     volumes:
