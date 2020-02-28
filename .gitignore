@@ -1,6 +1,8 @@
 db-data
-api/app/__pycache__
+api/app/__pycache__/
+api/app/services/__pycache__/
 .tests
-tests/__pycache__
+tests/__pycache__/
 .coverage
 coverage.xml
+mongo-data
