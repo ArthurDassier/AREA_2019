@@ -238,8 +238,12 @@ def applets():
         return {"status": "success", "message": "Applet "+datas['name']+" successfully added."}
     if request.method == 'GET':
         applets = collec.find({'user_id': usr.id})
-        p = [dumps(applet) for applet in applets]
-        return {"status": "success", "datas": p}
+        resp = {'status': "success", "datas": []}
+        for a in applets:
+            resp['datas'].append(a)
+        for i in range(len(resp['datas'])):
+            resp['datas'][i]['_id'] = str(resp['datas'][i]['_id'])
+        return dumps(resp)
 
 
 @app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'DELETE', 'PATCH'])
