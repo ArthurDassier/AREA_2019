@@ -7,7 +7,8 @@ import {
     ScrollView,
     TextInput,
     FlatList,
-    RefreshControl
+    RefreshControl,
+    Alert
 } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
@@ -53,7 +54,9 @@ export default class Profil extends React.Component {
         }
     }
 
-
+    _disconnect = (name) => {
+        console.log("works");
+    } 
 
     headerContainer = () => {
         return (
@@ -140,7 +143,15 @@ export default class Profil extends React.Component {
                                         {item}
                                     </Text>
                                     <Text style={styles.profilEdit}
-                                        onPress={() => console.log("Disconnecting from " + item)}>
+                                        onPress={() => {
+                                                    Alert.alert(
+                                                      'Confirmation',
+                                                      'Disconnect from ' + item + ' ?',
+                                                      [
+                                                        { text: 'Yes', onPress: this._disconnect(item)},
+                                                        { text: 'No', style: 'cancel' },
+                                                      ]);
+                                        }}>
                                         Disconnecting
                                     </Text>
                                 </View>

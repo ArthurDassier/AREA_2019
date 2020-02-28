@@ -27,7 +27,7 @@ export function createApplet(applet, access_token) {
             'Authorization': 'JWT ' + access_token
         },
         body: JSON.stringify(applet)
-    }).then(response => response.text())
+    }).then(response => response.json())
         .then(responseJson => responseJson)
         .catch(error => console.log('error while creating the applet:', error));
 }

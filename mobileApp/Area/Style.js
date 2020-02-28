@@ -49,6 +49,103 @@ export const styles = StyleSheet.create({
     },
 
     //----------------------------------------------------//
+    //                Applet Description                  //
+    //----------------------------------------------------//
+
+    appletDescriptionContainer: {
+        
+    },
+
+    descriptionContainer: {
+        padding: 10,
+        justifyContent: 'center',
+    },
+
+    buttonContainer: {
+        flex: 1,
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+
+    appletBtn: {
+        backgroundColor: '#0B75D9',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 25,
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        overflow: 'hidden',
+        padding: 12,
+        textAlign: 'center',
+        justifyContent: 'center',
+        shadowRadius: 10,
+        shadowColor: 'black',
+        width: WIDTH - 210,
+        height: 50,
+
+    },
+
+    appletTitle: {
+        fontSize: 25,
+        fontFamily: 'Comfortaa-Bold',
+    },
+
+    appletName: {
+        fontSize: 20,
+        fontFamily: 'Comfortaa',
+    },
+
+    appletSubTitle: {
+        fontSize: 18,
+        fontFamily: 'Comfortaa',
+        marginLeft: 12
+    },
+
+    appletOptions: {
+        fontSize: 14,
+        fontFamily: 'Comfortaa',
+        marginLeft: 12,
+        textAlign: 'left',
+        marginLeft: 20
+    },
+
+    //----------------------------------------------------//
+    //                    Applet Form        ...          //
+    //----------------------------------------------------//
+
+    appletFormContainer: {
+        flex: 1,
+    },
+
+    appletFormTitle: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginBottom: 10
+    },
+
+    appletFormName: {
+        fontSize: 25,
+        fontFamily: 'Comfortaa-Bold',
+        textAlign: 'center'
+    },
+
+    dataForm: {
+        fontSize: 14,
+        fontFamily: 'Comfortaa',
+        textAlign: 'center',
+        padding: 5,
+        marginBottom: 5
+    },
+    data: {
+        fontSize: 15,
+        fontFamily: 'Comfortaa-Light',
+        textAlign: 'center'
+    },
+
+    //----------------------------------------------------//
     //                        Home                        //
     //----------------------------------------------------//
 

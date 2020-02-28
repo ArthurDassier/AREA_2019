@@ -7,7 +7,14 @@ import {
     Alert
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+/*----Import Services----*/
 import { getActionList } from '../services/services'
+import { getUserServices } from '../services/user';
+
+/*----Import Utils----*/
+import { getAccessToken } from '../utils/common';
+
 
 /*----Import Styles----*/
 import { styles } from '../Style';
@@ -15,12 +22,15 @@ import { styles } from '../Style';
 export default class Card extends Component {
     constructor() {
         super();
-        this.state = { action: []}
+        this.state = {
+            action: [],
+             services: []}
     }
 
     _refreshAction = async () => {
         const { navigation, item } = this.props;
         let allActions = await getActionList();
+        let services = await getUserServices(getAccessToken());
 
         Object.entries(allActions).forEach(([key, value]) => {
             if (value.service == item["id"]) {
@@ -33,11 +43,18 @@ export default class Card extends Component {
                });
             }
         });
+        Object.entries(services).forEach(([key, value]) => {
+            if (value == true) {
+               this.setState({
+                   services: [...this.state.services, key]
+               });
+            }
+        });
     }
 
     _redirect = async () => {
         this._refreshAction().then(() => {
-            let isCo = this.props.connectedServices.find(element => element == this.props.item["id"]);
+            let isCo = this.state.services.find(element => element == this.props.item["id"]);
             if (isCo == undefined) {
                 this.props.navigation.navigate('Service', { item: this.props.item });
             } else {

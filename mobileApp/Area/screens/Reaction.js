@@ -5,7 +5,9 @@ import {
     View,
     FlatList,
     TouchableOpacity,
-    Alert
+    Alert,
+    SafeAreaView,
+    ScrollView
 } from 'react-native';
 
 /*----Import Components----*/
@@ -16,7 +18,7 @@ import { styles } from '../Style';
 
 export default class Action extends React.Component {
     static navigationOptions = {
-        title: "Action"
+        title: "Reaction"
     };
 
     constructor(props) {
@@ -54,7 +56,7 @@ export default class Action extends React.Component {
         return (
             <View style={styles.appletFlatListHeader}>
                 <Text style={styles.flatListHeaderTitle}> Fill the parameters !</Text>
-                <Text style={styles.flatListHeaderTitle}> {navigation.getParam('item').name}</Text>
+                <Text style={styles.appletFormName}> {navigation.getParam('item').name}</Text>
             </View>
         );
     }
@@ -71,7 +73,8 @@ export default class Action extends React.Component {
         const { navigation } = this.props;
         let obj = {
             "name": navigation.getParam('item').id,
-            "params": this.state.input
+            "params": this.state.input,
+            "title": navigation.getParam('item').name
         }
 
         if (this.state.params.length == Object.keys(this.state.input).length) { //Si tous les champs sont rempli c'est ok
@@ -83,21 +86,27 @@ export default class Action extends React.Component {
         const { navigation } = this.props;
 
         if ( navigation.getParam('finalAction').data.length == 0 ) {
-            return (
-                <View>
-                </View>
-
-            );
+            return;
         } else {
-
             return (
-                <View>
-                    <Text>
-                        Type "$data" to get the data of the action
-                    </Text>
-                    <Text>
-                        Available data: {navigation.getParam('finalAction').data + ' '}
-                    </Text>
+                <View style={{marginTop: 20, marginBottom: 10}}>
+                    <TouchableOpacity
+                     style={styles.cardContainer}
+                     onPress={this._redirect}
+                     >
+                        <Text style={[styles.appletCardTitle, {textAlign: 'center', marginTop: 10}]}>
+                            Tips
+                        </Text>
+                        <Text style={styles.dataForm}>
+                            Type "$data" to get the data of the action
+                        </Text>
+                        <Text style={[styles.appletCardTitle, {textAlign: 'center', marginTop: 10}]}>
+                            Available data
+                        </Text>
+                        <Text style={styles.dataForm}>
+                            {navigation.getParam('finalAction').data.join(' / ')}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             );
         }
@@ -106,7 +115,8 @@ export default class Action extends React.Component {
     render() {
         const { navigation, item } = this.props;
         return (
-            <View>
+            <SafeAreaView>
+                <ScrollView style={styles.appletDescriptionContainer}>
                 <View>
                     <FlatList
                         data={this.state.params}
@@ -117,16 +127,17 @@ export default class Action extends React.Component {
                         ListFooterComponent={this.RenderFlatListFooter}
                     />
                 </View>
-                <View>
+                <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                    style={styles.loginBtn}
+                    style={styles.appletBtn}
                     onPress={this._redirect}
                     >
-                        <Text style={styles.loginText}>Login</Text>
+                        <Text style={styles.loginText}>Next</Text>
                     </TouchableOpacity>
 
                 </View>
-            </View>
+                </ScrollView>
+            </SafeAreaView>
                 );
         }
 }

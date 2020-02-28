@@ -43,10 +43,9 @@ export default class NewApplet extends React.Component {
 
     _checkResponse = (data) => {
         if (data.status == "success") {
-            Alert.alert('Applet successfully created !', 'Check and manage it in Applet drawer',
+            Alert.alert(data.message, 'Check and manage it in Applet drawer',
                 [{ text: 'Nice', onPress: () => this.props.navigation.navigate('Discover') }])
         } else {
-            console.log(data);
             Alert.alert('Error while creating the applet...', 'Please try again',
                 [{ text: 'Home', onPress: () => this.props.navigation.navigate('Discover') }])
         }
@@ -63,10 +62,12 @@ export default class NewApplet extends React.Component {
             "name": this.state.title,
 	        "description": this.state.description,
 	        "action": {
+                "title": action.title,
 	            "name": action.name,
                 "params": action.params
 	        },
             "reaction": {
+                "title": reaction.title,
 		        "name": reaction.name,
                 "params": reaction.params
             },
@@ -80,7 +81,10 @@ export default class NewApplet extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.appletDescriptionContainer}>
+                <View style={styles.appletFlatListHeader}>
+                    <Text style={styles.flatListHeaderTitle}> Last step: Name it !</Text>
+                </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.profilOption}>
                         Title:
@@ -100,7 +104,7 @@ export default class NewApplet extends React.Component {
                         underlineColorAndroid='transparent'
                     />
                 </View>
-                <View style={styles.inputContainer}>
+                <View style={[styles.inputContainer, {marginBottom: 30}]}>
                     <Text style={styles.profilOption}>
                         Description:
                     </Text>
@@ -121,13 +125,14 @@ export default class NewApplet extends React.Component {
                         underlineColorAndroid='transparent'
                     />
                 </View>
+                <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    style={styles.loginBtn}
+                    style={styles.appletBtn}
                     onPress={this._createApplet}
                 >
                     <Text style={styles.loginText}>Create my Applet</Text>
                 </TouchableOpacity>
-
+                </View>
             </View>
         );
     }
