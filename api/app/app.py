@@ -245,8 +245,8 @@ def applets():
             resp['datas'][i]['_id'] = str(resp['datas'][i]['_id'])
         return dumps(resp)
 
-
-@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/applets/<string:id>', methods=['DELETE'])
+@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'PATCH'])
 @jwt_required()
 def appletUpdate(id, status=None):
     usr = current_identity
