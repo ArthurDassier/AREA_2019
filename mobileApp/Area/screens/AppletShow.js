@@ -41,62 +41,7 @@ export default class AppletShow extends React.Component {
         let applet = await getApplets(getAccessToken());
 
         this.setState({data: []})
-        this.setState({data: [
-            {
-                "name": "Test",
-                "_id": "3456788765",
-                "description": "Voici la description",
-                "action": {
-                    "title": "Action Title",
-                    "name": "GetFavVoila",
-                    "params": { "title": "Voici le titre", "body": "Voici le body"}
-                },
-                "reaction": {
-                    "title": "Reaction Title",
-                    "name": "SendSms",
-                    "params": {"number": "0786385086", "content": "Voici le content"}
-                },
-                "refresh_time": 1,
-                "last_refresh": -1,
-                "enable": true
-            },
-            {
-                "name": "Pute",
-                "_id": "3456788765",
-                "description": "Voici la description qui est censé être très longue quand meme ça commence à devenir long la",
-                "action": {
-                    "title": "Action Title",
-                    "name": "GetFavVoila",
-                    "params": {}
-                },
-                "reaction": {
-                    "title": "Reaction Title",
-                    "name": "SendSms",
-                    "params": {"number": "0786385086", "content": "Voici le content"}
-                },
-                "refresh_time": 1,
-                "last_refresh": -1,
-                "enable": false
-            },
-            {
-                "name": "Test",
-                "_id": "3456788765",
-                "description": "Voici la description",
-                "action": {
-                    "title": "Action Title",
-                    "name": "GetFavVoila",
-                    "params": { "title": "Voici le titre", "body": "Voici le body"}
-                },
-                "reaction": {
-                    "title": "Reaction Title",
-                    "name": "SendSms",
-                    "params": {"number": "0786385086", "content": "Voici le content"}
-                },
-                "refresh_time": 1,
-                "last_refresh": -1,
-                "enable": true
-            },
-        ], refreshing: false})
+        this.setState({data: applet.datas})
     }
 
     FlatListItemSeparator = () => (

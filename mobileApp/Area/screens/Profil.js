@@ -15,6 +15,7 @@ import { Avatar } from 'react-native-elements';
 
 /*----Import Services----*/
 import { getUserInfo, getUserServices } from '../services/user';
+import { getServicesList, disconnectService} from '../services/services';
 
 /*----Import Utils----*/
 import { getAccessToken } from '../utils/common';
@@ -54,8 +55,26 @@ export default class Profil extends React.Component {
         }
     }
 
-    _disconnect = (name) => {
-        console.log("works");
+    _checkDisco = (data) => {
+        if (data.status == "success") {
+            Alert.alert(
+                'Success',
+                 data.message,
+                [
+                  { text: 'Perfect', style: 'cancel' },
+                ]);
+        } else {
+            Alert.alert(
+                "Problem...",
+                 data.message,
+                [
+                  { text: 'Aie...', style: 'cancel' },
+                ]);
+        }
+    }
+
+    _disconnect = async (name) => {
+        await disconnectService(name, getAccessToken()).then((response) => this._checkDisco(response));
     } 
 
     headerContainer = () => {
@@ -148,7 +167,7 @@ export default class Profil extends React.Component {
                                                       'Confirmation',
                                                       'Disconnect from ' + item + ' ?',
                                                       [
-                                                        { text: 'Yes', onPress: this._disconnect(item)},
+                                                        { text: 'Yes', onPress: () => this._disconnect(item)},
                                                         { text: 'No', style: 'cancel' },
                                                       ]);
                                         }}>

@@ -34,6 +34,10 @@
         "reactionList": {
             "url": "/static/reactions.json",
             "method": "GET"
+        },
+        "disconnectService": {
+            "url": "/services/",
+            "method": "DELETE"
         }
     },
     "applet": {
@@ -44,7 +48,14 @@
         "createApplet": {
             "url": "/applets",
             "method": "POST"
-
+        },
+        "deletApplet": {
+            "url": "/applets/",
+            "method": "DELETE"
+        },
+        "changeStateApplet": {
+            "url": "/applets/",
+            "method": "PATCH"
         }
     }
 }

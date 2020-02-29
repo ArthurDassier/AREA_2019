@@ -13,6 +13,12 @@ import {
 /*----Import Styles----*/
 import { styles } from '../Style';
 
+/*----Import Utils----*/
+import { getAccessToken } from '../utils/common';
+
+/*----Import Services----*/
+import { deletApplet, changeStateApplet} from '../services/applet.js'
+
 
 export default class AppletDescription extends React.Component {
 
@@ -102,12 +108,7 @@ export default class AppletDescription extends React.Component {
     }
 
     changeStateApplet = () => {
-        let newApplet = this.state.applet;
-        newApplet.enable = !newApplet.enable;
-        this.setState({applet: newApplet})
-        console.log("change state of applet id: ")
-        console.log(this.state.applet._id);
-        console.log(this.state.applet);
+        this.turnStateApplet();
     }
 
     changeState = () => {
@@ -124,9 +125,52 @@ export default class AppletDescription extends React.Component {
             ]);
     }
 
-    deletApplet = () => {
-        console.log("delet applet id: ");
-        console.log(this.state.applet._id);
+    _checkStateResponse = (data) => {
+        if (data.status == "success") {
+            this.setState(prevState => ({
+                applet: {
+                    ...prevState.applet,
+                    enable: !this.state.applet.enable
+                }
+            }));
+        } else {
+        Alert.alert(
+            'Problem...',
+             data.message,
+            [
+              { text: 'Okay', style: 'cancel' },
+            ]);
+        }
+    }
+
+    _checkDeletResponse = (data) => {
+        console.log(data);
+        console.log(data.status);
+        console.log(data.message);
+        console.log(data["status"]);
+        if (data.status == "success") {
+            Alert.alert(
+                this.state.applet.name + ' successfully deleted',
+                 data.message,
+                [
+                  { text: 'Bouya', style: 'cancel', onPress: () => {this.props.navigation.goBack()} },
+                ]);
+        } else {
+            Alert.alert(
+                'Problem...',
+                 data.message,
+                [
+                  { text: 'Okay', style: 'cancel' },
+                ]);
+        }
+    }
+
+    deletApplet = async () => {
+        await deletApplet(this.state.applet._id, getAccessToken()).then((response) => this._checkDeletResponse(response));
+    }
+
+    turnStateApplet = async () => {
+        await changeStateApplet(this.state.applet._id, getAccessToken(), !this.state.applet.enable).then((response) => this._checkStateResponse(response));
     }
 
     delete = () => {

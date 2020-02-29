@@ -38,6 +38,11 @@ export default class Home extends React.Component {
 
     componentDidMount = () => {
         this.asyncCall();
+        this.focusListener = this.props.navigation.addListener('didFocus', () => this.asyncCall());
+    }
+
+    componentWillUnmount = () => {
+        this.focusListener();
     }
 
     asyncCall = async () => {
