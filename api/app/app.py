@@ -153,6 +153,21 @@ def verify_google_token(token):
         return None
 
 
+def getServicesStatus(user_id):
+    res = {}
+    tokens = OAuthTokens.query.filter_by(user_id=user_id).all()
+    for service in SERVICES_NAMES:
+        found = False
+        for token in tokens:
+            if service == token.service:
+                res[service] = True
+                found = True
+                break
+        if found != True:
+            res[service] = False
+    return (res)
+
+
 jwt = JWT(app, authenticate, identity)
 
 
@@ -245,8 +260,8 @@ def applets():
             resp['datas'][i]['_id'] = str(resp['datas'][i]['_id'])
         return dumps(resp)
 
-
-@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/applets/<string:id>', methods=['DELETE'])
+@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'PATCH'])
 @jwt_required()
 def appletUpdate(id, status=None):
     usr = current_identity
@@ -269,8 +284,16 @@ def appletUpdate(id, status=None):
         datas = None
         if status:
             if status == "enable":
+                applet = collec.find_one({'user_id': usr.id, '_id': ObjectId(id)})
                 datas = {'$set': {'enable': True}}
                 status_res = "enabled"
+                actionService = applet['action']['name'].split('.')[0].lower()
+                reactionService = applet['reaction']['name'].split('.')[0].lower()
+                activatedServices = getServicesStatus(usr.id)
+                if (activatedServices[actionService] == False):
+                    return {'status': 'error', 'message': "Your are not connected to the "+actionService+" service. You have to be connected to the service of the applet to enable it."}
+                if (activatedServices[reactionService] == False):
+                    return {'status': 'error', 'message': "Your are not connected to the "+reactionService+" service. You have to be connected to the service of the applet to enable it."}
             elif status == "disable":
                 datas = {'$set': {'enable': False}}
                 status_res = "disabled"
@@ -342,18 +365,7 @@ def OAuth2():
 def getActiveServices(service_name=None):
     usr = current_identity    
     if request.method == 'GET':
-        res = {}
-        tokens = OAuthTokens.query.filter_by(user_id=usr.id).all()
-        for service in SERVICES_NAMES:
-            found = False
-            for token in tokens:
-                if service == token.service:
-                    res[service] = True
-                    found = True
-                    break
-            if found != True:
-                res[service] = False
-        return (res)
+        return getServicesStatus(usr.id)
     if request.method == 'DELETE':
         if service_name not in SERVICES_NAMES :
             return {'status': 'error', 'message': "This service doesn't exist."}
