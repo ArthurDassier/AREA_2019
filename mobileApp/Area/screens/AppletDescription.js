@@ -144,10 +144,6 @@ export default class AppletDescription extends React.Component {
     }
 
     _checkDeletResponse = (data) => {
-        console.log(data);
-        console.log(data.status);
-        console.log(data.message);
-        console.log(data["status"]);
         if (data.status == "success") {
             Alert.alert(
                 this.state.applet.name + ' successfully deleted',

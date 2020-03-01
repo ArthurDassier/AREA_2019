@@ -43,6 +43,7 @@ export default class Card extends Component {
                });
             }
         });
+        this.setState({ services: []});
         Object.entries(services).forEach(([key, value]) => {
             if (value == true) {
                this.setState({

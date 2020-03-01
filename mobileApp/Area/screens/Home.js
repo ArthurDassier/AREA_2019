@@ -38,16 +38,22 @@ export default class Home extends React.Component {
 
     componentDidMount = () => {
         this.asyncCall();
-        this.focusListener = this.props.navigation.addListener('didFocus', () => this.asyncCall());
     }
 
-    componentWillUnmount = () => {
-        this.focusListener();
+    _refreshServices = async () => {
+        let services = await getUserServices(getAccessToken());
+
+        Object.entries(services).forEach(([key, value]) => {
+            if (value == true) {
+               this.setState({
+                   services: [...this.state.services, key]
+               });
+            }
+        });
     }
 
     asyncCall = async () => {
         let data = await getServicesList();
-        let services = await getUserServices(getAccessToken());
         let goodData = this.goodDataFormat(data);
 
         if (typeof goodData == 'undefined') {
@@ -57,14 +63,7 @@ export default class Home extends React.Component {
             this.arrayHolder = goodData;
             this.setState({ data: goodData });
         }
-
-        Object.entries(services).forEach(([key, value]) => {
-            if (value == true) {
-               this.setState({
-                   services: [...this.state.services, key]
-               });
-            }
-        });
+        this._refreshServices();
     }
 
     goodDataFormat = (object) => {
@@ -78,8 +77,8 @@ export default class Home extends React.Component {
                    ...card,
                    ["id"]: key
                }
-        }
-            goodData.push(card)
+                goodData.push(card);
+            }
         });
         return goodData;
     }
