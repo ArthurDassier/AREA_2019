@@ -45,11 +45,14 @@ export function getReactionList() {
 
 export function getRightUrlToLog(access_token, serviceData)
 {
+    let scopeTxt = "scope=";
+    serviceData["id"] == "mastodont" ? scopeTxt = "scope=" : scopeTxt = "scopes=";
+
     const header = API.config.header + API.config.servAddr + ":" + API.config.port;
     const client_id = '?' + 'client_id=' + serviceData["client_id"];
     const redirect_url =  '&' + 'redirect_uri=' + header + "/oauth2-endpoint";
     const response_type = '&' + 'response_type=' + "code";
-    const scope = '&' + 'scope=' + serviceData["scope"];
+    const scope = '&' + scopeTxt + serviceData["scope"];
     const access_type = '&' + 'access_type=offline';
     const state = '&' + 'state=' + serviceData["id"] + ',' + access_token;
 
