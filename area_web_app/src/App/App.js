@@ -10,10 +10,10 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isUserLogged: true,
+      isUserLogged: false,
       userData: {
-        accessToken: Config.debugAccessToken,
-        username: "Guillaume"
+        accessToken: "",
+        username: ""
       }
     }
   }
