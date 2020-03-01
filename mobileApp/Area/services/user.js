@@ -65,3 +65,33 @@ export function getUserServices(access_token) {
         .then(responseJson => responseJson)
         .catch(error => console.log('error on getting user services:', error));
 }
+
+export function getUsers(access_token) {
+    const req = API.user.getUsers;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'JWT ' + access_token
+        }
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on getting user list:', error));
+}
+
+export function delUser(access_token, id) {
+    const req = API.user.delUser;
+    const header = API.config.header + API.config.servAddr + ":" + API.config.port;
+    return fetch(header + req.url + id, {
+        method: req.method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'JWT ' + access_token
+        }
+    }).then(response => response.json())
+        .then(responseJson => responseJson)
+        .catch(error => console.log('error on deleting user: ', error));
+}

@@ -31,6 +31,7 @@ import Action from './screens/Action';
 import Reaction from './screens/Reaction';
 import NewApplet from './screens/NewApplet';
 import AppletDescription from './screens/AppletDescription';
+import Admin from './screens/Admin';
 
 /*----Import Components----*/
 import Drawer from './components/Drawer';
@@ -79,7 +80,8 @@ const HomeStackNavigator = createStackNavigator(
         [config.action]: Action,
         [config.reaction]: Reaction,
         [config.newApplet]: NewApplet,
-        [config.appletDescription]: AppletDescription
+        [config.appletDescription]: AppletDescription,
+        [config.admin]: Admin
     },
     {
         defaultNavigationOptions: ({ navigation }) => 
@@ -112,7 +114,7 @@ const ProfileStackNavigator = createStackNavigator(
 const AppDrawerNavigator = createDrawerNavigator({
     [config.home]: HomeStackNavigator,
     [config.appletShow]: AppletShowStackNavigator,
-    [config.profile]: ProfileStackNavigator,
+    [config.profile]: ProfileStackNavigator
 }, {
     contentOptions: {
         activeTintColor: 'orange'

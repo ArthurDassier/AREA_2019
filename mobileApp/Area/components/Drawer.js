@@ -51,6 +51,15 @@ export default class Drawer extends Component {
         </View>
     );
 
+    admin = () => {
+        return (
+            <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={()=> this.props.navigation.navigate('Admin') }>
+              <Text style={{margin: 16, marginLeft: 140, fontWeight: 'bold',color: 'black'}}>Admin</Text>
+            </TouchableOpacity>
+
+        )
+    }
+
     render() {
         return (
             <SafeAreaView
@@ -60,6 +69,7 @@ export default class Drawer extends Component {
                 <ScrollView>
                     <DrawerItems {...this.props} />
                 </ScrollView>
+                <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity onPress={()=>
               Alert.alert(
                 'Log out',
@@ -76,6 +86,8 @@ export default class Drawer extends Component {
             }>
               <Text style={{margin: 16,fontWeight: 'bold',color: 'black'}}>Logout</Text>
             </TouchableOpacity>
+            {this.admin()}
+            </View>
             </SafeAreaView>
         );
     }
