@@ -42,19 +42,6 @@ export default class Profil extends React.Component {
         this._refreshProfil();
     }
 
-    asyncCall = async () => {
-        let data = await getServicesList();
-        let goodData = this.goodDataFormat(data);
-
-        if (typeof goodData == 'undefined') {
-            this.arrayHolder = ER.errors;
-            this.setState({ data: ER.errors })
-        } else {
-            this.arrayHolder = goodData;
-            this.setState({ data: goodData });
-        }
-    }
-
     _checkDisco = (data) => {
         if (data.status == "success") {
             Alert.alert(

@@ -20,6 +20,14 @@
         "userServices": {
             "url": "/services",
             "method": "GET"
+        },
+        "getUsers": {
+            "url": "/users",
+            "method": "GET"
+        },
+        "delUser": {
+            "url": "/user/",
+            "method": "DELETE"
         }
     },
     "service": {

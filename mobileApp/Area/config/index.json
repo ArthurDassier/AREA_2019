@@ -2,6 +2,7 @@
     "home": "Discover",
     "loginService": "LoginService",
     "profile": "Profile",
+    "admin": "Admin",
     "service": "Service",
     "applet": "Applet",
     "appletShow": "Applets",
