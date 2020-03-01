@@ -1,17 +1,19 @@
 import React from 'react';
 import './App.css';
-import Header from './header'
-import Connect from './Login/connection'
-import MainPage from './MainPage/mainpage'
+import Header from './Header'
+import Connect from '../Login/Connection'
+import Home from './Home'
+
+const Config = require('../App/app.config.json');
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isUserLogged: false,
+      isUserLogged: true,
       userData: {
-        accessToken: "",
-        username: ""
+        accessToken: Config.debugAccessToken,
+        username: "Guillaume"
       }
     }
   }
@@ -27,7 +29,7 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <MainPage userData={this.state.userData} />
+        <Home userData={this.state.userData} />
       )
     }
   }

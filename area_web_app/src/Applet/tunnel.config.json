@@ -1,0 +1,11 @@
+{
+    "ServicesListeAction": 1,
+    "ActionServiceConnection": 2,
+    "ActionServiceDetail": 3,
+    "ActionDetail": 4,
+    "ServicesListeReaction": 5,
+    "ReactionServiceConnection": 6,
+    "ReactionServiceDetail": 7,
+    "ReactionDetail": 8,
+    "Summary": 9
+}

@@ -10,13 +10,14 @@ import {
     ToastsContainerPosition
 } from 'react-toasts';
 
-export default class Register extends React.Component {
+const Config = require('../App/app.config.json');
+
+export default class Login extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             username: '',
-            password: '',
-            email: ''
+            password: ''
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,27 +26,28 @@ export default class Register extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
 
-        await fetch('http://localhost:5005/register', {
+        await fetch(Config.apiEndpointUrl + '/auth', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: this.state.username,
-                password: this.state.password,
-                mail: this.state.email
+                password: this.state.password
             })
         })
+            .catch(error => {
+                console.log('error', error);
+                ToastsStore.error("Connection failed...\nPlease try again later");
+            })
             .then(res => res.json())
             .then(res => {
-                if (res.status === 'success') {
-                    console.log("LE COMPTE A BIEN ÉTÉ CRÉÉ");
-                    ToastsStore.success("Registration complete !\nYou may now log in :)");
+                console.log(res);
+                if (res.hasOwnProperty('access_token')) {
+                    console.log("CONNEXION RÉUSSIE");
+                    ToastsStore.success("Hello there :)");
+                    this.props.UserConnect(res.access_token, this.state.username);
                 } else {
-                    console.log('ERREUR');
-                    if (res.message === 'This user already exist') {
-                        ToastsStore.error("This user already exists\nIf this is you, please log in!");
-                    } else {
-                        ToastsStore.error("Registration failed...\nPlease try again later :/");
-                    }
+                    console.log("ERREUR DE CONNEXION");
+                    ToastsStore.error("Connection failed\nPlease try again");
                 }
             })
     }
@@ -58,9 +60,6 @@ export default class Register extends React.Component {
                 break;
             case 'password':
                 this.setState({ password: event.target.value })
-                break;
-            case 'email':
-                this.setState({ email: event.target.value })
                 break;
             default:
                 break;
@@ -83,16 +82,6 @@ export default class Register extends React.Component {
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    label="Email Address"
-                    type="email"
-                    name="email"
-                    required
-                    onChange={this.handleChange}
-                />
-                <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
                     label="Password"
                     type="password"
                     name="password"
@@ -105,7 +94,7 @@ export default class Register extends React.Component {
                     color="primary"
                     style={{ "marginTop": "16px" }}
                 >
-                    Register
+                    Log In
                 </Button>
                 <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
             </form>
