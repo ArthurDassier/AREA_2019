@@ -2,7 +2,8 @@
     "config": {
         "header": "http://",
         "servAddr" : "jarvis-app.fr",
-        "port": "8090"
+        "port": "8090",
+        "https": "https://area.ngrok.io"
     },
     "user": {
         "auth": {
