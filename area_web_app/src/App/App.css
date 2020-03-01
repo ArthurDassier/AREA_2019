@@ -77,7 +77,7 @@ body {
   padding: 20px;
   width: 500px;
   margin: auto;
-  background-color: rgba(255, 255, 255, 0.5) !important;
+  background-color: rgba(255, 255, 255, 1) !important;
 }
 
 .login-form {
@@ -98,6 +98,60 @@ body {
 
 .button-link:hover {
   text-decoration: underline;
+}
+
+/* #endregion */
+
+/* #region Radio images */
+
+.selector input {
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.serviceli {
+  list-style-type: none;
+  cursor: pointer;
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(0.7);
+  -moz-filter: brightness(1.8) grayscale(1) opacity(0.7);
+  filter: brightness(1.8) grayscale(1) opacity(0.7);
+}
+
+.service {
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 100px;
+  height: 70px;
+  /* -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(0.7);
+  -moz-filter: brightness(1.8) grayscale(1) opacity(0.7);
+  filter: brightness(1.8) grayscale(1) opacity(0.7); */
+}
+
+.serviceli:hover {
+  -webkit-filter: brightness(1.2) grayscale(0.5) opacity(0.9);
+  -moz-filter: brightness(1.2) grayscale(0.5) opacity(0.9);
+  filter: brightness(1.2) grayscale(0.5) opacity(0.9);
+}
+
+.selector input:active+.serviceli {
+  opacity: 0.9;
+}
+
+.selector input:checked+.serviceli {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
 }
 
 /* #endregion */

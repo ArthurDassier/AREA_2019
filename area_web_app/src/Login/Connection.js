@@ -4,8 +4,8 @@ import {
     Card
 } from '@material-ui/core';
 import 'typeface-roboto';
-import Login from './login';
-import Register from './register';
+import Login from './Login';
+import Register from './Register';
 
 export default class Connect extends React.Component {
     constructor(props) {

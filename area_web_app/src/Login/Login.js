@@ -34,15 +34,20 @@ export default class Login extends React.Component {
                 password: this.state.password
             })
         })
+            .catch(error => {
+                console.log('error', error);
+                ToastsStore.error("Connection failed...\nPlease try again later");
+            })
             .then(res => res.json())
             .then(res => {
+                console.log(res);
                 if (res.hasOwnProperty('access_token')) {
                     console.log("CONNEXION RÉUSSIE");
-                    ToastsStore.success("Hello there :)")
-                    this.props.UserConnect(res.access_token, this.state.username)
+                    ToastsStore.success("Hello there :)");
+                    this.props.UserConnect(res.access_token, this.state.username);
                 } else {
-                    console.log("ERREUR DE CONNEXION")
-                    ToastsStore.error("Connection failed\nPlease try again")
+                    console.log("ERREUR DE CONNEXION");
+                    ToastsStore.error("Connection failed\nPlease try again");
                 }
             })
     }
