@@ -4,8 +4,8 @@ import {
     Card
 } from '@material-ui/core';
 import 'typeface-roboto';
-import Login from './login';
-import Register from './register';
+import Login from './Login';
+import Register from './Register';
 
 export default class Connect extends React.Component {
     constructor(props) {
@@ -37,15 +37,13 @@ export default class Connect extends React.Component {
             );
 
         return (
-            <div className="main-content">
-                <Card className="blurred-card">
-                    <Typography component="h1" variant="h4" style={{ "marginTop": "20px", "marginBottom": "20px" }}>
-                        {formTitle}
-                    </Typography>
-                    {this.display()}
-                    {button}
-                </Card>
-            </div>
+            <Card className="blurred-card">
+                <Typography component="h1" variant="h4" style={{ "marginTop": "20px", "marginBottom": "20px" }}>
+                    {formTitle}
+                </Typography>
+                {this.display()}
+                {button}
+            </Card>
         )
     }
 }
