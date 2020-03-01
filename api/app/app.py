@@ -314,11 +314,12 @@ def getClientSecret(service_name):
 
 def OAuth2GetTokens(service_name, user_id, code):
     header = {"content-type": "application/x-www-form-urlencoded", "Accept": "application/json"}
+    redirect_uri = "https://area.ngrok.io" if service_name == "outlook" else SERVER_ADDRESS
     data = {
         'code': code,
         'client_id': SERVICES[service_name]['client_id'],
         'client_secret': getClientSecret(service_name),
-        'redirect_uri': SERVER_ADDRESS+SERVICES['endpoint_path'],
+        'redirect_uri': redirect_uri+SERVICES['endpoint_path'],
         'grant_type': 'authorization_code'
     }
     r = requests.post(SERVICES[service_name]['token_uri'], data=data, headers=header)
