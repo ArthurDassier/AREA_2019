@@ -48,16 +48,17 @@ services:
     restart: always
 
   client-web:
-    image: httpd:2.4
+    build:
+      context: area_web_app
     ports:
-      - "8081:80"
+      - "8081:3000"
     depends_on:
       - server-api
       - client-mobile
     networks:
       - app-tier
     volumes:
-      - ./web/app:/usr/local/apache2/htdocs/
+      - ./area_web_app:/app
       - shared-volume:/apk
     restart: always
 
