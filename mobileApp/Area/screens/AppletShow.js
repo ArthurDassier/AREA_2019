@@ -29,11 +29,8 @@ export default class AppletShow extends React.Component {
 
         this.state = {
             refreshing: false,
-            data: [
-                // {name: "Spotify Fav sms", description: "Voici la description de la carte"}
-            ]
+            data: []
         };
-        this.arrayHolder = [];
     }
 
     componentDidMount = () => {
@@ -44,8 +41,7 @@ export default class AppletShow extends React.Component {
         let applet = await getApplets(getAccessToken());
 
         this.setState({data: []})
-        this.setState({data: ["JE SUE DU CUL"], refreshing: false})
-        console.log(applet);
+        this.setState({data: applet.datas})
     }
 
     FlatListItemSeparator = () => (
@@ -65,15 +61,12 @@ export default class AppletShow extends React.Component {
         );
     }
 
-    _action = () => {
-        console.Log("show the applet");
-    }
-
     RenderFlatListItem = ({ item }) => (
         <AppletCard
             item={item}
             navigation={this.props.navigation}
-            action={this._action}
+            action="show"
+            info={" - " + (item.enable ? "Enabled" : "Disabled")}
         />
     );
 
@@ -94,6 +87,8 @@ export default class AppletShow extends React.Component {
                     renderItem={this.RenderFlatListItem}
                     keyExtractor={(item, index) => index.toString()}
                     ListHeaderComponent={this.RenderFlatListStickyHeader}
+                    ListFooterComponent={<View style={{margintop: 20, height: 40}} />}
+
                 />
                 </View>
                 <View style={{flex: 0.1}}>

@@ -20,15 +20,15 @@ export default class InputApplet extends Component {
         const { item, input} = this.props;
 
         return (
-            <View>
-                <Text style={styles.profilOption}>
-                    {item}
+            <View style={styles.appletFormContainer}>
+                <Text style={[styles.appletName, styles.appletFormTitle]}>
+                    {item[0].toUpperCase() + item.slice(1)}
                 </Text>
                 <TextInput
                     onChangeText={(txt) => this.props.save(txt, item)}
-                    placeholder={item.param}
+                    placeholder={item[0].toUpperCase() + item.slice(1)}
                     placeholderTextColor={'(rgba(255, 255, 255, 0.7)'}
-                    style={styles.input}
+                    style={[styles.input, {textAlign: 'center', paddingLeft: 0}]}
                     underlineColorAndroid={'transparent'}
                 />
             </View>

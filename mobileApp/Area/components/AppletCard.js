@@ -27,8 +27,7 @@ export default class AppletCard extends Component {
         const { action, navigation, item } = this.props;
 
         if (action == "show") {
-            console.log("SHOW THE APPLET");
-            // navigation.navigate('Action', { item: this.props.item });
+            this.props.navigation.navigate('Applet Description', { item: this.props.item });
         } else if (action == "Action") {
             if (this.props.applet.length == 0) {
                 Alert.alert('Error', 'Actually, you have 0 available reaction because you\'re not connected to enough services',
@@ -51,9 +50,9 @@ export default class AppletCard extends Component {
             >
                 <View style={styles.appletCardContainer}>
                     <Text style={styles.appletCardTitle}>
-                        {item.name}
+                        {item.name + this.props.info}
                     </Text>
-                    <Text>
+                    <Text style={{flex: 1}} numberOfLines={3}>
                         {item.description}
                     </Text>
                 </View>

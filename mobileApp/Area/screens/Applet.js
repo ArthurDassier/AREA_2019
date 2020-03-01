@@ -109,11 +109,12 @@ export default class Applet extends React.Component {
         );
     }
 
-    _actuAction = (input, name, data) => {
+    _actuAction = (input, name, data, title) => {
         let obj = {
             "name": name,
             "params": input,
-            "data": data
+            "data": data,
+            "title": title
         }
         this.setState({ finalAction: obj });
     }
@@ -126,6 +127,7 @@ export default class Applet extends React.Component {
             actuAction={this._actuAction}
             finalAction={this.state.finalAction}
             applet={this.state.reaction}
+            info=""
         />
     );
 

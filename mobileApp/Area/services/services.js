@@ -57,16 +57,17 @@ export function getRightUrlToLog(access_token, serviceData)
     return url;
 }
 
-export function getResponseConnect(rep) {
-    const req = API.service.reactionList;
+export function disconnectService(name, access_token) {
+    const req = API.service.disconnectService;
     const header = API.config.header + API.config.servAddr + ":" + API.config.port;
-    return fetch(rep, {
+    return fetch(header + req.url + name, {
         method: req.method,
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'JWT ' + access_token
         },
     }).then(response => response.json())
         .then(responseJson => responseJson)
-        .catch(error => console.log('error on ActionList', error));
+        .catch(error => console.log('Error on disconnecting from ' + name, error));
 }

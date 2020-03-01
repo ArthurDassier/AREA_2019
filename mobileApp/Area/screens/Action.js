@@ -5,7 +5,9 @@ import {
     View,
     FlatList,
     TouchableOpacity,
-    Alert
+    Alert,
+    SafeAreaView,
+    ScrollView
 } from 'react-native';
 
 /*----Import Components----*/
@@ -51,9 +53,9 @@ export default class Action extends React.Component {
         const { navigation } = this.props;
 
         return (
-            <View style={styles.appletFlatListHeader}>
+            <View style={[styles.appletFlatListHeader, {marginBottom: 15}]}>
                 <Text style={styles.flatListHeaderTitle}> Fill the parameters !</Text>
-                <Text style={styles.flatListHeaderTitle}> {navigation.getParam('item').name}</Text>
+                <Text style={styles.appletFormName}> {navigation.getParam('item').name}</Text>
             </View>
         );
     }
@@ -69,7 +71,7 @@ export default class Action extends React.Component {
     _redirect = () => {
         const { navigation} = this.props;
 
-        navigation.getParam('action')(this.state.input, navigation.getParam('item').id, navigation.getParam('item').datas);
+        navigation.getParam('action')(this.state.input, navigation.getParam('item').id, navigation.getParam('item').datas, navigation.getParam('item').name);
         if (this.state.params.length == Object.keys(this.state.input).length) { //Si tous les champs sont rempli
             this.props.navigation.navigate('Applet', { item: this.props.item, step: "Reaction"});
         }
@@ -78,7 +80,8 @@ export default class Action extends React.Component {
     render() {
         const { navigation, item } = this.props;
         return (
-            <View>
+            <SafeAreaView>
+                <ScrollView style={styles.appletDescriptionContainer}>
                 <View>
                     <FlatList
                         data={this.state.params}
@@ -88,16 +91,16 @@ export default class Action extends React.Component {
                         ListHeaderComponent={this.RenderFlatListStickyHeader}
                     />
                 </View>
-                <View>
+                <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                    style={styles.loginBtn}
+                    style={styles.appletBtn}
                     onPress={this._redirect}
                     >
-                        <Text style={styles.loginText}>Login</Text>
+                        <Text style={styles.loginText}>Next</Text>
                     </TouchableOpacity>
-
-                </View>
-            </View>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
                 );
         }
 }
