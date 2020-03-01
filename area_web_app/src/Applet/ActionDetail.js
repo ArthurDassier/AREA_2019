@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 
-import MyCard from './MyCard';
+import MyCard from '../Helpers/MyCard';
 import { getValue } from '../Helpers/Helpers';
 
 export default class ActionDetail extends React.Component {
@@ -61,12 +61,12 @@ export default class ActionDetail extends React.Component {
 
         return (
             <MyCard
-                title="Paramétrage de l'action"
+                title="Set up the action"
                 content={content}
                 doBack={this.handleBack}
-                backText="Retour"
+                backText="Back"
                 doNext={this.handleContinue}
-                nextText="Continuer"
+                nextText="Continue"
                 canPressNext={this.state.paramsComplete}
             />
         )

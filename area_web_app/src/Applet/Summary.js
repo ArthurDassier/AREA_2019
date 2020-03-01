@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import { KeyboardArrowDown } from '@material-ui/icons';
-import MyCard from './MyCard';
+import MyCard from '../Helpers/MyCard';
 import { isObjectEmpty, getValue, getObjName } from '../Helpers/Helpers';
 
 export default class Summary extends React.Component {
@@ -119,12 +119,12 @@ export default class Summary extends React.Component {
 
         return (
             <MyCard
-                title="Votre nouvel applet"
+                title="Your new applet"
                 content={content}
                 doBack={this.handleBack}
-                backText="Retour"
+                backText="Back"
                 doNext={this.handleContinue}
-                nextText="Valider"
+                nextText="Create"
                 canPressNext={this.state.allComplete}
             />
         )

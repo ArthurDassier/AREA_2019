@@ -7,7 +7,7 @@ import {
     // Typography
 } from '@material-ui/core';
 
-import MyCard from './MyCard';
+import MyCard from '../Helpers/MyCard';
 import { getObjName, getValue } from '../Helpers/Helpers';
 
 export default class ActionDetail extends React.Component {
@@ -64,10 +64,10 @@ export default class ActionDetail extends React.Component {
 
         return (
             <MyCard
-                title={`Connexion à ${serviceName}`}
+                title={`Connection to ${serviceName}`}
                 content={content}
                 doBack={this.handleBack}
-                backText="Retour"
+                backText="Back"
             />
         )
     }

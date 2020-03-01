@@ -96,7 +96,7 @@ export default class Login extends React.Component {
                 >
                     Log In
                 </Button>
-                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
+                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.BOTTOM_RIGHT} />
             </form>
         );
     }

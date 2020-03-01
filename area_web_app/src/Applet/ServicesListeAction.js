@@ -1,5 +1,5 @@
 import React from 'react';
-import MyCard from './MyCard';
+import MyCard from '../Helpers/MyCard';
 import { getName, getValue, getObjName } from '../Helpers/Helpers';
 
 const Config = require('../App/app.config.json');
