@@ -7,13 +7,15 @@ import {
     ScrollView,
     TextInput,
     FlatList,
-    RefreshControl
+    RefreshControl,
+    Alert
 } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
 
 /*----Import Services----*/
 import { getUserInfo, getUserServices } from '../services/user';
+import { getServicesList, disconnectService} from '../services/services';
 
 /*----Import Utils----*/
 import { getAccessToken } from '../utils/common';
@@ -40,20 +42,27 @@ export default class Profil extends React.Component {
         this._refreshProfil();
     }
 
-    asyncCall = async () => {
-        let data = await getServicesList();
-        let goodData = this.goodDataFormat(data);
-
-        if (typeof goodData == 'undefined') {
-            this.arrayHolder = ER.errors;
-            this.setState({ data: ER.errors })
+    _checkDisco = (data) => {
+        if (data.status == "success") {
+            Alert.alert(
+                'Success',
+                 data.message,
+                [
+                  { text: 'Perfect', style: 'cancel' },
+                ]);
         } else {
-            this.arrayHolder = goodData;
-            this.setState({ data: goodData });
+            Alert.alert(
+                "Problem...",
+                 data.message,
+                [
+                  { text: 'Aie...', style: 'cancel' },
+                ]);
         }
     }
 
-
+    _disconnect = async (name) => {
+        await disconnectService(name, getAccessToken()).then((response) => this._checkDisco(response));
+    } 
 
     headerContainer = () => {
         return (
@@ -140,7 +149,15 @@ export default class Profil extends React.Component {
                                         {item}
                                     </Text>
                                     <Text style={styles.profilEdit}
-                                        onPress={() => console.log("Disconnecting from " + item)}>
+                                        onPress={() => {
+                                                    Alert.alert(
+                                                      'Confirmation',
+                                                      'Disconnect from ' + item + ' ?',
+                                                      [
+                                                        { text: 'Yes', onPress: () => this._disconnect(item)},
+                                                        { text: 'No', style: 'cancel' },
+                                                      ]);
+                                        }}>
                                         Disconnecting
                                     </Text>
                                 </View>

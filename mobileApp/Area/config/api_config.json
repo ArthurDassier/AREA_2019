@@ -20,6 +20,14 @@
         "userServices": {
             "url": "/services",
             "method": "GET"
+        },
+        "getUsers": {
+            "url": "/users",
+            "method": "GET"
+        },
+        "delUser": {
+            "url": "/user/",
+            "method": "DELETE"
         }
     },
     "service": {
@@ -27,5 +35,35 @@
             "url": "/static/services.json",
             "method": "GET"
         },
+        "actionList": {
+            "url": "/static/actions.json",
+            "method": "GET"
+        },
+        "reactionList": {
+            "url": "/static/reactions.json",
+            "method": "GET"
+        },
+        "disconnectService": {
+            "url": "/services/",
+            "method": "DELETE"
+        }
+    },
+    "applet": {
+        "getApplet": {
+            "url": "/applets",
+            "method": "GET"
+        },
+        "createApplet": {
+            "url": "/applets",
+            "method": "POST"
+        },
+        "deletApplet": {
+            "url": "/applets/",
+            "method": "DELETE"
+        },
+        "changeStateApplet": {
+            "url": "/applets/",
+            "method": "PATCH"
+        }
     }
 }

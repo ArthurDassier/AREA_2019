@@ -49,11 +49,116 @@ export const styles = StyleSheet.create({
     },
 
     //----------------------------------------------------//
+    //                Applet Description                  //
+    //----------------------------------------------------//
+
+    appletDescriptionContainer: {
+        
+    },
+
+    descriptionContainer: {
+        padding: 10,
+        justifyContent: 'center',
+    },
+
+    buttonContainer: {
+        flex: 1,
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+
+    appletBtn: {
+        backgroundColor: '#0B75D9',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 25,
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        overflow: 'hidden',
+        padding: 12,
+        textAlign: 'center',
+        justifyContent: 'center',
+        shadowRadius: 10,
+        shadowColor: 'black',
+        width: WIDTH - 210,
+        height: 50,
+
+    },
+
+    appletTitle: {
+        fontSize: 25,
+        fontFamily: 'Comfortaa-Bold',
+    },
+
+    appletName: {
+        fontSize: 20,
+        fontFamily: 'Comfortaa',
+    },
+
+    appletSubTitle: {
+        fontSize: 18,
+        fontFamily: 'Comfortaa',
+        marginLeft: 12
+    },
+
+    appletOptions: {
+        fontSize: 14,
+        fontFamily: 'Comfortaa',
+        marginLeft: 12,
+        textAlign: 'left',
+        marginLeft: 20
+    },
+
+    //----------------------------------------------------//
+    //                    Applet Form        ...          //
+    //----------------------------------------------------//
+
+    appletFormContainer: {
+        flex: 1,
+    },
+
+    appletFormTitle: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginBottom: 10
+    },
+
+    appletFormName: {
+        fontSize: 25,
+        fontFamily: 'Comfortaa-Bold',
+        textAlign: 'center'
+    },
+
+    dataForm: {
+        fontSize: 14,
+        fontFamily: 'Comfortaa',
+        textAlign: 'center',
+        padding: 5,
+        marginBottom: 5
+    },
+    data: {
+        fontSize: 15,
+        fontFamily: 'Comfortaa-Light',
+        textAlign: 'center'
+    },
+
+    //----------------------------------------------------//
     //                        Home                        //
     //----------------------------------------------------//
 
     flatListFooter: {
         backgroundColor: '#000',
+        flex: 1,
+        height: 40,
+        marginTop: 20,
+        width: '100%'
+    },
+
+    flatListFooterEmpty: {
+        backgroundColor: '#EEEEEE',
         flex: 1,
         height: 40,
         marginTop: 20,
@@ -196,6 +301,17 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+
+    inputDescription: {
+        backgroundColor: 'rgba(0, 0, 0, 0.35)',
+        borderRadius: 25,
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 16,
+        height: 150,
+        marginHorizontal: 25,
+        paddingLeft: 45,
+        width: WIDTH - 55
     },
 
     //----------------------------------------------------//

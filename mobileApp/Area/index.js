@@ -4,6 +4,16 @@ import {
     createAppContainer,
     createSwitchNavigator
 } from 'react-navigation';
+
+import {
+    SafeAreaView,
+    TouchableOpacity,
+    View,
+    Alert,
+    Text,
+    AsyncStorage,
+} from 'react-native';
+
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
 import Icon from 'react-native-vector-icons/Feather';
@@ -12,10 +22,16 @@ import Icon from 'react-native-vector-icons/Feather';
 import CreateAccount from './screens/CreateAccount';
 import Home from './screens/Home';
 import Profil from './screens/Profil';
+import AppletShow from './screens/AppletShow';
 import Login from './screens/Login';
 import Service from './screens/Service';
 import LoginService from './screens/LoginService';
 import Applet from './screens/Applet';
+import Action from './screens/Action';
+import Reaction from './screens/Reaction';
+import NewApplet from './screens/NewApplet';
+import AppletDescription from './screens/AppletDescription';
+import Admin from './screens/Admin';
 
 /*----Import Components----*/
 import Drawer from './components/Drawer';
@@ -59,7 +75,13 @@ const HomeStackNavigator = createStackNavigator(
         [config.home]: Home,
         [config.service]: Service,
         [config.loginService]: LoginService,
-        [config.applet]: Applet
+        [config.applet]: Applet,
+        [config.appletShow]: AppletShow,
+        [config.action]: Action,
+        [config.reaction]: Reaction,
+        [config.newApplet]: NewApplet,
+        [config.appletDescription]: AppletDescription,
+        [config.admin]: Admin
     },
     {
         defaultNavigationOptions: ({ navigation }) => 
@@ -69,9 +91,9 @@ const HomeStackNavigator = createStackNavigator(
     }
 );
 
-const NotificationsStackNavigator = createStackNavigator(
+const AppletShowStackNavigator = createStackNavigator(
     {
-        [config.notifications]: Home
+        [config.appletShow]: AppletShow
     },
     {
         defaultNavigationOptions: ({ navigation }) =>
@@ -91,14 +113,18 @@ const ProfileStackNavigator = createStackNavigator(
 
 const AppDrawerNavigator = createDrawerNavigator({
     [config.home]: HomeStackNavigator,
-    [config.notifications]: NotificationsStackNavigator,
+    [config.appletShow]: AppletShowStackNavigator,
     [config.profile]: ProfileStackNavigator
 }, {
     contentOptions: {
         activeTintColor: 'orange'
     },
     drawerType: 'slide',
-    contentComponent: (props => <Drawer {...props}/>)
+    contentComponent: (props) => ( <Drawer {...props} />),
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle'
+    
 });
 
 const AppSwitchNavigator = createSwitchNavigator({

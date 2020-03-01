@@ -4,7 +4,11 @@ import {
     Image,
     SafeAreaView,
     ScrollView,
-    View
+    View,
+    TouchableOpacity,
+    Text,
+    AsyncStorage,
+    Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { DrawerItems } from 'react-navigation-drawer';
@@ -47,13 +51,43 @@ export default class Drawer extends Component {
         </View>
     );
 
+    admin = () => {
+        return (
+            <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={()=> this.props.navigation.navigate('Admin') }>
+              <Text style={{margin: 16, marginLeft: 140, fontWeight: 'bold',color: 'black'}}>Admin</Text>
+            </TouchableOpacity>
+
+        )
+    }
+
     render() {
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView
+            style={{ flex: 1 }} 
+            forceInset={{ top: 'always', horizontal: 'never' }}>
                 {this.renderHeader()}
                 <ScrollView>
                     <DrawerItems {...this.props} />
                 </ScrollView>
+                <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity onPress={()=>
+              Alert.alert(
+                'Log out',
+                'Do you want to logout?',
+                [
+                  {text: 'Cancel', onPress: () => {return null}},
+                  {text: 'Confirm', onPress: () => {
+                    AsyncStorage.clear();
+                    this.props.navigation.navigate('Login')
+                  }},
+                ],
+                { cancelable: false }
+              )  
+            }>
+              <Text style={{margin: 16,fontWeight: 'bold',color: 'black'}}>Logout</Text>
+            </TouchableOpacity>
+            {this.admin()}
+            </View>
             </SafeAreaView>
         );
     }

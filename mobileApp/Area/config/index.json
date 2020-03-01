@@ -1,8 +1,13 @@
 {
     "home": "Discover",
     "loginService": "LoginService",
-    "notifications": "Notifications",
     "profile": "Profile",
+    "admin": "Admin",
     "service": "Service",
-    "applet": "Applet"
+    "applet": "Applet",
+    "appletShow": "Applets",
+    "action": "Action",
+    "reaction": "Reaction",
+    "newApplet": "New Applet",
+    "appletDescription": "Applet Description"
 }

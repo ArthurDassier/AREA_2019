@@ -153,6 +153,21 @@ def verify_google_token(token):
         return None
 
 
+def getServicesStatus(user_id):
+    res = {}
+    tokens = OAuthTokens.query.filter_by(user_id=user_id).all()
+    for service in SERVICES_NAMES:
+        found = False
+        for token in tokens:
+            if service == token.service:
+                res[service] = True
+                found = True
+                break
+        if found != True:
+            res[service] = False
+    return (res)
+
+
 jwt = JWT(app, authenticate, identity)
 
 
@@ -238,11 +253,15 @@ def applets():
         return {"status": "success", "message": "Applet "+datas['name']+" successfully added."}
     if request.method == 'GET':
         applets = collec.find({'user_id': usr.id})
-        p = [dumps(applet) for applet in applets]
-        return {"status": "success", "datas": p}
+        resp = {'status': "success", "datas": []}
+        for a in applets:
+            resp['datas'].append(a)
+        for i in range(len(resp['datas'])):
+            resp['datas'][i]['_id'] = str(resp['datas'][i]['_id'])
+        return dumps(resp)
 
-
-@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/applets/<string:id>', methods=['DELETE'])
+@app.route('/applets/<string:id>/<string:status>', methods=['GET', 'PUT', 'PATCH'])
 @jwt_required()
 def appletUpdate(id, status=None):
     usr = current_identity
@@ -265,8 +284,16 @@ def appletUpdate(id, status=None):
         datas = None
         if status:
             if status == "enable":
+                applet = collec.find_one({'user_id': usr.id, '_id': ObjectId(id)})
                 datas = {'$set': {'enable': True}}
                 status_res = "enabled"
+                actionService = applet['action']['name'].split('.')[0].lower()
+                reactionService = applet['reaction']['name'].split('.')[0].lower()
+                activatedServices = getServicesStatus(usr.id)
+                if (activatedServices[actionService] == False):
+                    return {'status': 'error', 'message': "Your are not connected to the "+actionService+" service. You have to be connected to the service of the applet to enable it."}
+                if (activatedServices[reactionService] == False):
+                    return {'status': 'error', 'message': "Your are not connected to the "+reactionService+" service. You have to be connected to the service of the applet to enable it."}
             elif status == "disable":
                 datas = {'$set': {'enable': False}}
                 status_res = "disabled"
@@ -332,23 +359,30 @@ def OAuth2():
     return {'satus': 'error', 'message': 'Code or state parameters is missing.'}
 
 
-@app.route('/services', methods=['GET'])
+@app.route('/services', methods=['GET', 'DELETE'])
+@app.route('/services/<string:service_name>', methods=['GET', 'DELETE'])
 @jwt_required()
-def getActiveServices():
-    res = {}
-    usr = current_identity
-    tokens = OAuthTokens.query.filter_by(user_id=usr.id).all()
-    for service in SERVICES_NAMES:
-        found = False
-        for token in tokens:
-            if service == token.service:
-                res[service] = True
-                found = True
-                break
-        if found != True:
-            res[service] = False
-    return (res)
-
+def getActiveServices(service_name=None):
+    usr = current_identity    
+    if request.method == 'GET':
+        return getServicesStatus(usr.id)
+    if request.method == 'DELETE':
+        if service_name not in SERVICES_NAMES :
+            return {'status': 'error', 'message': "This service doesn't exist."}
+        if service_name != None:
+            tokens = OAuthTokens.query.filter_by(service=service_name).all()
+            for tok in tokens:
+                if usr.id == tok.user_id:
+                    tok.delete()
+                    collec = mongo_client.area.applets
+                    applets = collec.find({'user_id': usr.id})
+                    for appl in applets:
+                        if appl['action']['name'].split('.')[0].lower() == service_name or appl['reaction']['name'].split('.')[0].lower() == service_name:
+                            datas = {'$set': {'enable': False}}
+                            collec.update_one({'user_id': usr.id, '_id': ObjectId(appl['_id'])}, datas)
+                    return {'status': 'success', 'message': 'Service successfully deleted.'}
+            return {'status': 'error', 'message': "This service wasn't activated."}
+        return {'status': 'error', 'message': "Undefined service"}
 
 @app.route('/about.json', methods=['GET'])
 def about():

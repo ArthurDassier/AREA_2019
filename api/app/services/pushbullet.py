@@ -34,7 +34,7 @@ class Pushbullet():
             "data": {
                 "target_device_iden": iden,
                 "addresses": numbers.split(" "),
-                "message": msg+" "+str(change),
+                "message": msg,
                 "guid": uuid.uuid4().hex.upper()[0:20],
                 "status": "queued"
             }
