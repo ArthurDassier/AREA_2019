@@ -1,5 +1,5 @@
 import React from 'react';
-import MyCard from './MyCard';
+import MyCard from '../Helpers/MyCard';
 import ReactionsListe from './ReactionsListe';
 
 export default class ServiceDetail extends React.Component {
@@ -27,10 +27,10 @@ export default class ServiceDetail extends React.Component {
 
         return (
             <MyCard
-                title="Choix de la réaction"
+                title="Choose a reaction"
                 content={content}
                 doBack={this.handleBack}
-                backText="Retour"
+                backText="Back"
             />
         )
     }

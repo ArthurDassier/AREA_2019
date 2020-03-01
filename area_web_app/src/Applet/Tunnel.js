@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+    ToastsContainer,
+    ToastsStore,
+    ToastsContainerPosition
+} from 'react-toasts';
 
 import ServicesListeAction from './ServicesListeAction';
 import ServiceConnection from './ServiceConnection';
@@ -109,15 +114,21 @@ export default class Tunnel extends React.Component {
                     this.setState({ userServiceConnections: res },
                         () => { console.log('newConnections:', this.state.userServiceConnections); });
                     this.tunnelGoNext();
+                } else {
+                    ToastsStore.error("Connection to service failed\nPlease try again later");
                 }
             })
     }
 
     connectToService = async (service) => {
         let serv = getValue(service);
+        let redirect_uri = (getName(service) === "outlook"
+            ? "https://area.ngrok.io/oauth2-endpoint"
+            : "http://jarvis-app.fr:8090/oauth2-endpoint");
+
         const url = serv.authorization_uri
             + '?client_id=' + serv.client_id
-            + '&redirect_uri=http://jarvis-app.fr:8090/oauth2-endpoint'
+            + '&redirect_uri=' + redirect_uri
             + '&response_type=code'
             + '&scope=' + serv.scope
             + '&access_type=offline'
@@ -289,6 +300,7 @@ export default class Tunnel extends React.Component {
                 {isReady && (
                     this.renderSwitch()
                 )}
+                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.BOTTOM_RIGHT} />
             </div>
         )
     }

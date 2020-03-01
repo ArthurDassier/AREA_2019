@@ -109,7 +109,7 @@ export default class Register extends React.Component {
                 >
                     Register
                 </Button>
-                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
+                <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.BOTTOM_RIGHT} />
             </form>
         );
     }

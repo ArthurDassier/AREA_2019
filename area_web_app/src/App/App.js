@@ -4,8 +4,6 @@ import Header from './Header'
 import Connect from '../Login/Connection'
 import Home from './Home'
 
-const Config = require('../App/app.config.json');
-
 export default class App extends React.Component {
   constructor(props) {
     super(props)

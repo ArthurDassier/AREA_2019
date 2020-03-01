@@ -1,5 +1,5 @@
 import React from 'react';
-import MyCard from './MyCard';
+import MyCard from '../Helpers/MyCard';
 import { getName, getValue, getObjName } from '../Helpers/Helpers';
 
 const Config = require('../App/app.config.json');
@@ -96,10 +96,10 @@ export default class ServicesListeReaction extends React.Component {
 
         return (
             <MyCard
-                title="Choix du service pour la réaction"
+                title="Choose a service for the reaction"
                 content={content}
                 doBack={this.handleBack}
-                backText="Retour"
+                backText="Back"
             />
         )
     }
