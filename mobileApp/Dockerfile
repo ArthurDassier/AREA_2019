@@ -2,6 +2,6 @@ FROM ubuntu:16.04
 
 WORKDIR /app
 
-COPY Area-6cafd8fc1c4943cf9eb8fb9aa5a61c60-signed.apk /apk/
+COPY Area-1df47d39cb804ff18d9a6bdf56990253-signed.apk /apk/
 
 CMD tail -f /dev/null
